@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Yaclops</id>
+    <version>0.1.1</version>
+    <title>Yet Another Command-Line Option Parser</title>
+    <authors>Doug Swisher</authors>
+    <owners>Doug Swisher</owners>
+    <licenseUrl>https://raw.github.com/dswisher/yaclops/master/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/dswisher/yaclops</projectUrl>
+    <iconUrl>https://raw.github.com/dswisher/yaclops/master/logo.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A .NET library for parsing command line options with subcommands (like git or svn).</description>
+    <releaseNotes>Initial Release</releaseNotes>
+    <copyright>Copyright (c) 2015 Doug Swisher</copyright>
+    <tags>command line argument option parser</tags>
+  </metadata>
+</package>

@@ -18,7 +18,10 @@ The following is a list of ones that I have seen (and possibly borrowed some ide
 * [Nito.KitchenSink](http://nitokitchensink.codeplex.com/) (by Stephen Cleary) is a big library that include option parsing, including some support for subcommands. See this [SO answer](http://stackoverflow.com/a/6507934/282725).
 * [CommandLineParser](http://commandline.codeplex.com/)
 * [CommandLineArguments](http://commandlinearguments.codeplex.com/)
-* [Fluent Command Line Parser](https://github.com/fclp/fluent-command-line-parser) (fclp)
+* [Fluent Command Line Parser](https://github.com/fclp/fluent-command-line-parser) (fclp) ([nuget](http://www.nuget.org/packages/FluentCommandLineParser/), [homepage](http://fclp.github.io/fluent-command-line-parser/))
+* [Command Line Parser](https://github.com/gsscoder/commandline) by gsscoder ([nuget](http://www.nuget.org/packages/CommandLineParser/))
+* [MGR.CommandLineParser](http://mgrcommandlineparser.codeplex.com/) ([nuget](http://www.nuget.org/packages/MGR.CommandLineParser/))
+* [ICM.CommandLine](https://bitbucket.org/icalvo/icm.commandline) ([nuget](http://www.nuget.org/packages/Icm.CommandLine/))
 
 
 # Other Languages #
@@ -27,6 +30,11 @@ The following is a list of ones that I have seen (and possibly borrowed some ide
 ## Java ##
 
 * [args4j](http://args4j.kohsuke.org/), which has support for [subcommands](http://args4j.kohsuke.org/args4j/apidocs/org/kohsuke/args4j/spi/SubCommandHandler.html)
+
+
+## C ##
+
+* GNU docs on [program arguments](http://www.gnu.org/software/libc/manual/html_node/Program-Arguments.html#Program-Arguments)
 
 
 # Articles and Other Stuff #

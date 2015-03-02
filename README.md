@@ -1,3 +1,5 @@
+![](logo.png)
+
 # Yaclops #
 
 Yet another command-line option parser.
@@ -5,6 +7,7 @@ Yet another command-line option parser.
 * Intended for cases where subcommands are required (like git or svn)
 * Nearly POCO classes: they need to inherit an interface and implement one method (`Execute()`).
 * Works well with IoC containers - resolve all command objects in one fell swoop
+* No dependencies
 
 ## Examples ##
 
