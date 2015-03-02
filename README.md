@@ -90,7 +90,7 @@ Creating the commands is a little awkward, but the intent is that an IoC contain
             return builder.Build();
         }
 
-More examples forthcoming. The Sample project has other examples.
+More examples forthcoming. The included Sample project has additional examples.
 
 
 ## Links ##

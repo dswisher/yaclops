@@ -50,7 +50,7 @@ namespace Yaclops
                 var option = (CommandLineOptionAttribute)p.GetCustomAttributes(typeof(CommandLineOptionAttribute), true).First();
                 if (!string.IsNullOrWhiteSpace(option.ShortName))
                 {
-                    _namedParameters.Add(option.ShortName.ToLower(), p);
+                    _namedParameters.Add(option.ShortName, p);
                 }
 
                 // TODO - handle names like DryRun, which should become dry-run
