@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yaclops", "Yaclops\Yaclops.csproj", "{8FA0C3EF-0236-4B3D-B8A7-9AB7744F1AEB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yaclops.Tests", "Yaclops.Tests\Yaclops.Tests.csproj", "{D4A57B22-74C0-4426-B5D3-F3B75A8FF7CB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8FA0C3EF-0236-4B3D-B8A7-9AB7744F1AEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FA0C3EF-0236-4B3D-B8A7-9AB7744F1AEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FA0C3EF-0236-4B3D-B8A7-9AB7744F1AEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FA0C3EF-0236-4B3D-B8A7-9AB7744F1AEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4A57B22-74C0-4426-B5D3-F3B75A8FF7CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4A57B22-74C0-4426-B5D3-F3B75A8FF7CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4A57B22-74C0-4426-B5D3-F3B75A8FF7CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4A57B22-74C0-4426-B5D3-F3B75A8FF7CB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
