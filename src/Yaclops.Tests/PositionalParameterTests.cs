@@ -78,7 +78,7 @@ namespace Yaclops.Tests
 
 
         // ReSharper disable UnusedAutoPropertyAccessor.Local
-        private class StringCommand : ICommand
+        private class StringCommand : ISubCommand
         {
             [CommandLineParameter, Required]
             public string Param1 { get; set; }
@@ -90,7 +90,7 @@ namespace Yaclops.Tests
         }
 
 
-        private class IntCommand : ICommand
+        private class IntCommand : ISubCommand
         {
             [CommandLineParameter, Required]
             public int Param { get; set; }
@@ -99,7 +99,7 @@ namespace Yaclops.Tests
         }
 
 
-        private class ListCommand : ICommand
+        private class ListCommand : ISubCommand
         {
             public ListCommand()
             {

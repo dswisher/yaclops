@@ -6,8 +6,8 @@ namespace Yaclops.Tests
     [TestFixture]
     public class OneWordCommandTests : AbstractCommandTests
     {
-        private readonly ICommand[] _funkyCommand = { new FunkyCommand() };
-        private readonly ICommand[] _threeCommands = { new FunkyCommand(), new PullCommand(), new PushCommand() };
+        private readonly ISubCommand[] _funkyCommand = { new FunkyCommand() };
+        private readonly ISubCommand[] _threeCommands = { new FunkyCommand(), new PullCommand(), new PushCommand() };
 
 
 

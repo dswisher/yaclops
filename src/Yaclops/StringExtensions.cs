@@ -4,7 +4,7 @@ namespace Yaclops
 {
     internal static class StringExtensions
     {
-        public static string Decamel(this string camel)
+        public static string Decamel(this string camel, char separator = ' ')
         {
             StringBuilder builder = new StringBuilder();
 
@@ -14,7 +14,7 @@ namespace Yaclops
                 {
                     if (builder.Length > 0)
                     {
-                        builder.Append(' ');
+                        builder.Append(separator);
                     }
 
                     builder.Append(char.ToLower(c));

@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yaclops", "Yaclops\Yaclops.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yaclops.Tests", "Yaclops.Tests\Yaclops.Tests.csproj", "{D4A57B22-74C0-4426-B5D3-F3B75A8FF7CB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample", "Sample\Sample.csproj", "{DF7C6514-7305-44AC-95FC-19EEA60B8CF0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{D4A57B22-74C0-4426-B5D3-F3B75A8FF7CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4A57B22-74C0-4426-B5D3-F3B75A8FF7CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4A57B22-74C0-4426-B5D3-F3B75A8FF7CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF7C6514-7305-44AC-95FC-19EEA60B8CF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF7C6514-7305-44AC-95FC-19EEA60B8CF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF7C6514-7305-44AC-95FC-19EEA60B8CF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF7C6514-7305-44AC-95FC-19EEA60B8CF0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

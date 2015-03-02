@@ -8,13 +8,13 @@ namespace Yaclops
 {
     internal class CommandLineArgumentParser
     {
-        private readonly ICommand _command;
+        private readonly ISubCommand _command;
         private readonly ArgumentList _args;
         private readonly Stack<PropertyInfo> _positionalParameters = new Stack<PropertyInfo>();
         private readonly Dictionary<string, PropertyInfo> _namedParameters = new Dictionary<string, PropertyInfo>(); 
 
 
-        internal static void Parse(ICommand command, ArgumentList args)
+        internal static void Parse(ISubCommand command, ArgumentList args)
         {
             var parser = new CommandLineArgumentParser(command, args);
 
@@ -24,7 +24,7 @@ namespace Yaclops
 
 
 
-        private CommandLineArgumentParser(ICommand command, ArgumentList args)
+        private CommandLineArgumentParser(ISubCommand command, ArgumentList args)
         {
             _command = command;
             _args = args;
@@ -33,8 +33,7 @@ namespace Yaclops
 
             // Push all positional parameters on a stack in reverse order
             var props = type.GetProperties()
-                .Where(x => x.GetCustomAttributes(typeof(CommandLineParameterAttribute), true)
-                    .Any(y => string.IsNullOrEmpty(((CommandLineParameterAttribute)y).Name)))
+                .Where(x => x.GetCustomAttributes(typeof(CommandLineParameterAttribute), true).Any())
                 .Reverse();
 
             foreach (var p in props)
@@ -42,17 +41,21 @@ namespace Yaclops
                 _positionalParameters.Push(p);
             }
 
-            // TODO - add all named parameters to a list
-            props = type.GetProperties()
-                .Where(x => x.GetCustomAttributes(typeof(CommandLineParameterAttribute), true)
-                    .Any(y => !string.IsNullOrEmpty(((CommandLineParameterAttribute)y).Name)));
+            // Add all named parameters to a list
+            var namedProps = type.GetProperties()
+                .Where(x => x.GetCustomAttributes(typeof(CommandLineOptionAttribute), true).Any());
 
-            foreach (var p in props)
+            foreach (var p in namedProps)
             {
-                var name = p.GetCustomAttributes(typeof(CommandLineParameterAttribute))
-                    .Cast<CommandLineParameterAttribute>()
-                    .First(x => !string.IsNullOrEmpty(x.Name))
-                    .Name.ToLower();
+                var option = (CommandLineOptionAttribute)p.GetCustomAttributes(typeof(CommandLineOptionAttribute), true).First();
+                if (!string.IsNullOrWhiteSpace(option.ShortName))
+                {
+                    _namedParameters.Add(option.ShortName.ToLower(), p);
+                }
+
+                // TODO - handle names like DryRun, which should become dry-run
+                // TODO - use LongName if set on attribute
+                var name = "-" + p.Name.Decamel('-').ToLower();
 
                 _namedParameters.Add(name, p);
             }

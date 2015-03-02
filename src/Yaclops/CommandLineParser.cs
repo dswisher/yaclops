@@ -5,10 +5,10 @@ namespace Yaclops
 {
     public class CommandLineParser
     {
-        private readonly List<ICommand> _commands = new List<ICommand>();
+        private readonly List<ISubCommand> _commands = new List<ISubCommand>();
 
 
-        public CommandLineParser(IEnumerable<ICommand> commands)
+        public CommandLineParser(IEnumerable<ISubCommand> commands)
         {
             _commands.AddRange(commands);
 
@@ -16,20 +16,20 @@ namespace Yaclops
         }
 
 
-        internal IList<ICommand> Commands { get { return _commands; } }
+        internal IList<ISubCommand> Commands { get { return _commands; } }
 
 
-        public ICommand Parse(IEnumerable<string> raw)
+        public ISubCommand Parse(IEnumerable<string> raw)
         {
             return ParseMinion(raw);
         }
 
 
-        public ICommand ParseMinion(IEnumerable<string> raw)
+        public ISubCommand ParseMinion(IEnumerable<string> raw)
         {
             var args = new ArgumentList(raw);
 
-            ICommand matchingCommand = null;
+            ISubCommand matchingCommand = null;
 
             if (args.IsEmpty || (args.Peek().Equals("help", StringComparison.CurrentCultureIgnoreCase)))
             {

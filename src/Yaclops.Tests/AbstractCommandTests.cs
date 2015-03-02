@@ -9,7 +9,7 @@ namespace Yaclops.Tests
     public abstract class AbstractCommandTests
     {
 
-        protected static void CanFindCommand(IEnumerable<ICommand> commands, Type expected, params string[] args)
+        protected static void CanFindCommand(IEnumerable<ISubCommand> commands, Type expected, params string[] args)
         {
             var parser = new CommandLineParser(commands);
 
@@ -21,39 +21,39 @@ namespace Yaclops.Tests
 
 
 
-        protected class FunkyCommand : ICommand
+        protected class FunkyCommand : ISubCommand
         {
             public void Execute() { }
         }
 
-        protected class PullCommand : ICommand
+        protected class PullCommand : ISubCommand
         {
             public void Execute() { }
         }
 
-        protected class PushCommand : ICommand
+        protected class PushCommand : ISubCommand
         {
             public void Execute() { }
         }
 
 
 
-        protected class FetchItemCommand : ICommand
+        protected class FetchItemCommand : ISubCommand
         {
             public void Execute() { }
         }
 
-        protected class FetchStickCommand : ICommand
+        protected class FetchStickCommand : ISubCommand
         {
             public void Execute() { }
         }
 
-        protected class PullItemCommand : ICommand
+        protected class PullItemCommand : ISubCommand
         {
             public void Execute() { }
         }
 
-        protected class PushItemCommand : ICommand
+        protected class PushItemCommand : ISubCommand
         {
             public void Execute() { }
         }

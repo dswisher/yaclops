@@ -6,7 +6,7 @@ namespace Yaclops.Tests
     [TestFixture]
     public class TwoWordCommandTests : AbstractCommandTests
     {
-        private readonly ICommand[] _fetchItemCommand = { new FetchItemCommand() };
+        private readonly ISubCommand[] _fetchItemCommand = { new FetchItemCommand() };
 
 
 

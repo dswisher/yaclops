@@ -3,7 +3,8 @@
 namespace Yaclops
 {
     [AttributeUsage(AttributeTargets.Property)]
-    public class CommandLineParameterAttribute : Attribute
+    public class CommandLineOptionAttribute : Attribute
     {
+        public string ShortName { get; set; }
     }
 }

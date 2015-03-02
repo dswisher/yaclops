@@ -57,7 +57,7 @@ namespace Yaclops
         }
 
 
-        public int Matches(ICommand command)
+        public int Matches(ISubCommand command)
         {
             string[] words = command.AsWords();
 
@@ -78,7 +78,7 @@ namespace Yaclops
         }
 
 
-        public void Accept(ICommand command)
+        public void Accept(ISubCommand command)
         {
             _position = command.AsWords().Length;
         }

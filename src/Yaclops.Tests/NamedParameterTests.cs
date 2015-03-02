@@ -13,7 +13,7 @@ namespace Yaclops.Tests
             var parser = new CommandLineParser(new[] { new BoolCommand() });
             var result = (BoolCommand)parser.Parse(new[] { "bool", "-flag" });
             result.Param1.ShouldBe(null);
-            result.Param2.ShouldBe(true);
+            result.Flag.ShouldBe(true);
         }
 
 
@@ -26,12 +26,31 @@ namespace Yaclops.Tests
 
 
         [Test]
-        public void CanSetStringFlagByName()
+        public void CanSetStringOptionByName()
         {
             var parser = new CommandLineParser(new[] { new StringCommand() });
-            var result = (StringCommand)parser.Parse(new[] { "string", "-name", "fred" });
+            var result = (StringCommand)parser.Parse(new[] { "string", "--name", "fred" });
             result.Param1.ShouldBe(null);
-            result.Param2.ShouldBe("fred");
+            result.Name.ShouldBe("fred");
+        }
+
+
+        [Test]
+        public void CanSetMultiWordOptionByDefaultLongName()
+        {
+            var parser = new CommandLineParser(new[] { new AddCommand() });
+            var result = (AddCommand)parser.Parse(new[] { "add", "--dry-run" });
+            result.DryRun.ShouldBe(true);
+        }
+
+
+        [Test]
+        public void CanSetStringOptionByShortName()
+        {
+            var parser = new CommandLineParser(new[] { new StringCommand() });
+            var result = (StringCommand)parser.Parse(new[] { "string", "-n", "fred" });
+            result.Param1.ShouldBe(null);
+            result.Name.ShouldBe("fred");
         }
 
 
@@ -44,47 +63,56 @@ namespace Yaclops.Tests
 
 
         [Test]
-        public void CanSetLongFlagByName()
+        public void CanSetLongOptionByName()
         {
             var parser = new CommandLineParser(new[] { new LongCommand() });
-            var result = (LongCommand)parser.Parse(new[] { "long", "-value", "1337" });
+            var result = (LongCommand)parser.Parse(new[] { "long", "--value", "1337" });
             result.Param1.ShouldBe(null);
-            result.Param2.ShouldBe(1337);
+            result.Value.ShouldBe(1337);
         }
 
-        
+
         // ReSharper disable UnusedAutoPropertyAccessor.Local
-        private class BoolCommand : ICommand
+        private class BoolCommand : ISubCommand
         {
-            [CommandLineParameter]
+            [CommandLineOption]
             public string Param1 { get; set; }
 
-            [CommandLineParameter(Name = "flag")]
-            public bool Param2 { get; set; }
+            [CommandLineOption(ShortName = "flag")]
+            public bool Flag { get; set; }
 
             public void Execute() { }
         }
 
 
-        private class StringCommand : ICommand
+        private class StringCommand : ISubCommand
         {
-            [CommandLineParameter]
+            [CommandLineOption]
             public string Param1 { get; set; }
 
-            [CommandLineParameter(Name = "name")]
-            public string Param2 { get; set; }
+            [CommandLineOption(ShortName = "n")]
+            public string Name { get; set; }
 
-            public void Execute() { }            
+            public void Execute() { }
         }
 
 
-        private class LongCommand : ICommand
+        private class LongCommand : ISubCommand
         {
-            [CommandLineParameter]
+            [CommandLineOption]
             public string Param1 { get; set; }
 
-            [CommandLineParameter(Name = "value")]
-            public long Param2 { get; set; }
+            [CommandLineOption]
+            public long Value { get; set; }
+
+            public void Execute() { }
+        }
+
+
+        private class AddCommand : ISubCommand
+        {
+            [CommandLineOption]
+            public bool DryRun { get; set; }
 
             public void Execute() { }
         }

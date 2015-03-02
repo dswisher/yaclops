@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Yaclops
 {
-    internal class HelpCommand : ICommand
+    internal class HelpCommand : ISubCommand
     {
         private readonly CommandLineParser _parser;
 
@@ -25,7 +25,7 @@ namespace Yaclops
         {
             if (Commands.Any())
             {
-                ICommand command;
+                ISubCommand command;
                 try
                 {
                     command = _parser.Parse(Commands);
