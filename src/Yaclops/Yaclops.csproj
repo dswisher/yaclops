@@ -52,6 +52,7 @@
     <Compile Include="CommandLineParserException.cs" />
     <Compile Include="HelpCommand.cs" />
     <Compile Include="ISubCommand.cs" />
+    <Compile Include="Markdown\AstWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SummaryAttribute.cs" />
     <Compile Include="StringExtensions.cs" />
