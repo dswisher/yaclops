@@ -3,6 +3,7 @@ using Yaclops;
 
 namespace Sample.Commands
 {
+    [Summary("Clone a repository into a new directory")]
     public class CloneCommand : ISubCommand
     {
         public void Execute()

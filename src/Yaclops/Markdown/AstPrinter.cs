@@ -12,7 +12,7 @@ namespace Yaclops.Markdown
     /// <remarks>
     /// cobbled from Printer.PrintBlocks, which is internal
     /// </remarks>
-    internal class AstWriter
+    internal class AstPrinter
     {
         public static void WriteAst(TextWriter writer, Block block)
         {
@@ -297,18 +297,19 @@ namespace Yaclops.Markdown
             public readonly Block Target;
             public BlockStackEntry(int indent, Block target)
             {
-                this.Indent = indent;
-                this.Target = target;
+                Indent = indent;
+                Target = target;
             }
         }
+
         private struct InlineStackEntry
         {
             public readonly int Indent;
             public readonly Inline Target;
             public InlineStackEntry(int indent, Inline target)
             {
-                this.Indent = indent;
-                this.Target = target;
+                Indent = indent;
+                Target = target;
             }
         }
     }

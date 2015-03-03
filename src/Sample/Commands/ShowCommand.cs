@@ -3,6 +3,7 @@ using Yaclops;
 
 namespace Sample.Commands
 {
+    [Summary("Show various types of objects")]
     public class ShowCommand : ISubCommand
     {
         public void Execute()

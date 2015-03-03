@@ -3,8 +3,8 @@ using Yaclops;
 
 namespace Sample.Commands
 {
-    [Summary("Download objects and refs from another repository")]
-    public class FetchCommand : ISubCommand
+    [Summary("Cleanup unnecessary files and optimize the local repository")]
+    public class GcCommand : ISubCommand
     {
         public void Execute()
         {

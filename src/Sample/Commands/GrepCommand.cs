@@ -3,6 +3,7 @@ using Yaclops;
 
 namespace Sample.Commands
 {
+    [Summary("Print lines matching a pattern")]
     public class GrepCommand : ISubCommand
     {
         public void Execute()

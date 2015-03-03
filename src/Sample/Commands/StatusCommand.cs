@@ -3,6 +3,7 @@ using Yaclops;
 
 namespace Sample.Commands
 {
+    [Summary("Show the working tree status")]
     public class StatusCommand : ISubCommand
     {
         public void Execute()

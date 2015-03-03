@@ -3,6 +3,7 @@ using Yaclops;
 
 namespace Sample.Commands
 {
+    [Summary("Checkout a branch or paths to the working tree")]
     public class CheckoutCommand : ISubCommand
     {
         public void Execute()

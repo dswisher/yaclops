@@ -19,8 +19,9 @@
 ### Help ###
 
 * Add short description to commands, and emit it in the command-list help page
-* For subcommands with subcommands (like `bisect` in sample), only display one line in command list page - **where to get the summary, though**?
+* For subcommands with subcommands (like `bisect` in sample), only display one line in command list page - where to get the summary? Perhaps a new "group" class of some sort?
 * Add long description to commands, and emit (using Markdown) in the detailed help page for a command
 * Add description to parameters and flags, and emit (using MD) in the detailed help page for a command
 * Add ability to generate HTML help and pop it up, like `git` does
 * Add cross-reference ability (mainly for html)
+* Allow commands to be tagged as "Common" and "Uncommon", and only show the "Common" ones on command-list (ala Git)

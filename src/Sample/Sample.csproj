@@ -52,6 +52,7 @@
     <Compile Include="Commands\CommitCommand.cs" />
     <Compile Include="Commands\DiffCommand.cs" />
     <Compile Include="Commands\FetchCommand.cs" />
+    <Compile Include="Commands\GcCommand.cs" />
     <Compile Include="Commands\GrepCommand.cs" />
     <Compile Include="Commands\InitCommand.cs" />
     <Compile Include="Commands\LogCommand.cs" />

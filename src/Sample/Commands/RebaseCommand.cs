@@ -3,6 +3,7 @@ using Yaclops;
 
 namespace Sample.Commands
 {
+    [Summary("Forward-port local commits to the updated upstream head")]
     public class RebaseCommand : ISubCommand
     {
         public void Execute()

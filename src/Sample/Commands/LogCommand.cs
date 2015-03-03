@@ -3,6 +3,7 @@ using Yaclops;
 
 namespace Sample.Commands
 {
+    [Summary("Show commit logs")]
     public class LogCommand : ISubCommand
     {
         public void Execute()

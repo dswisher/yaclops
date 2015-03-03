@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using CommonMark;
@@ -47,8 +46,10 @@ namespace Yaclops
             {
                 var ast = CreateCommandList();
 
-                // TODO - for now, just dump the AST
-                AstWriter.WriteAst(Console.Out, ast);
+                // TODO - dump the AST for debugging
+                // AstPrinter.WriteAst(Console.Out, ast);
+
+                ConsolePrinter.WriteAst(ast);
             }
         }
 
@@ -62,7 +63,7 @@ namespace Yaclops
 
             builder.AppendLine("# Commands #");
 
-            foreach (var command in _parser.Commands.OrderBy(x => x.Name()).Take(10))
+            foreach (var command in _parser.Commands.OrderBy(x => x.Name()))
             {
                 builder.AppendLine(string.Concat("* `", command.Name(), "` ", command.Summary()));
             }

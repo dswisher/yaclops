@@ -3,6 +3,7 @@ using Yaclops;
 
 namespace Sample.Commands
 {
+    [Summary("Record changes to the repository")]
     public class CommitCommand : ISubCommand
     {
         public void Execute()

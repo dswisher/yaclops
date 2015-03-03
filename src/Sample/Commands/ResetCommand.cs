@@ -3,6 +3,7 @@ using Yaclops;
 
 namespace Sample.Commands
 {
+    [Summary("Reset current HEAD to the specified state")]
     public class ResetCommand : ISubCommand
     {
         public void Execute()

@@ -52,7 +52,12 @@
     <Compile Include="CommandLineParserException.cs" />
     <Compile Include="HelpCommand.cs" />
     <Compile Include="ISubCommand.cs" />
-    <Compile Include="Markdown\AstWriter.cs" />
+    <Compile Include="Markdown\AstPrinter.cs" />
+    <Compile Include="Markdown\ConsoleMarkup\AstConverter.cs" />
+    <Compile Include="Markdown\ConsoleMarkup\MarkupItem.cs" />
+    <Compile Include="Markdown\ConsoleMarkup\NewlineItem.cs" />
+    <Compile Include="Markdown\ConsoleMarkup\TextItem.cs" />
+    <Compile Include="Markdown\ConsolePrinter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SummaryAttribute.cs" />
     <Compile Include="StringExtensions.cs" />

@@ -3,6 +3,7 @@ using Yaclops;
 
 namespace Sample.Commands
 {
+    [Summary("Show changes between commits, commit and working tree, etc")]
     public class DiffCommand : ISubCommand
     {
         public void Execute()
