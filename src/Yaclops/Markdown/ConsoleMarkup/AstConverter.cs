@@ -26,6 +26,7 @@ namespace Yaclops.Markdown.ConsoleMarkup
                         // TODO - push header style
                         SpewInline(block.InlineContent);
                         // TODO - pop header style
+                        EnsureLine();
                         break;
 
                     case BlockTag.List:
@@ -34,11 +35,13 @@ namespace Yaclops.Markdown.ConsoleMarkup
 
                     case BlockTag.ListItem:
                         EnsureLine();
-                        // TODO - different bullet characters?
-                        _items.Add(new TextItem("*"));
+                        _items.Add(new IndentItem(3));
+                        // TODO - different bullet characters? Use the one from ast?
+                        _items.Add(new TextItem("-"));
                         break;
 
                     case BlockTag.Paragraph:
+                        EnsureLine();
                         SpewInline(block.InlineContent);
                         break;
 
@@ -100,6 +103,9 @@ namespace Yaclops.Markdown.ConsoleMarkup
                     case InlineTag.Code:
                         // TODO - set code style
                         _items.Add(new TextItem(inline.LiteralContent.Trim()));
+                        break;
+
+                    case InlineTag.SoftBreak:
                         break;
 
                     default:

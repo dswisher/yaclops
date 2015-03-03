@@ -48,6 +48,7 @@
     <Compile Include="ISubCommand.cs" />
     <Compile Include="Markdown\AstPrinter.cs" />
     <Compile Include="Markdown\ConsoleMarkup\AstConverter.cs" />
+    <Compile Include="Markdown\ConsoleMarkup\IndentItem.cs" />
     <Compile Include="Markdown\ConsoleMarkup\MarkupItem.cs" />
     <Compile Include="Markdown\ConsoleMarkup\NewlineItem.cs" />
     <Compile Include="Markdown\ConsoleMarkup\TextItem.cs" />

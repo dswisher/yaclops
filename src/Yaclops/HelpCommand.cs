@@ -40,17 +40,54 @@ namespace Yaclops
                     return;
                 }
 
-                Console.WriteLine("Detailed help on '{0}' is not yet available...", command.Name());
+                var ast = CreateDetail(command);
+
+                AstPrinter.WriteAst(Console.Out, ast);
+
+                ConsolePrinter.WriteAst(ast);
             }
             else
             {
                 var ast = CreateCommandList();
 
-                // TODO - dump the AST for debugging
                 // AstPrinter.WriteAst(Console.Out, ast);
 
                 ConsolePrinter.WriteAst(ast);
             }
+        }
+
+
+
+        private Block CreateDetail(ISubCommand command)
+        {
+            // TODO - for now, build up the markdown and parse it, rather than building the AST directly
+
+            StringBuilder builder = new StringBuilder();
+
+            builder.AppendLine("# Name #");
+            builder.AppendLine(command.Name());
+
+            builder.AppendLine("# Synopsis #");
+            builder.AppendLine("TBD.");
+
+            builder.AppendLine("# Description #");
+            if (command.Description() == null)
+            {
+                builder.AppendLine("n/a");
+            }
+            else
+            {
+                builder.AppendLine(command.Description());
+            }
+
+            var settings = new CommonMarkSettings
+            {
+                OutputFormat = OutputFormat.SyntaxTree
+            };
+
+            var result = CommonMarkConverter.Parse(builder.ToString(), settings);
+
+            return result;
         }
 
 
