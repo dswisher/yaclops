@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using CommonMark;
@@ -45,14 +46,8 @@ namespace Yaclops
             {
                 var ast = CreateCommandList();
 
-                WriteAstToConsole(ast);
-
-                //Console.WriteLine("Commands:");
-
-                //foreach (var command in _parser.Commands.OrderBy(x => x.Name()))
-                //{
-                //    Console.WriteLine("   {0}", command.Name());
-                //}
+                // TODO - for now, just dump the AST; cobbled from Printer.PrintBlocks
+                WriteAst(Console.Out, ast);
             }
         }
 
@@ -66,15 +61,14 @@ namespace Yaclops
 
             builder.AppendLine("# Commands #");
 
-            foreach (var command in _parser.Commands.OrderBy(x => x.Name()))
+            foreach (var command in _parser.Commands.OrderBy(x => x.Name()).Take(10))
             {
-                // Console.WriteLine("   {0}", command.Name());
-                builder.AppendLine(string.Join("- `", command.Name(), "` ", command.Summary()));
+                builder.AppendLine(string.Concat("* `", command.Name(), "` ", command.Summary()));
             }
 
             var settings = new CommonMarkSettings
             {
-                OutputFormat = OutputFormat.SyntaxTree // for now
+                OutputFormat = OutputFormat.SyntaxTree
             };
 
             var result = CommonMarkConverter.Parse(builder.ToString(), settings);
@@ -84,21 +78,21 @@ namespace Yaclops
 
 
 
-        private void WriteAstToConsole(Block block)
+        private void WriteAst(TextWriter writer, Block block)
         {
-            // TODO - for now, just dump the AST; cobbled from Printer.PrintBlocks
-
             int indent = 0;
             var stack = new Stack<BlockStackEntry>();
+            var inlineStack = new Stack<InlineStackEntry>();
+            var buffer = new StringBuilder();
 
             while (block != null)
             {
-                Console.Write(new string(' ', indent));
+                writer.Write(new string(' ', indent));
 
                 switch (block.Tag)
                 {
                     case BlockTag.Document:
-                        Console.Write("document");
+                        writer.Write("document");
                         break;
 
                     // TODO - handle remaining block types
@@ -107,15 +101,14 @@ namespace Yaclops
                         writer.Write("block_quote");
                         PrintPosition(trackPositions, writer, block);
                         break;
+#endif
 
                     case BlockTag.ListItem:
                         writer.Write("list_item");
-                        PrintPosition(trackPositions, writer, block);
                         break;
 
                     case BlockTag.List:
                         writer.Write("list");
-                        PrintPosition(trackPositions, writer, block);
 
                         var data = block.ListData;
                         if (data.ListType == ListType.Ordered)
@@ -132,11 +125,10 @@ namespace Yaclops
                                  data.BulletChar);
                         }
                         break;
-#endif
 
                     case BlockTag.AtxHeader:
-                        Console.Write("atx_header");
-                        Console.Write(" (level={0})", block.HeaderLevel);
+                        writer.Write("atx_header");
+                        writer.Write(" (level={0})", block.HeaderLevel);
                         break;
 
 #if false
@@ -148,7 +140,7 @@ namespace Yaclops
 #endif
 
                     case BlockTag.Paragraph:
-                        Console.Write("paragraph");
+                        writer.Write("paragraph");
                         break;
 
 #if false
@@ -190,16 +182,12 @@ namespace Yaclops
                         throw new NotImplementedException("Block " + block.Tag + " is not yet handled!");
                 }
 
-                Console.WriteLine();
+                writer.WriteLine();
 
-                // TODO - handle inline context
-#if false
                 if (block.InlineContent != null)
                 {
-                    PrintInlines(writer, block.InlineContent, indent + 2, inlineStack, buffer, trackPositions);
+                    PrintInlines(writer, block.InlineContent, indent + 2, inlineStack, buffer);
                 }
-
-#endif
 
                 if (block.FirstChild != null)
                 {
@@ -228,8 +216,7 @@ namespace Yaclops
 
 
 
-#if false
-        private static void PrintInlines(System.IO.TextWriter writer, Inline inline, int indent, Stack<InlineStackEntry> stack, StringBuilder buffer, bool trackPositions)
+        private static void PrintInlines(TextWriter writer, Inline inline, int indent, Stack<InlineStackEntry> stack, StringBuilder buffer)
         {
             while (inline != null)
             {
@@ -239,11 +226,12 @@ namespace Yaclops
                 {
                     case InlineTag.String:
                         writer.Write("str");
-                        PrintPosition(trackPositions, writer, inline);
                         writer.Write(' ');
                         writer.Write(format_str(inline.LiteralContent, buffer));
                         break;
 
+                        // TODO - handle remaining inline tags
+#if false
                     case InlineTag.LineBreak:
                         writer.Write("linebreak");
                         PrintPosition(trackPositions, writer, inline);
@@ -253,14 +241,13 @@ namespace Yaclops
                         writer.Write("softbreak");
                         PrintPosition(trackPositions, writer, inline);
                         break;
+#endif
 
                     case InlineTag.Code:
                         writer.Write("code {0}", format_str(inline.LiteralContent, buffer));
-                        PrintPosition(trackPositions, writer, inline);
-                        writer.Write(' ');
-                        writer.Write(format_str(inline.LiteralContent, buffer));
                         break;
 
+#if false
                     case InlineTag.RawHtml:
                         writer.Write("html {0}", format_str(inline.LiteralContent, buffer));
                         writer.Write(' ');
@@ -297,10 +284,10 @@ namespace Yaclops
                         writer.Write("del");
                         PrintPosition(trackPositions, writer, inline);
                         break;
+#endif
 
                     default:
                         writer.Write("unknown: " + inline.Tag.ToString());
-                        PrintPosition(trackPositions, writer, inline);
                         break;
                 }
 
@@ -330,7 +317,43 @@ namespace Yaclops
                 }
             }
         }
-#endif
+
+
+        private static string format_str(string s, StringBuilder buffer)
+        {
+            if (s == null)
+                return string.Empty;
+
+            int pos = 0;
+            int len = s.Length;
+            char c;
+
+            buffer.Length = 0;
+            buffer.Append('\"');
+            while (pos < len)
+            {
+                c = s[pos];
+                switch (c)
+                {
+                    case '\n':
+                        buffer.Append("\\n");
+                        break;
+                    case '"':
+                        buffer.Append("\\\"");
+                        break;
+                    case '\\':
+                        buffer.Append("\\\\");
+                        break;
+                    default:
+                        buffer.Append(c);
+                        break;
+                }
+                pos++;
+            }
+            buffer.Append('\"');
+            return buffer.ToString();
+        }
+
 
         private struct BlockStackEntry
         {
