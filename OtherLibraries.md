@@ -6,6 +6,7 @@ I make no claim that mine is "better", but for my personal use cases, I find it 
 The following is a list of ones that I have seen (and possibly borrowed some ideas) in no particular order:
 
 
+* [PowerArgs](https://github.com/adamabdelhamed/PowerArgs) - handles `git` style using methods instead of classes
 * [Args](https://github.com/little-sharps/args)
    * Uses an interface (`IHelpFormatter`) to allow replacement of default help formatting
    * Can provide lambda expression for type conversion
