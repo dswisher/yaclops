@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbstractCommandTests.cs" />
+    <Compile Include="IssueTests.cs" />
     <Compile Include="NamedParameterTests.cs" />
     <Compile Include="OneWordCommandTests.cs" />
     <Compile Include="PositionalParameterTests.cs" />
