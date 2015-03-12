@@ -51,11 +51,19 @@ namespace Yaclops
                 if (!string.IsNullOrWhiteSpace(option.ShortName))
                 {
                     _namedParameters.Add(option.ShortName, p);
+                    // TODO - if no short name is specified, should we use the first character as a default?
                 }
 
-                // TODO - handle names like DryRun, which should become dry-run
-                // TODO - use LongName if set on attribute
-                var name = "-" + p.Name.Decamel('-').ToLower();
+                string name;
+                if (!string.IsNullOrEmpty(option.LongName))
+                {
+                    // TODO - what about case-sensitive names?? All this .ToLower() business may be bad...
+                    name = "-" + option.LongName.ToLower();
+                }
+                else
+                {
+                    name = "-" + p.Name.Decamel('-').ToLower();
+                }
 
                 _namedParameters.Add(name, p);
             }
@@ -69,7 +77,8 @@ namespace Yaclops
             {
                 if (_args.Peek().StartsWith("-"))
                 {
-                    string name = _args.Pop().Substring(1);
+                    string option = _args.Pop();
+                    string name = option.Substring(1);
                     string key = name.ToLower();
 
                     if (_namedParameters.ContainsKey(key))
@@ -82,7 +91,7 @@ namespace Yaclops
                     }
                     else
                     {
-                        throw new CommandLineParserException("Unknown parameter: '{0}').", name);
+                        throw new CommandLineParserException("Unknown option: '{0}').", option);
                     }
                 }
                 else

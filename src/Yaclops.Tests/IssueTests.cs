@@ -6,9 +6,9 @@ namespace Yaclops.Tests
     [TestFixture]
     public class IssueTests
     {
-        // Tests to reproduce reported issues
+        // Tests to reproduce reported/noticed issues if they don't fit elsewhere
 
-        [Test, Ignore("How does this related to global flags?")]
+        [Test, Ignore("Need a way to handle 'global' options - those that appear before a command")]
         public void UnknownCommand()
         {
             var parser = new CommandLineParser(new[] { new LoadCommand() });
@@ -19,6 +19,7 @@ namespace Yaclops.Tests
 
 
         #region Test Commands
+        // ReSharper disable UnusedAutoPropertyAccessor.Local
 
         private class LoadCommand : ISubCommand
         {
@@ -30,6 +31,7 @@ namespace Yaclops.Tests
             }
         }
 
+        // ReSharper restore UnusedAutoPropertyAccessor.Local
         #endregion
     }
 }

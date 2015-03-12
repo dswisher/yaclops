@@ -72,7 +72,26 @@ namespace Yaclops.Tests
         }
 
 
+        [Test]
+        public void CanSetOptionByLongNameOverride()
+        {
+            var parser = new CommandLineParser(new[] { new UserCommand() });
+            var result = (UserCommand)parser.Parse(new[] { "user", "--add-user" });
+            result.CreateUser.ShouldBe(true);
+        }
+
+
+        [Test]
+        public void CannotSetOptionByDefaultLongNameWhenOverridden()
+        {
+            var parser = new CommandLineParser(new[] { new UserCommand() });
+            Should.Throw<CommandLineParserException>(() => parser.Parse(new[] { "user", "--create-user" }));
+        }
+
+
+        #region Test Commands
         // ReSharper disable UnusedAutoPropertyAccessor.Local
+
         private class BoolCommand : ISubCommand
         {
             [CommandLineOption]
@@ -116,6 +135,17 @@ namespace Yaclops.Tests
 
             public void Execute() { }
         }
+
+
+        private class UserCommand : ISubCommand
+        {
+            [CommandLineOption(LongName = "add-user")]
+            public bool CreateUser { get; set; }
+
+            public void Execute() { }
+        }
+
         // ReSharper restore UnusedAutoPropertyAccessor.Local
+        #endregion
     }
 }
