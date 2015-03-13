@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Yaclops.Help
 {
@@ -15,8 +16,13 @@ namespace Yaclops.Help
 
         public void Add(AbstractDocumentItem item)
         {
+            if (!CanAdd(item))
+            {
+                throw new InvalidOperationException(string.Format("Help build error: cannnot add type {0} to {1}.", item.GetType().Name, GetType().Name));
+            }
+
             Items.Add(item);
-            // TODO - should be two base classes - one for containers and one for non-containers?
+            // TODO - should there be two base classes - one for containers and one for non-containers?
         }
 
 

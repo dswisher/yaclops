@@ -23,5 +23,11 @@ namespace Yaclops.Help
 
             target.WriteLine();
         }
+
+
+        protected override bool CanAdd(AbstractDocumentItem item)
+        {
+            return item.GetType() == typeof(DocumentTableColumn);
+        }
     }
 }
