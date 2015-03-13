@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using CommonMark;
 using CommonMark.Syntax;
+using Yaclops.Help;
 using Yaclops.Markdown;
 
 
@@ -48,11 +49,12 @@ namespace Yaclops
             }
             else
             {
-                var ast = CreateCommandList();
+                var document = HelpBuilder.CommandList(_parser.Commands);
 
-                // AstPrinter.WriteAst(Console.Out, ast);
+                var target = new WrappedConsole();
+                var renderer = new ConsoleRenderer(target);
 
-                ConsolePrinter.WriteAst(ast);
+                renderer.Render(document);
             }
         }
 
@@ -80,35 +82,8 @@ namespace Yaclops
                 builder.AppendLine(command.Description());
             }
 
-            var settings = new CommonMarkSettings
-            {
-                OutputFormat = OutputFormat.SyntaxTree
-            };
-
-            var result = CommonMarkConverter.Parse(builder.ToString(), settings);
-
-            return result;
-        }
-
-
-
-        private Block CreateCommandList()
-        {
-            // TODO - for now, build up the markdown and parse it, rather than building the AST directly
-
-            StringBuilder builder = new StringBuilder();
-
-            builder.AppendLine("# Commands #");
-
-            foreach (var command in _parser.Commands.OrderBy(x => x.Name()))
-            {
-                builder.AppendLine(string.Concat("* `", command.Name(), "` ", command.Summary()));
-            }
-
-            var settings = new CommonMarkSettings
-            {
-                OutputFormat = OutputFormat.SyntaxTree
-            };
+            var settings = CommonMarkSettings.Default.Clone();
+            settings.OutputFormat = OutputFormat.SyntaxTree;
 
             var result = CommonMarkConverter.Parse(builder.ToString(), settings);
 

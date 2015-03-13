@@ -46,6 +46,15 @@
     <Compile Include="CommandLineParser.cs" />
     <Compile Include="CommandLineParserException.cs" />
     <Compile Include="HelpCommand.cs" />
+    <Compile Include="Help\AbstractDocumentItem.cs" />
+    <Compile Include="Help\ConsoleDocument.cs" />
+    <Compile Include="Help\ConsoleRenderer.cs" />
+    <Compile Include="Help\DocumentHeader.cs" />
+    <Compile Include="Help\DocumentTable.cs" />
+    <Compile Include="Help\DocumentTableColumn.cs" />
+    <Compile Include="Help\DocumentTableRow.cs" />
+    <Compile Include="Help\HelpBuilder.cs" />
+    <Compile Include="Help\WrappedConsole.cs" />
     <Compile Include="ISubCommand.cs" />
     <Compile Include="Markdown\AstPrinter.cs" />
     <Compile Include="Markdown\ConsoleMarkup\AstConverter.cs" />
