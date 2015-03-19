@@ -23,6 +23,8 @@ namespace Yaclops.Help
 
         public void Execute()
         {
+            IConsole console = new WrappedConsole();
+
             if (Commands.Any())
             {
                 ISubCommand command;
@@ -32,11 +34,9 @@ namespace Yaclops.Help
                 }
                 catch (CommandLineParserException)
                 {
-                    Console.WriteLine("Information on that command is not available, as it does not exist.");
+                    console.WriteLine("Information on that command is not available, as it does not exist.");
                     return;
                 }
-
-                IConsole console = new WrappedConsole();
 
                 // TODO - print out command detail!
 
@@ -44,8 +44,6 @@ namespace Yaclops.Help
             }
             else
             {
-                IConsole console = new WrappedConsole();
-
                 HelpBuilder.WriteCommandList(_parser.Commands, console);
             }
         }

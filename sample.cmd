@@ -1,1 +1,1 @@
-src\sample\bin\debug\Sample.exe
+src\sample\bin\debug\Sample.exe %*
