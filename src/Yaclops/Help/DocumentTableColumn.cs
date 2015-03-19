@@ -16,5 +16,11 @@ namespace Yaclops.Help
         {
             target.Write(_content);
         }
+
+
+        public int Width
+        {
+            get { return _content.Length; }
+        }
     }
 }
