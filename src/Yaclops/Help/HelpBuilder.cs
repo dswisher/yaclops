@@ -6,27 +6,27 @@ namespace Yaclops.Help
 {
     internal static class HelpBuilder
     {
-
-        public static ConsoleDocument CommandList(IEnumerable<ISubCommand> commands)
+        public static void WriteCommandList(IEnumerable<ISubCommand> commands, IConsole console)
         {
-            ConsoleDocument doc = new ConsoleDocument();
+            // TODO - need to get bisect into this list, but only once!
+            var topCommands = commands
+                .Where(x => !x.Name().Contains(" "))
+                .OrderBy(x => x.Name())
+                .ToList();
 
-            doc.Add(new DocumentHeader("Commands"));
+            int maxLength = FindMaxCommandLength(topCommands);
 
-            var table = new DocumentTable();
-            doc.Add(table);
-
-            foreach (var command in commands.OrderBy(x => x.Name()))
+            foreach (var command in topCommands)
             {
-                var row = new DocumentTableRow();
-                table.Add(row);
-
-                row.Add(new DocumentTableColumn(command.Name()));
-                row.Add(new DocumentTableColumn(command.Summary()));
+                console.WriteLine("  {0} {1}", command.Name().PadRight(maxLength), command.Summary());
             }
-
-            return doc;
         }
 
+
+
+        private static int FindMaxCommandLength(IEnumerable<ISubCommand> commands)
+        {
+            return commands.Select(x => x.Name().Length).Max();
+        }
     }
 }

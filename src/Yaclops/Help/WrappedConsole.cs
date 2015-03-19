@@ -12,6 +12,7 @@ namespace Yaclops.Help
 
         void WriteLine();
         void WriteLine(string content);
+        void WriteLine(string format, params object[] args);
     }
 
 
@@ -28,6 +29,11 @@ namespace Yaclops.Help
         public void WriteLine(string content)
         {
             Console.WriteLine(content);
+        }
+
+        public void WriteLine(string format, params object[] args)
+        {
+            Console.WriteLine(format, args);
         }
 
         public void Write(string content)

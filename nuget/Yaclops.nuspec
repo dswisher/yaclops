@@ -16,10 +16,6 @@
     <licenseUrl>https://raw.github.com/dswisher/yaclops/master/LICENSE.txt</licenseUrl>
     <copyright>Copyright (c) 2015 Doug Swisher</copyright>
     <tags>command line argument option parser</tags>
-
-    <dependencies>
-      <dependency id="CommonMark.NET" version="0.8.4" />
-    </dependencies>
   </metadata>
 
   <files>
