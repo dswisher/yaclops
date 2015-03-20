@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 
 namespace Yaclops.Help
@@ -44,6 +45,18 @@ namespace Yaclops.Help
             }
             else
             {
+                // TODO - allow the name to be overridden in settings
+                string command = Assembly.GetEntryAssembly().GetName().Name.ToLower();
+
+                console.StartWrap("usage: {0}", command);
+
+                // TODO - write global flags
+
+                console.Write(" <command> [<args>]");
+
+                console.EndWrap();
+                console.WriteLine();
+
                 HelpBuilder.WriteCommandList(_parser.Commands, console);
             }
         }

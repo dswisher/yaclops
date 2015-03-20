@@ -9,10 +9,14 @@ namespace Yaclops.Help
     internal interface IConsole
     {
         void Write(string content);
+        void Write(string format, params object[] args);
 
         void WriteLine();
         void WriteLine(string content);
         void WriteLine(string format, params object[] args);
+
+        void StartWrap(string format, params object[] args);
+        void EndWrap();
     }
 
 
@@ -21,6 +25,11 @@ namespace Yaclops.Help
     /// </summary>
     internal class WrappedConsole : IConsole
     {
+        private bool _wrapping;
+        private int _pos;
+        private int _indent;
+
+
         public void WriteLine()
         {
             Console.WriteLine();
@@ -36,9 +45,55 @@ namespace Yaclops.Help
             Console.WriteLine(format, args);
         }
 
+
+        public void Write(string format, params object[] args)
+        {
+            Write(string.Format(format, args));
+        }
+
+
         public void Write(string content)
         {
+            if (_wrapping)
+            {
+                // TODO - make right-margin configurable
+                if (_pos + content.Length > 80)
+                {
+                    Console.WriteLine();
+                    Console.Write(new string(' ', _indent));
+                    _pos = _indent;
+                }
+
+                Console.Write(content);
+                _pos += content.Length;
+            }
+            else
+            {
+                Console.Write(content);
+            }
+        }
+
+
+        public void StartWrap(string format, params object[] args)
+        {
+            string content = string.Format(format, args);
+
             Console.Write(content);
+
+            _indent = content.Length;
+            _pos = content.Length;
+            _wrapping = true;
+        }
+
+
+        public void EndWrap()
+        {
+            if (_pos > 0)
+            {
+                WriteLine();
+            }
+
+            _wrapping = false;
         }
     }
 }
