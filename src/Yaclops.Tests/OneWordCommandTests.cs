@@ -7,6 +7,7 @@ namespace Yaclops.Tests
     public class OneWordCommandTests : AbstractCommandTests
     {
         private readonly ISubCommand[] _funkyCommand = { new FunkyCommand() };
+        private readonly ISubCommand[] _requiredCommand = { new RequiredCommand() };
         private readonly ISubCommand[] _threeCommands = { new FunkyCommand(), new PullCommand(), new PushCommand() };
 
 
@@ -49,6 +50,13 @@ namespace Yaclops.Tests
             var parser = new CommandLineParser(_threeCommands);
 
             Should.Throw<CommandLineParserException>(() => parser.Parse(new[] { "xyzzy" }));
+        }
+
+
+        [Test]
+        public void CanPickOutCommandWithRequiredParameter()
+        {
+            CanFindCommand(_requiredCommand, _requiredCommand[0].GetType(), "required");
         }
 
 

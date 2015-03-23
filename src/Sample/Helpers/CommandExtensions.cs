@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Yaclops;
 
@@ -22,9 +23,19 @@ namespace Sample.Helpers
 
                 foreach (var p in props)
                 {
-                    // TODO - if a collection, dump out the values, rather than the type!
+                    string val;
+                    // TODO - handle more than just List<string>!
+                    if (p.PropertyType == typeof (List<string>))
+                    {
+                        var list = (List<string>)p.GetValue(command);
+                        val = list == null ? "<null>" : string.Join(", ", list);
+                    }
+                    else
+                    {
+                        val = p.GetValue(command).ToString();
+                    }
 
-                    Console.WriteLine("   {0,15}: {1}", p.Name, p.GetValue(command));
+                    Console.WriteLine("   {0,15}: {1}", p.Name, val);
                 }
             }
         }

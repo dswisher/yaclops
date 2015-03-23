@@ -29,7 +29,7 @@ namespace Yaclops.Help
                 ISubCommand command;
                 try
                 {
-                    command = _parser.Parse(Commands);
+                    command = _parser.Parse(Commands, false);
                 }
                 catch (CommandLineParserException)
                 {

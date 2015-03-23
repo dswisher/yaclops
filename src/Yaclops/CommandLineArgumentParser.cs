@@ -14,12 +14,12 @@ namespace Yaclops
         private readonly Dictionary<string, PropertyInfo> _namedParameters = new Dictionary<string, PropertyInfo>(); 
 
 
-        internal static void Parse(ISubCommand command, ArgumentList args)
+        internal static void Parse(ISubCommand command, ArgumentList args, bool checkRequired)
         {
             var parser = new CommandLineArgumentParser(command, args);
 
             parser.Parse();
-            parser.Verify();
+            parser.Verify(checkRequired);
         }
 
 
@@ -63,6 +63,8 @@ namespace Yaclops
 
         private void Parse()
         {
+            bool popList = false;
+
             while (_args.HasRemaining())
             {
                 if (_args.Peek().StartsWith("-"))
@@ -96,12 +98,21 @@ namespace Yaclops
                     var val = _args.Pop();
 
                     // If a collection, add, otherwise set...
-                    if (!CanAddTo(prop, val))
+                    if (!AddToCollection(prop, val))
                     {
                         SetValue(prop, val);
                         _positionalParameters.Pop();
                     }
+                    else
+                    {
+                        popList = true;
+                    }
                 }
+            }
+
+            if (popList)
+            {
+                _positionalParameters.Pop();
             }
         }
 
@@ -125,12 +136,21 @@ namespace Yaclops
 
 
 
-        private bool CanAddTo(PropertyInfo prop, string value)
+        private bool AddToCollection(PropertyInfo prop, string value)
         {
             // TODO - need better handling for collections! Shouldn't be limited to List<string>
             if (prop.PropertyType == typeof (List<string>))
             {
-                ((List<string>)prop.GetValue(_command)).Add(value);
+                var list = ((List<string>) prop.GetValue(_command));
+
+                if (list == null)
+                {
+                    list = new List<string>();
+                    prop.SetValue(_command, list);
+                }
+
+                list.Add(value);
+
                 return true;
             }
 
@@ -148,13 +168,13 @@ namespace Yaclops
 
 
 
-        private void Verify()
+        private void Verify(bool checkRequired)
         {
             while (_positionalParameters.Count > 0)
             {
                 var p = _positionalParameters.Pop();
 
-                if (IsRequired(p))
+                if (checkRequired && IsRequired(p))
                 {
                     throw new CommandLineParserException("You must specify a value for the '{0}' parameter.", p.Name);
                 }

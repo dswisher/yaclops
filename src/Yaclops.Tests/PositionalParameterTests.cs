@@ -74,10 +74,21 @@ namespace Yaclops.Tests
         }
 
 
+        [Test]
+        public void CanSetRequiredListParameterOnce()
+        {
+            var parser = new CommandLineParser(new[] { new OtherCommand() });
+            var result = (OtherCommand)parser.Parse(new[] { "other", "one" });
+            result.Param.ShouldContain("one");
+        }
+
+
+
         // TODO - custom types - a filter object, say
 
 
         // ReSharper disable UnusedAutoPropertyAccessor.Local
+        // ReSharper disable CollectionNeverUpdated.Local
         private class StringCommand : ISubCommand
         {
             [CommandLineParameter, Required]
@@ -101,16 +112,21 @@ namespace Yaclops.Tests
 
         private class ListCommand : ISubCommand
         {
-            public ListCommand()
-            {
-                Param = new List<string>();
-            }
-
             [CommandLineParameter]
             public List<string> Param { get; private set; }
 
             public void Execute() { }
         }
+
+
+        private class OtherCommand : ISubCommand
+        {
+            [CommandLineParameter, Required]
+            public List<string> Param { get; private set; }
+
+            public void Execute() { }
+        }
+        // ReSharper restore CollectionNeverUpdated.Local
         // ReSharper restore UnusedAutoPropertyAccessor.Local
     }
 }

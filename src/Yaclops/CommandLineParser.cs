@@ -20,13 +20,13 @@ namespace Yaclops
         internal IList<ISubCommand> Commands { get { return _commands; } }
 
 
-        public ISubCommand Parse(IEnumerable<string> raw)
+        public ISubCommand Parse(IEnumerable<string> raw, bool checkRequired = true)
         {
-            return ParseMinion(raw);
+            return ParseMinion(raw, checkRequired);
         }
 
 
-        public ISubCommand ParseMinion(IEnumerable<string> raw)
+        private ISubCommand ParseMinion(IEnumerable<string> raw, bool checkRequired)
         {
             var args = new ArgumentList(raw);
 
@@ -65,7 +65,7 @@ namespace Yaclops
                 args.Accept(matchingCommand);
             }
 
-            CommandLineArgumentParser.Parse(matchingCommand, args);
+            CommandLineArgumentParser.Parse(matchingCommand, args, checkRequired);
 
             // Return what we've got
             return matchingCommand;

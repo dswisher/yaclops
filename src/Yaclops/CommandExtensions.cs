@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using Yaclops.Models;
@@ -95,7 +96,8 @@ namespace Yaclops
                 .Select(x => new PositionalParameterEntry
                 {
                     Property = x,
-                    Attribute = (CommandLineParameterAttribute)x.GetCustomAttributes(typeof(CommandLineParameterAttribute), true).First()
+                    Attribute = (CommandLineParameterAttribute)x.GetCustomAttributes(typeof(CommandLineParameterAttribute), true).First(),
+                    Required = x.GetCustomAttributes(typeof(RequiredAttribute), true).Any()
                 });
         }
     }

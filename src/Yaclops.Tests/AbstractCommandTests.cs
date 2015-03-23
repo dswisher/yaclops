@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using NUnit.Framework;
 using Shouldly;
 
@@ -13,7 +14,7 @@ namespace Yaclops.Tests
         {
             var parser = new CommandLineParser(commands);
 
-            var result = parser.Parse(args);
+            var result = parser.Parse(args, false);
 
             result.ShouldBeOfType(expected);
         }
@@ -36,6 +37,13 @@ namespace Yaclops.Tests
             public void Execute() { }
         }
 
+        protected class RequiredCommand : ISubCommand
+        {
+            [CommandLineParameter, Required]
+            public string FileName { get; set; }
+
+            public void Execute() { }
+        }
 
 
         protected class FetchItemCommand : ISubCommand

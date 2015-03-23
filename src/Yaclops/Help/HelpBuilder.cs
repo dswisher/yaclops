@@ -97,8 +97,26 @@ namespace Yaclops.Help
             // Write out the positional parameters
             foreach (var p in command.PositionalParameters())
             {
-                // TODO - for lists, indicate mmultiple
-                console.Write(" [<{0}>]", p.Property.Name.Decamel());
+                List<string> bits = new List<string>();
+
+                bits.Add(" ");
+
+                if (!p.Required)
+                {
+                    bits.Add("[");
+                }
+
+                bits.Add("<");
+                bits.Add(p.Property.Name.Decamel());
+                bits.Add(">");
+
+                if (!p.Required)
+                {
+                    bits.Add("]");
+                }
+
+                // TODO - for lists, indicate multiple
+                console.Write(string.Concat(bits));
             }
 
             // Finish off the synopsis
