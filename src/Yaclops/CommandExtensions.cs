@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using Yaclops.Models;
 
 namespace Yaclops
@@ -59,6 +60,20 @@ namespace Yaclops
 
 
 
+        private static string Description(this PropertyInfo property)
+        {
+            var att = (DescriptionAttribute)property.GetCustomAttributes(typeof(DescriptionAttribute), true).FirstOrDefault();
+
+            if (att == null)
+            {
+                return null;
+            }
+
+            return att.Description;
+        }
+
+
+
         public static IEnumerable<NamedParameterEntry> NamedParameters(this ISubCommand command)
         {
             return command.GetType().GetProperties()
@@ -66,7 +81,8 @@ namespace Yaclops
                 .Select(x => new NamedParameterEntry
                 {
                     Property = x,
-                    Attribute = (CommandLineOptionAttribute) x.GetCustomAttributes(typeof (CommandLineOptionAttribute), true).First()
+                    Attribute = (CommandLineOptionAttribute) x.GetCustomAttributes(typeof (CommandLineOptionAttribute), true).First(),
+                    Description = x.Description()
                 });
         }
 

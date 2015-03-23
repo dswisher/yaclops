@@ -19,6 +19,9 @@ namespace Yaclops.Help
         void EndWrap();
 
         void WriteTitle(string format, params object[] args);
+
+        void StartIndent();
+        void EndIndent();
     }
 
 
@@ -56,10 +59,13 @@ namespace Yaclops.Help
 
         public void Write(string content)
         {
+            // TODO - make right-margin configurable
+            const int rightMargin = 80;
+
             if (_wrapping)
             {
-                // TODO - make right-margin configurable
-                if (_pos + content.Length > 80)
+                // TODO - handle multi-line content
+                if ((_pos + content.Length > rightMargin) && (content.Length < rightMargin))
                 {
                     Console.WriteLine();
                     Console.Write(new string(' ', _indent));
@@ -106,6 +112,21 @@ namespace Yaclops.Help
 
             Console.WriteLine(msg);
             Console.WriteLine(new string('-', msg.Length));
+        }
+
+
+        public void StartIndent()
+        {
+            _wrapping = true;
+            _indent = 3;
+            _pos = _indent;
+            Console.Write(new string(' ', _indent));
+        }
+
+
+        public void EndIndent()
+        {
+            EndWrap();
         }
     }
 }

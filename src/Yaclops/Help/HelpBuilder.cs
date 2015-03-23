@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
@@ -108,8 +109,47 @@ namespace Yaclops.Help
 
         public static void WriteOptionDetails(ISubCommand command, IConsole console)
         {
-            // TODO
-            console.WriteLine("TBD");
+            // TODO - positional parameters
+
+            // TODO - should be able to suppress long name, as in 'git branch -D'
+
+            bool first = true;
+            foreach (var p in command.NamedParameters())
+            {
+                List<string> opts = new List<string>();
+
+                if (!string.IsNullOrEmpty(p.Attribute.LongName))
+                {
+                    opts.Add("--" + p.Attribute.LongName);
+                }
+                else
+                {
+                    opts.Add("--" + p.Property.Name.Decamel('-'));
+                }
+
+                if (!string.IsNullOrEmpty(p.Attribute.ShortName))
+                {
+                    opts.Add("-" + p.Attribute.ShortName);
+                }
+
+                if (first)
+                {
+                    first = false;
+                }
+                else
+                {
+                    console.WriteLine();
+                }
+
+                console.WriteLine(string.Join(", ", opts));
+                if (p.Description != null)
+                {
+                    console.StartIndent();
+                    // TODO - better formatting of long descriptions
+                    console.Write(p.Description.Trim(Environment.NewLine.ToCharArray()));
+                    console.EndIndent();
+                }
+            }
         }
 
 

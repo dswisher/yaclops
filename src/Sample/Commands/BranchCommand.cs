@@ -9,7 +9,9 @@ namespace Sample.Commands
     {
 
         [CommandLineOption(ShortName = "d")]
-        [Description("Delete a branch. The branch must be fully merged in its upstream branch, or in HEAD if no upstream was set with --track or --set-upstream.")]
+        // TODO - better handling of long descriptions
+        //[Description("Delete a branch. The branch must be fully merged in its upstream branch, or in HEAD if no upstream was set with --track or --set-upstream.")]
+        [Description("Delete a branch. The branch must be fully merged...")]
         public bool Delete { get; set; }
 
         [CommandLineOption(ShortName = "D")]

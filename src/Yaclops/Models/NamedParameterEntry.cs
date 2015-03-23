@@ -6,5 +6,6 @@ namespace Yaclops.Models
     {
         public PropertyInfo Property { get; set; }
         public CommandLineOptionAttribute Attribute { get; set; }
+        public string Description { get; set; }
     }
 }
