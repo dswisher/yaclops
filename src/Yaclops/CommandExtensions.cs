@@ -1,5 +1,8 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using Yaclops.Models;
 
 namespace Yaclops
 {
@@ -36,7 +39,15 @@ namespace Yaclops
                 return null;
             }
 
-            return att.Description;
+            var desc = att.Description;
+
+            // Strip off leading newline, if it has one
+            if (desc.StartsWith(Environment.NewLine))
+            {
+                desc = desc.Substring(Environment.NewLine.Length);
+            }
+
+            return desc;
         }
 
 
@@ -44,6 +55,32 @@ namespace Yaclops
         public static string[] AsWords(this ISubCommand command)
         {
             return command.Name().Split(' ');
+        }
+
+
+
+        public static IEnumerable<NamedParameterEntry> NamedParameters(this ISubCommand command)
+        {
+            return command.GetType().GetProperties()
+                .Where(x => x.GetCustomAttributes(typeof (CommandLineOptionAttribute), true).Any())
+                .Select(x => new NamedParameterEntry
+                {
+                    Property = x,
+                    Attribute = (CommandLineOptionAttribute) x.GetCustomAttributes(typeof (CommandLineOptionAttribute), true).First()
+                });
+        }
+
+
+
+        public static IEnumerable<PositionalParameterEntry> PositionalParameters(this ISubCommand command)
+        {
+            return command.GetType().GetProperties()
+                .Where(x => x.GetCustomAttributes(typeof (CommandLineParameterAttribute), true).Any())
+                .Select(x => new PositionalParameterEntry
+                {
+                    Property = x,
+                    Attribute = (CommandLineParameterAttribute)x.GetCustomAttributes(typeof(CommandLineParameterAttribute), true).First()
+                });
         }
     }
 }

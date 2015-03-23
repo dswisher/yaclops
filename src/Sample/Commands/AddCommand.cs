@@ -32,8 +32,7 @@ Ignored files reached by directory recursion or filename globbing performed by G
 your globs before the shell) will be silently ignored. The git add command can be used
 to add ignored files with the -f (force) option.
 
-Please see `commit` for alternative ways to add content to a commit.
-")]
+Please see `commit` for alternative ways to add content to a commit.")]
     public class AddCommand : ISubCommand
     {
         public AddCommand()

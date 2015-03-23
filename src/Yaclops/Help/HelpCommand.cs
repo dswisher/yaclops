@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 
 
 namespace Yaclops.Help
@@ -26,9 +24,6 @@ namespace Yaclops.Help
         {
             IConsole console = new WrappedConsole();
 
-            // TODO - allow the name to be overridden in settings
-            string exeName = Assembly.GetEntryAssembly().GetName().Name.ToLower();
-
             if (Commands.Any())
             {
                 ISubCommand command;
@@ -44,63 +39,38 @@ namespace Yaclops.Help
 
                 // TODO - how to get help on multi-word commands, like bisect? ('sample help bisect' should show *something*)
 
-                // Print the synopsis
-                var type = command.GetType();
-
-                console.StartWrap("usage: {0} {1}", exeName, command.Name());
-
-                // TODO - repeat global flags?
-
-                // Write out the named parameters
-                var namedParams = type.GetProperties()
-                    .Where(x => x.GetCustomAttributes(typeof(CommandLineOptionAttribute), true).Any());
-
-                foreach (var p in namedParams)
-                {
-                    var att = (CommandLineOptionAttribute)p.GetCustomAttributes(typeof(CommandLineOptionAttribute), true).First();
-                    List<string> opts = new List<string>();
-
-                    if (!string.IsNullOrEmpty(att.LongName))
-                    {
-                        opts.Add("--" + att.LongName);
-                    }
-                    else
-                    {
-                        opts.Add("--" + p.Name.Decamel('-'));                        
-                    }
-
-                    if (!string.IsNullOrEmpty(att.ShortName))
-                    {
-                        opts.Add("-" + att.ShortName);
-                    }
-
-                    console.Write(" [{0}]", string.Join(" | ", opts));
-                }
-
-                // Write out the positional parameters
-                var positional = type.GetProperties()
-                    .Where(x => x.GetCustomAttributes(typeof (CommandLineParameterAttribute), true).Any());
-
-                foreach (var p in positional)
-                {
-                    // TODO - for lists, indicate mmultiple
-                    console.Write(" [<{0}>]", p.Name.Decamel());
-                }
-
-                // Finish off the synopsis
-                console.EndWrap();
+                // Start off with a blank line...seems cleaner to me...
                 console.WriteLine();
 
-                console.WriteLine(command.Summary());
+                // Print the name
+                console.WriteTitle("Name");
+                console.WriteLine("{0} {1} - {2}", HelpBuilder.ExeName(), command.Name(), command.Summary());
 
-                // TODO - long description
-                console.WriteLine(command.Description());
+                // Print the synopsis
+                console.WriteLine();
+                console.WriteTitle("Synopsis");
+                HelpBuilder.WriteSynopsis(command, console);
 
-                // TODO - option details
+                // Long description
+                var desc = command.Description();
+                if (!string.IsNullOrEmpty(desc))
+                {
+                    console.WriteLine();
+                    console.WriteTitle("Description");
+                    console.WriteLine(command.Description());
+                }
+
+                // Option details
+                console.WriteLine();
+                console.WriteTitle("Options");
+                HelpBuilder.WriteOptionDetails(command, console);
+
+                // TODO - examples
+                // TODO - see also?
             }
             else
             {
-                console.StartWrap("usage: {0}", exeName);
+                console.StartWrap("usage: {0}", HelpBuilder.ExeName());
 
                 // TODO - write global flags
 

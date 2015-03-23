@@ -45,6 +45,8 @@
     <Compile Include="Help\HelpBuilder.cs" />
     <Compile Include="Help\WrappedConsole.cs" />
     <Compile Include="ISubCommand.cs" />
+    <Compile Include="Models\NamedParameterEntry.cs" />
+    <Compile Include="Models\PositionalParameterEntry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SummaryAttribute.cs" />
     <Compile Include="StringExtensions.cs" />

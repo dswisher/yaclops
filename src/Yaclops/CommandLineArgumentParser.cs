@@ -29,43 +29,33 @@ namespace Yaclops
             _command = command;
             _args = args;
 
-            var type = command.GetType();
-
             // Push all positional parameters on a stack in reverse order
-            var props = type.GetProperties()
-                .Where(x => x.GetCustomAttributes(typeof(CommandLineParameterAttribute), true).Any())
-                .Reverse();
-
-            foreach (var p in props)
+            foreach (var p in command.PositionalParameters().Reverse())
             {
-                _positionalParameters.Push(p);
+                _positionalParameters.Push(p.Property);
             }
 
             // Add all named parameters to a list
-            var namedProps = type.GetProperties()
-                .Where(x => x.GetCustomAttributes(typeof(CommandLineOptionAttribute), true).Any());
-
-            foreach (var p in namedProps)
+            foreach (var p in command.NamedParameters())
             {
-                var option = (CommandLineOptionAttribute)p.GetCustomAttributes(typeof(CommandLineOptionAttribute), true).First();
-                if (!string.IsNullOrWhiteSpace(option.ShortName))
+                if (!string.IsNullOrWhiteSpace(p.Attribute.ShortName))
                 {
-                    _namedParameters.Add(option.ShortName, p);
+                    _namedParameters.Add(p.Attribute.ShortName, p.Property);
                     // TODO - if no short name is specified, should we use the first character as a default?
                 }
 
                 string name;
-                if (!string.IsNullOrEmpty(option.LongName))
+                if (!string.IsNullOrEmpty(p.Attribute.LongName))
                 {
                     // TODO - what about case-sensitive names?? All this .ToLower() business may be bad...
-                    name = "-" + option.LongName.ToLower();
+                    name = "-" + p.Attribute.LongName.ToLower();
                 }
                 else
                 {
-                    name = "-" + p.Name.Decamel('-').ToLower();
+                    name = "-" + p.Property.Name.Decamel('-').ToLower();
                 }
 
-                _namedParameters.Add(name, p);
+                _namedParameters.Add(name, p.Property);
             }
         }
 

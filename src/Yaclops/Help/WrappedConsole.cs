@@ -17,6 +17,8 @@ namespace Yaclops.Help
 
         void StartWrap(string format, params object[] args);
         void EndWrap();
+
+        void WriteTitle(string format, params object[] args);
     }
 
 
@@ -94,6 +96,16 @@ namespace Yaclops.Help
             }
 
             _wrapping = false;
+        }
+
+
+        public void WriteTitle(string format, params object[] args)
+        {
+            // TODO - make this stand out - change color or something, rather than this hacky way...
+            string msg = string.Format(format, args).ToUpper();
+
+            Console.WriteLine(msg);
+            Console.WriteLine(new string('-', msg.Length));
         }
     }
 }
