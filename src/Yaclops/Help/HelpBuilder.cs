@@ -54,6 +54,9 @@ namespace Yaclops.Help
             {
                 console.WriteLine("   {0}   {1}", command.Name.PadRight(maxLength), command.Summary);
             }
+
+            console.WriteLine();
+            console.WriteLine("See '{0} help <command>' to read about a specific subcommand.", ExeName());
         }
 
 
