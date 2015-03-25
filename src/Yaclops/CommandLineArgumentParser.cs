@@ -83,7 +83,7 @@ namespace Yaclops
                     }
                     else
                     {
-                        throw new CommandLineParserException("Unknown option: '{0}').", option);
+                        throw new CommandLineParserException("Unknown option: '{0}'.", option);
                     }
                 }
                 else
