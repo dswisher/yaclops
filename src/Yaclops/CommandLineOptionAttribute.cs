@@ -2,9 +2,14 @@
 
 namespace Yaclops
 {
+    /// <summary>
+    /// Mark a property as a command-line option (named parameter).
+    /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
     public class CommandLineOptionAttribute : Attribute
     {
+        // TODO - rename this to NamedParameter?
+
         /// <summary>
         /// The short name for the option.
         /// </summary>

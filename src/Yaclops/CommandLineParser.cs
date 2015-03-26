@@ -4,11 +4,18 @@ using Yaclops.Help;
 
 namespace Yaclops
 {
+    /// <summary>
+    /// Parse a command line
+    /// </summary>
     public class CommandLineParser
     {
         private readonly List<ISubCommand> _commands = new List<ISubCommand>();
 
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="commands">The list of commands to expose to the parser</param>
         public CommandLineParser(IEnumerable<ISubCommand> commands)
         {
             _commands.AddRange(commands);
@@ -17,13 +24,19 @@ namespace Yaclops
         }
 
 
-        internal IList<ISubCommand> Commands { get { return _commands; } }
-
-
+        /// <summary>
+        /// Parse the given command line.
+        /// </summary>
+        /// <param name="raw">The raw list of arguments passed into the program.</param>
+        /// <param name="checkRequired">If true, an exception will be thrown if a required parameter is omitted.</param>
+        /// <returns></returns>
         public ISubCommand Parse(IEnumerable<string> raw, bool checkRequired = true)
         {
             return ParseMinion(raw, checkRequired);
         }
+
+
+        internal IList<ISubCommand> Commands { get { return _commands; } }
 
 
         private ISubCommand ParseMinion(IEnumerable<string> raw, bool checkRequired)
