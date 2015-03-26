@@ -62,6 +62,22 @@ namespace Yaclops.Tests.Parsing
 
 
 
+        [Test]
+        public void NoArgsReturnsDefault()
+        {
+            const string subcommand = "add";
+
+            _config.AddCommand("foo");
+            _config.AddCommand(subcommand);
+            _config.AddCommand("bar");
+            _config.DefaultCommand = subcommand;
+
+            DoParse(null).Command.ShouldBe(subcommand);
+            DoParse("").Command.ShouldBe(subcommand);
+        }
+
+
+
         private ParseResult DoParse(string text)
         {
             Parser parser = new Parser(_config);

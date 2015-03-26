@@ -17,8 +17,12 @@ namespace Yaclops.Parsing
         {
             ParseResult result = new ParseResult();
 
-            // Quick hack to get first unit test to pass
-            if (_configuration.IsCommand(text))
+            // Quick hacks to get first unit test to pass
+            if (string.IsNullOrEmpty(text))
+            {
+                result.Command = _configuration.DefaultCommand;
+            }
+            else if (_configuration.IsCommand(text))
             {
                 result.Command = text;
             }
