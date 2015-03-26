@@ -12,6 +12,33 @@ namespace Yaclops.Parsing
     }
 
 
+    internal abstract class ParserParameter
+    {
+        protected ParserParameter(string key)
+        {
+            Key = key;
+        }
+
+        public string Key { get; private set; }
+
+        public ParserParameter ShortName(string name)
+        {
+            // TODO
+            return this;
+        }
+    }
+
+
+    internal class ParserNamedParameter : ParserParameter
+    {
+        public ParserNamedParameter(string key)
+            : base(key)
+        {
+        }
+    }
+
+
+
     internal class ParserConfiguration
     {
         private readonly HashSet<string> _commands = new HashSet<string>();
@@ -45,6 +72,13 @@ namespace Yaclops.Parsing
 
                 _defaultCommand = value;
             }
+        }
+
+
+        public ParserNamedParameter AddNamedParameter(string key)
+        {
+            // TODO
+            return new ParserNamedParameter(key);
         }
 
 

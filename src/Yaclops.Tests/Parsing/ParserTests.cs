@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System.Linq;
+using NUnit.Framework;
 using Shouldly;
 using Yaclops.Parsing;
 
@@ -48,6 +49,7 @@ namespace Yaclops.Tests.Parsing
             _config.AddCommand("fetch");
 
             DoParse("add").Command.ShouldBe(null);
+            // TODO - shouldn't result contain an error in this case?
         }
 
 
@@ -63,7 +65,7 @@ namespace Yaclops.Tests.Parsing
 
 
         [Test]
-        public void NoArgsReturnsDefault()
+        public void NoArgsReturnsDefaultCommand()
         {
             const string subcommand = "add";
 
@@ -74,6 +76,23 @@ namespace Yaclops.Tests.Parsing
 
             DoParse(null).Command.ShouldBe(subcommand);
             DoParse("").Command.ShouldBe(subcommand);
+        }
+
+
+
+        [Test, Ignore("Get this working!")]
+        public void CanParseGlobalNamedParameterByShortName()
+        {
+            _config.AddNamedParameter("File").ShortName("f");
+
+            var result = DoParse("-f foo.txt");
+
+            result.Command.ShouldBe(null);
+
+            var value = result.GlobalValues.FirstOrDefault(x => x.Name == "File");
+
+            value.ShouldNotBe(null);
+            value.Name.ShouldBe("foo.txt");
         }
 
 
