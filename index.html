@@ -1,0 +1,159 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Yaclops by dswisher</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Yaclops</h1>
+        <p>Yet another command-line options parser</p>
+
+        <p class="view"><a href="https://github.com/dswisher/yaclops">View the Project on GitHub <small>dswisher/yaclops</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/dswisher/yaclops/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/dswisher/yaclops/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/dswisher/yaclops">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <p><img src="logo.png" alt=""></p>
+
+<h1>
+<a id="yaclops" class="anchor" href="#yaclops" aria-hidden="true"><span class="octicon octicon-link"></span></a>Yaclops</h1>
+
+<p>Yet another command-line option parser.</p>
+
+<ul>
+<li>Intended for cases where subcommands are required (like git or svn)</li>
+<li>Nearly POCO classes: they need to inherit an interface and implement one method (<code>Execute()</code>).</li>
+<li>Works well with IoC containers - resolve all command objects in one fell swoop</li>
+<li>No dependencies</li>
+</ul>
+
+<h2>
+<a id="examples" class="anchor" href="#examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Examples</h2>
+
+<p>For each subcommand, implement a class that inherits the <code>ISubCommand</code> interface, which requires implementing one method (<code>Execute</code>) that is called to run the command. In your main function, create a <code>Parser</code> object and call <code>Parse(args)</code>, which will return the command to run. If no command is specified, the returned command will be a built-in <code>Help</code> command. Any errors (unknown command, for example) will throw a <code>CommandLineParserException</code>.</p>
+
+<pre><code>using Yaclops;
+
+public class AddCommand : ISubCommand
+{
+    [CommandLineOption(ShortName="n")]
+    public bool DryRun { get; set; }
+
+    public void Execute()
+    {
+        // Execute the command....
+        Console.WriteLine("Add command!");
+    }
+}
+
+
+static void Main(string[] args)
+{
+    try
+    {
+        var parser = new CommandLineParser(new ISubCommand[] { new AddCommand(), new DiffCommand() });
+
+        var command = parser.Parse(args);
+
+        command.Execute();
+    }
+    catch (CommandLineParserException ex)
+    {
+        Console.WriteLine(ex.Message);
+    }
+}
+</code></pre>
+
+<p>Creating the commands is a little awkward, but the intent is that an IoC container, such as AutoFac, will be used, which makes it much cleaner:</p>
+
+<pre><code>    static void Main(string[] args)
+    {
+        try
+        {
+            var container = CreateContainer();
+
+            var parser = container.Resolve&lt;CommandLineParser&gt;();
+
+            var command = parser.Parse(args);
+
+            command.Execute();
+        }
+        catch (CommandLineParserException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Unhandled exception in main.");
+            Console.WriteLine(ex);
+        }
+
+        if (Debugger.IsAttached)
+        {
+            Console.Write("&lt;press ENTER to continue&gt;");
+            Console.ReadLine();
+        }
+    }
+
+
+
+    private static IContainer CreateContainer()
+    {
+        ContainerBuilder builder = new ContainerBuilder();
+
+        // Command-line specific stuff
+        builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
+            .Where(t =&gt; typeof(ISubCommand).IsAssignableFrom(t) &amp;&amp; t.IsPublic)
+            .SingleInstance()
+            .As&lt;ISubCommand&gt;();
+
+        builder.RegisterType&lt;CommandLineParser&gt;();
+
+        return builder.Build();
+    }
+</code></pre>
+
+<p>More examples forthcoming. The included Sample project has additional examples.</p>
+
+<h2>
+<a id="links" class="anchor" href="#links" aria-hidden="true"><span class="octicon octicon-link"></span></a>Links</h2>
+
+<ul>
+<li><a href="OtherLibraries.md">Other Libraries</a></li>
+<li><a href="ToDo.md">Todo List</a></li>
+</ul>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/dswisher">dswisher</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-53335216-2");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
