@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+
 
 namespace Yaclops.Parsing
 {
@@ -12,7 +9,7 @@ namespace Yaclops.Parsing
 
         public Lexer(string text)
         {
-            // TODO - this version is too simplistic!
+            // TODO - this version is almost certainly too simplistic!
             string[] bits = text.Split(' ');
 
             foreach (var item in bits)
@@ -20,6 +17,7 @@ namespace Yaclops.Parsing
                 _queue.Enqueue(item);
             }
         }
+
 
 
         public Token Pop()
@@ -31,12 +29,17 @@ namespace Yaclops.Parsing
 
             string item = _queue.Dequeue();
 
-            if (item.StartsWith("-"))
+            if (item.StartsWith("--"))
             {
-                return new Token { Kind = TokenKind.Name };
+                return new Token { Kind = TokenKind.LongName, Text = item.Substring(2) };
             }
 
-            return new Token { Kind = TokenKind.Value };
+            if (item.StartsWith("-"))
+            {
+                return new Token { Kind = TokenKind.ShortName, Text = item.Substring(1) };
+            }
+
+            return new Token { Kind = TokenKind.Value, Text = item };
         }
 
     }
