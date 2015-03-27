@@ -49,6 +49,8 @@
     <Compile Include="ISubCommand.cs" />
     <Compile Include="Models\NamedParameterEntry.cs" />
     <Compile Include="Models\PositionalParameterEntry.cs" />
+    <Compile Include="Parsing\Lexer.cs" />
+    <Compile Include="Parsing\Token.cs" />
     <Compile Include="Parsing\Parser.cs" />
     <Compile Include="Parsing\ParserConfiguration.cs" />
     <Compile Include="Parsing\ParserConfigurationException.cs" />

@@ -35,6 +35,7 @@ namespace Yaclops.Parsing
 
         public ParseResult Parse(IEnumerable<string> args)
         {
+            // TODO - if any item contains a space, wrap it in quotes
             return Parse(string.Join(" ", args));
         }
 

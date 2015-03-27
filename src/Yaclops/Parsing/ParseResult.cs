@@ -24,5 +24,6 @@ namespace Yaclops.Parsing
     internal class ParsedValue
     {
         public string Name { get; set; }
+        // TODO - how to represent the value, given we want to support collections?
     }
 }

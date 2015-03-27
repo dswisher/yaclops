@@ -92,7 +92,8 @@ namespace Yaclops.Tests.Parsing
             var value = result.GlobalValues.FirstOrDefault(x => x.Name == "File");
 
             value.ShouldNotBe(null);
-            value.Name.ShouldBe("foo.txt");
+            value.Name.ShouldBe("File");
+            // value.Value.ShouldBe("foo.txt");
         }
 
 
