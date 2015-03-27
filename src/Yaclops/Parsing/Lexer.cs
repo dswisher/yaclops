@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 
 namespace Yaclops.Parsing
@@ -6,15 +7,21 @@ namespace Yaclops.Parsing
     internal class Lexer
     {
         private readonly Queue<string> _queue = new Queue<string>();
+        private bool _endSent;
+
 
         public Lexer(string text)
         {
             // TODO - this version is almost certainly too simplistic!
-            string[] bits = text.Split(' ');
 
-            foreach (var item in bits)
+            if (!string.IsNullOrEmpty(text))
             {
-                _queue.Enqueue(item);
+                string[] bits = text.Split(' ');
+
+                foreach (var item in bits)
+                {
+                    _queue.Enqueue(item);
+                }
             }
         }
 
@@ -24,7 +31,13 @@ namespace Yaclops.Parsing
         {
             if (_queue.Count == 0)
             {
-                return null;
+                if (_endSent)
+                {
+                    throw new InvalidOperationException("Attempt to pop token after EndOfInput.");
+                }
+
+                _endSent = true;
+                return new Token { Kind = TokenKind.EndOfInput };
             }
 
             string item = _queue.Dequeue();

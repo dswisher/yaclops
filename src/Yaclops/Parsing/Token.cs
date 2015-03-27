@@ -6,7 +6,8 @@ namespace Yaclops.Parsing
     {
         ShortName,
         LongName,
-        Value
+        Value,
+        EndOfInput
     }
 
 

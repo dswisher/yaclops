@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Yaclops.Parsing.States;
 
 namespace Yaclops.Parsing
 {
@@ -15,21 +16,16 @@ namespace Yaclops.Parsing
 
         public ParseResult Parse(string text)
         {
-            ParseResult result = new ParseResult();
+            ParserContext context = new ParserContext(_configuration);
 
-            // Quick hacks to get first unit test to pass
-            if (string.IsNullOrEmpty(text))
+            AbstractState state = new InitialState(context);
+            Lexer lexer = new Lexer(text);
+            while (!state.IsTerminal)
             {
-                result.Command = _configuration.DefaultCommand;
-            }
-            else if (_configuration.IsCommand(text))
-            {
-                result.Command = text;
+                state = state.Advance(lexer.Pop());
             }
 
-            // TODO
-            
-            return result;
+            return context.Result;
         }
 
 

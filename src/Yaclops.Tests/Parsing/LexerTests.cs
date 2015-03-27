@@ -25,11 +25,15 @@ namespace Yaclops.Tests.Parsing
             for (int i = 0; i < kinds.Length; i++)
             {
                 TokenKind kind = (TokenKind)Enum.Parse(typeof(TokenKind), kinds[i]);
-                string text = texts[i];
 
                 var token = lexer.Pop();
                 token.Kind.ShouldBe(kind);
-                token.Text.ShouldBe(text);
+
+                if (token.Kind != TokenKind.EndOfInput)
+                {
+                    string text = texts[i];
+                    token.Text.ShouldBe(text);
+                }
             }
         }
 
@@ -97,6 +101,8 @@ namespace Yaclops.Tests.Parsing
 
                 public static implicit operator TestCaseData(CaseBuilder builder)
                 {
+                    builder._kinds.Add(TokenKind.EndOfInput);
+
                     var kinds = string.Join(Separator, builder._kinds.Select(x => x.ToString()));
                     var texts = string.Join(Separator, builder._texts);
 
