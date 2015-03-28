@@ -11,6 +11,43 @@ namespace Yaclops.Tests.Parsing
     [TestFixture]
     public class LexerTests
     {
+        [Test]
+        public void CanUnpushOnce()
+        {
+            var lexer = new Lexer("foo bar");
+
+            lexer.Pop().Text.ShouldBe("foo");
+            lexer.Unpush();
+            lexer.Pop().Text.ShouldBe("foo");
+            lexer.Pop().Text.ShouldBe("bar");
+        }
+
+
+
+        [Test]
+        public void CanUnpushTwice()
+        {
+            var lexer = new Lexer("foo bar");
+
+            lexer.Pop().Text.ShouldBe("foo");
+            lexer.Unpush();
+            lexer.Pop().Text.ShouldBe("foo");
+            lexer.Unpush();
+            lexer.Pop().Text.ShouldBe("foo");
+            lexer.Pop().Text.ShouldBe("bar");
+        }
+
+
+
+        [Test]
+        public void UnpushWithoutPopThrows()
+        {
+            var lexer = new Lexer("foo bar");
+
+            Should.Throw<CommandLineParserException>(() => lexer.Unpush());
+        }
+
+
 
         [Test, TestCaseSource(typeof(TestCaseFactory))]
         public void CanLexSingleToken(string content, string kindList, string textList)
