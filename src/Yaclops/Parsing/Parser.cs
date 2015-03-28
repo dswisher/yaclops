@@ -16,13 +16,12 @@ namespace Yaclops.Parsing
 
         public ParseResult Parse(string text)
         {
-            ParserContext context = new ParserContext(_configuration);
+            ParserContext context = new ParserContext(_configuration, text);
 
             AbstractState state = new InitialState(context);
-            Lexer lexer = new Lexer(text);
             while (!state.IsTerminal)
             {
-                state = state.Advance(lexer.Pop());
+                state = state.Advance();
             }
 
             return context.Result;

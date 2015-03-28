@@ -13,6 +13,6 @@ namespace Yaclops.Parsing.States
 
         public virtual bool IsTerminal { get { return false; } }
 
-        public abstract AbstractState Advance(Token token);
+        public abstract AbstractState Advance();
     }
 }

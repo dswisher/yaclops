@@ -12,26 +12,18 @@ namespace Yaclops.Parsing.States
         }
 
 
-        public override AbstractState Advance(Token token)
+        public override AbstractState Advance()
         {
-            switch (token.Kind)
+            Token token = Context.Lexer.Pop();
+
+            if (token.Kind == TokenKind.EndOfInput)
             {
-                case TokenKind.EndOfInput:
-                    Context.Result.Command = Context.Configuration.DefaultCommand;
-                    return new SuccessState(Context);
-
-                case TokenKind.Value:
-                    // TODO - need to switch to a new state, as there may be more input!
-                    if (Context.Configuration.IsCommand(token.Text))
-                    {
-                        Context.Result.Command = token.Text;
-                    }
-                    return new SuccessState(Context);
-
-                default:
-                    // TODO - hack, for the moment - just fail right away on anything else
-                    return new FailureState(Context);
+                Context.Result.Command = Context.Configuration.DefaultCommand;
+                return new SuccessState(Context);
             }
+
+            Context.Lexer.Unpush();
+            return new GlobalState(Context);
         }
     }
 }

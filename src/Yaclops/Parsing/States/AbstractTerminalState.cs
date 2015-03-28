@@ -16,7 +16,7 @@ namespace Yaclops.Parsing.States
         }
 
 
-        public override AbstractState Advance(Token token)
+        public override AbstractState Advance()
         {
             throw new InvalidOperationException("Should not attempt to advance out of a terminal state.");
         }

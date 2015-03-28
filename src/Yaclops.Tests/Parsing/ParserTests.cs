@@ -30,7 +30,7 @@ namespace Yaclops.Tests.Parsing
 
 
 
-        [Test, Ignore("Get this working!")]
+        [Test]
         public void CanFindTwoWordSubcommand()
         {
             const string subcommand = "bisect start";

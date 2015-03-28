@@ -53,6 +53,7 @@
     <Compile Include="Parsing\ParserContext.cs" />
     <Compile Include="Parsing\States\AbstractState.cs" />
     <Compile Include="Parsing\States\AbstractTerminalState.cs" />
+    <Compile Include="Parsing\States\GlobalState.cs" />
     <Compile Include="Parsing\States\FailureState.cs" />
     <Compile Include="Parsing\States\InitialState.cs" />
     <Compile Include="Parsing\States\SuccessState.cs" />
