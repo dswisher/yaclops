@@ -16,6 +16,7 @@ namespace Yaclops.Parsing
     {
         private readonly Entry _root = new Entry();
         private Entry _current;
+        private List<string> _words = new List<string>();
 
 
         public CommandMapper(IEnumerable<ParserCommand> commands)
@@ -33,21 +34,33 @@ namespace Yaclops.Parsing
 
         private void AddCommand(ParserCommand command)
         {
+            AddCommand(command.Text, command);
+
+            foreach (var alias in command.Aliases)
+            {
+                AddCommand(alias, command);
+            }
+        }
+
+
+
+        private void AddCommand(string commandText, ParserCommand command)
+        {
             Queue<string> queue = new Queue<string>();
-            foreach (var s in command.Text.Split(' '))
+            foreach (var s in commandText.Split(' '))
             {
                 queue.Enqueue(s);
             }
 
             _root.Add(queue, command);
-
-            // TODO - add any aliases
         }
 
 
 
         public void Advance(string word)
         {
+            _words.Add(word);
+
             if (_current.ContainsCommand(word))
             {
                 State = MapperState.Accepted;
@@ -64,8 +77,15 @@ namespace Yaclops.Parsing
         }
 
 
+        public bool CanAccept(string text)
+        {
+            return _current.ContainsChild(text) || _current.ContainsCommand(text);
+        }
+
+
         public MapperState State { get; private set; }
         public ParserCommand Command { get; private set; }
+        public string CommandText { get { return string.Join(" ", _words); } }
 
 
         private class Entry

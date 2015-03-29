@@ -48,13 +48,14 @@ namespace Yaclops.Tests.Parsing
             _config.AddCommand("pull");
             _config.AddCommand("fetch");
 
-            DoParse("add").Command.ShouldBe(null);
-            // TODO - shouldn't result contain an error in this case?
+            var result = DoParse("add");
+            result.Command.ShouldBe(null);
+            result.Errors.ShouldContain(x => x.Contains("add"));
         }
 
 
 
-        [Test, Ignore("Get this working!")]
+        [Test]
         public void CanFindCommandByAlias()
         {
             var command = _config.AddCommand("help").AddAlias("--help");

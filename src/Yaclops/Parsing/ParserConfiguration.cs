@@ -5,16 +5,17 @@ namespace Yaclops.Parsing
 {
     internal class ParserCommand
     {
+        private readonly List<string> _aliases = new List<string>();
+
         public ParserCommand(string text)
         {
             Text = text;
-            // TODO
         }
 
 
         public ParserCommand AddAlias(string text)
         {
-            // TODO
+            _aliases.Add(text);
             return this;
         }
 
@@ -26,6 +27,7 @@ namespace Yaclops.Parsing
 
 
         public string Text { get; private set; }
+        public IEnumerable<string> Aliases { get { return _aliases; } }
     }
 
 

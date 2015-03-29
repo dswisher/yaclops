@@ -19,12 +19,12 @@ namespace Yaclops.Parsing.States
             switch (token.Kind)
             {
                 case TokenKind.EndOfInput:
-                    if (Context.Command == null)
+                    if (Context.Mapper.State == MapperState.Pending)
                     {
-                        return new SuccessState(Context);
+                        Context.Result.AddError("Command '{0}' is ambiguous.", Context.Mapper.CommandText);
+                        return new FailureState(Context);
                     }
-                    // TODO - add message, indicating unknown command
-                    return new FailureState(Context);
+                    return new SuccessState(Context);
 
                 case TokenKind.Value:
                     Context.Mapper.Advance(token.Text);
@@ -33,15 +33,27 @@ namespace Yaclops.Parsing.States
                         case MapperState.Accepted:
                             // TODO - advance to command state
                             Context.Command = Context.Mapper.Command;
-                            Context.Result.Command = Context.Command;
+                            Context.Result.Command = Context.Mapper.Command;
                             return new SuccessState(Context);
 
                         case MapperState.Rejected:
-                            // TODO - add error message
+                            Context.Result.AddError("Command '{0}' is not known.", Context.Mapper.CommandText);
                             return new FailureState(Context);
 
                         case MapperState.Pending:
                             return this;
+                    }
+                    return this;
+
+                case TokenKind.LongName:
+                    if (Context.Mapper.CanAccept(token.Text))
+                    {
+                        Context.Mapper.Advance(token.Text);
+                        // TODO - assert/throw if state is not Accepted?  Longname command shouldn't be multiple words...
+                        // TODO - advance to command state
+                        Context.Command = Context.Mapper.Command;
+                        Context.Result.Command = Context.Mapper.Command;
+                        return new SuccessState(Context);
                     }
                     return this;
 
