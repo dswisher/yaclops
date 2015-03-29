@@ -5,11 +5,29 @@ namespace Yaclops.Parsing
 {
     internal class ParserCommand
     {
-        public void AddAlias(string text)
+        public ParserCommand(string text)
         {
+            Text = text;
             // TODO
         }
+
+
+        public ParserCommand AddAlias(string text)
+        {
+            // TODO
+            return this;
+        }
+
+
+        public override string ToString()
+        {
+            return Text;
+        }
+
+
+        public string Text { get; private set; }
     }
+
 
 
     internal abstract class ParserParameter
@@ -41,38 +59,31 @@ namespace Yaclops.Parsing
 
     internal class ParserConfiguration
     {
-        private readonly HashSet<string> _commands = new HashSet<string>();
-        private string _defaultCommand;
+        private readonly List<ParserCommand> _commands = new List<ParserCommand>();
+        private readonly HashSet<string> _commandsOld = new HashSet<string>();
 
 
         // TODO - this should return an object so we can add stuff to it
-        public ParserCommand AddCommand(string command)
+        public ParserCommand AddCommand(string commandText)
         {
-            if (_commands.Contains(command))
+            if (_commandsOld.Contains(commandText))
             {
-                throw new ParserConfigurationException("Cannot add duplicate command '{0}'.", command);
+                throw new ParserConfigurationException("Cannot add duplicate command '{0}'.", commandText);
             }
 
             // TODO - hack to get first unit test to pass
+            _commandsOld.Add(commandText);
+
+            var command = new ParserCommand(commandText);
+
             _commands.Add(command);
 
-            return new ParserCommand();
+            return command;
         }
 
 
-        public string DefaultCommand
-        {
-            get { return _defaultCommand; }
-            set
-            {
-                if (!_commands.Contains(value))
-                {
-                    throw new ParserConfigurationException("Cannot set default command to non-existant command '{0}'.", value);
-                }
-
-                _defaultCommand = value;
-            }
-        }
+        public ParserCommand DefaultCommand { get; set; }
+        public IEnumerable<ParserCommand> Commands { get { return _commands; } }
 
 
         public ParserNamedParameter AddNamedParameter(string key)
@@ -85,7 +96,7 @@ namespace Yaclops.Parsing
         [Obsolete]  // TODO - remove this!
         public bool IsCommand(string text)
         {
-            return _commands.Contains(text);
+            return _commandsOld.Contains(text);
         }
     }
 }

@@ -44,6 +44,7 @@
     <Compile Include="IssueTests.cs" />
     <Compile Include="NamedParameterTests.cs" />
     <Compile Include="OneWordCommandTests.cs" />
+    <Compile Include="Parsing\CommandMapperTests.cs" />
     <Compile Include="Parsing\LexerTests.cs" />
     <Compile Include="Parsing\ParserConfigurationTests.cs" />
     <Compile Include="Parsing\ParserTests.cs" />

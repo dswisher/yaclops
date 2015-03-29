@@ -21,11 +21,11 @@ namespace Yaclops.Tests.Parsing
         [Test]
         public void CanFindOneWordSubcommand()
         {
-            const string subcommand = "add";
+            const string commandText = "add";
 
-            _config.AddCommand(subcommand);
+            var command = _config.AddCommand(commandText);
 
-            DoParse(subcommand).Command.ShouldBe(subcommand);
+            DoParse(commandText).Command.ShouldBe(command);
         }
 
 
@@ -33,11 +33,11 @@ namespace Yaclops.Tests.Parsing
         [Test]
         public void CanFindTwoWordSubcommand()
         {
-            const string subcommand = "bisect start";
+            const string commandText = "bisect start";
 
-            _config.AddCommand(subcommand);
+            var command = _config.AddCommand(commandText);
 
-            DoParse(subcommand).Command.ShouldBe(subcommand);
+            DoParse(commandText).Command.ShouldBe(command);
         }
 
 
@@ -57,9 +57,9 @@ namespace Yaclops.Tests.Parsing
         [Test, Ignore("Get this working!")]
         public void CanFindCommandByAlias()
         {
-            _config.AddCommand("help").AddAlias("--help");
+            var command = _config.AddCommand("help").AddAlias("--help");
 
-            DoParse("--help").Command.ShouldBe("help");
+            DoParse("--help").Command.ShouldBe(command);
         }
 
 
@@ -67,15 +67,15 @@ namespace Yaclops.Tests.Parsing
         [Test]
         public void NoArgsReturnsDefaultCommand()
         {
-            const string subcommand = "add";
+            const string commandText = "add";
 
             _config.AddCommand("foo");
-            _config.AddCommand(subcommand);
+            var command = _config.AddCommand(commandText);
             _config.AddCommand("bar");
-            _config.DefaultCommand = subcommand;
+            _config.DefaultCommand = command;
 
-            DoParse(null).Command.ShouldBe(subcommand);
-            DoParse("").Command.ShouldBe(subcommand);
+            DoParse(null).Command.ShouldBe(command);
+            DoParse("").Command.ShouldBe(command);
         }
 
 

@@ -1,6 +1,4 @@
-﻿
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Yaclops.Parsing
 {
@@ -12,8 +10,8 @@ namespace Yaclops.Parsing
         }
 
 
-        // The command that was parsed, as lowercase words separated by one space
-        public string Command { get; set; }
+        // The command that was parsed
+        public ParserCommand Command { get; set; }
 
         // The list of parsed parameters that are global - not associated with a specific command
         public IEnumerable<ParsedValue> GlobalValues { get; private set; }

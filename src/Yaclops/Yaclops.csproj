@@ -49,6 +49,7 @@
     <Compile Include="ISubCommand.cs" />
     <Compile Include="Models\NamedParameterEntry.cs" />
     <Compile Include="Models\PositionalParameterEntry.cs" />
+    <Compile Include="Parsing\CommandMapper.cs" />
     <Compile Include="Parsing\Lexer.cs" />
     <Compile Include="Parsing\ParserContext.cs" />
     <Compile Include="Parsing\States\AbstractState.cs" />

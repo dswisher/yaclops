@@ -27,21 +27,21 @@ namespace Yaclops.Parsing.States
                     return new FailureState(Context);
 
                 case TokenKind.Value:
-                    // TODO - the context command needs to be smarter; this is just quick hack
-                    if (Context.Command == null)
+                    Context.Mapper.Advance(token.Text);
+                    switch (Context.Mapper.State)
                     {
-                        Context.Command = token.Text;
-                    }
-                    else
-                    {
-                        Context.Command += " " + token.Text;
-                    }
+                        case MapperState.Accepted:
+                            // TODO - advance to command state
+                            Context.Command = Context.Mapper.Command;
+                            Context.Result.Command = Context.Command;
+                            return new SuccessState(Context);
 
-                    // TODO - need to switch to a new state, as there may be more input!
-                    if (Context.Configuration.IsCommand(Context.Command))
-                    {
-                        Context.Result.Command = Context.Command;
-                        return new SuccessState(Context);
+                        case MapperState.Rejected:
+                            // TODO - add error message
+                            return new FailureState(Context);
+
+                        case MapperState.Pending:
+                            return this;
                     }
                     return this;
 

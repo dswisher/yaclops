@@ -17,15 +17,6 @@ namespace Yaclops.Tests.Parsing
         }
 
 
-
-        [Test]
-        public void SettingDefaultCommandToUnknownCommandThrows()
-        {
-            _config.AddCommand("foo");
-            Should.Throw<ParserConfigurationException>(() => _config.DefaultCommand = "bar");
-        }
-
-
         [Test]
         public void AddingDuplicateCommandThrows()
         {
