@@ -23,5 +23,27 @@ namespace Yaclops.Tests.Parsing
             _config.AddCommand("foo");
             Should.Throw<ParserConfigurationException>(() => _config.AddCommand("foo"));
         }
+
+
+        [Test]
+        public void NamedParameterGetsDefaultLongName()
+        {
+            var param = _config.AddNamedParameter("File");
+
+            param.HasLongName("file").ShouldBe(true);
+        }
+
+
+        [Test]
+        public void ExplicitLongNameOverridesDefault()
+        {
+            var param = _config.AddNamedParameter("File").LongName("Monkey");
+
+            param.HasLongName("file").ShouldBe(false);
+            param.HasLongName("monkey").ShouldBe(false);
+            param.HasLongName("Monkey").ShouldBe(true);
+        }
+
+        // TODO - how to disable long name?
     }
 }

@@ -57,17 +57,24 @@ namespace Yaclops.Parsing.States
                         Context.Result.Command = Context.Mapper.Command;
                         return new SuccessState(Context);
                     }
-                    return this;
-
-                case TokenKind.ShortName:
-                    var param = Context.Configuration.GlobalNamedParameters.FirstOrDefault(x => x.HasShortName(token.Text));
-                    if (param == null)
+                    var longParam = Context.Configuration.GlobalNamedParameters.FirstOrDefault(x => x.HasLongName(token.Text));
+                    if (longParam == null)
                     {
                         Context.Result.AddError("Named parameter '{0}' is not known.", token.Text);
                         return new FailureState(Context);
                     }
                     // TODO - what about a bool, that does not have a value (or at least, may not have a value)?
-                    return new GlobalValueState(Context, param);
+                    return new GlobalValueState(Context, longParam);
+
+                case TokenKind.ShortName:
+                    var shortParam = Context.Configuration.GlobalNamedParameters.FirstOrDefault(x => x.HasShortName(token.Text));
+                    if (shortParam == null)
+                    {
+                        Context.Result.AddError("Named parameter '{0}' is not known.", token.Text);
+                        return new FailureState(Context);
+                    }
+                    // TODO - what about a bool, that does not have a value (or at least, may not have a value)?
+                    return new GlobalValueState(Context, shortParam);
 
                 default:
                     // TODO - hack, for the moment - just fail right away on anything else

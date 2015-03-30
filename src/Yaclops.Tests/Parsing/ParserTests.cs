@@ -99,6 +99,24 @@ namespace Yaclops.Tests.Parsing
 
 
 
+        [Test]
+        public void CanParseGlobalNamedParameterByLongName()
+        {
+            _config.AddNamedParameter("File");
+
+            var result = DoParse("--file bar.txt");
+
+            result.Command.ShouldBe(null);
+
+            var value = result.GlobalValues.FirstOrDefault(x => x.Name == "File");
+
+            value.ShouldNotBe(null);
+            value.Name.ShouldBe("File");
+            value.Value.ShouldBe("bar.txt");
+        }
+
+
+
         private ParseResult DoParse(string text)
         {
             Parser parser = new Parser(_config);
