@@ -6,6 +6,7 @@ namespace Yaclops.Parsing
     {
         private readonly List<string> _errors = new List<string>();
         private readonly List<ParsedValue> _globalValues = new List<ParsedValue>();
+        private readonly List<ParsedValue> _values = new List<ParsedValue>();
 
 
 
@@ -25,7 +26,15 @@ namespace Yaclops.Parsing
         /// </summary>
         public IEnumerable<ParsedValue> GlobalValues { get { return _globalValues; } }
 
-        public ParsedValue AddValue(ParserParameter parameter, string value)
+
+        /// <summary>
+        /// The list of parameters that are tied to the command
+        /// </summary>
+        public IEnumerable<ParsedValue> Values { get { return _values; } }
+
+
+
+        public ParsedValue AddGlobalValue(ParserParameter parameter, string value)
         {
             var item = new ParsedValue { Name = parameter.Key, Value = value };
 
@@ -33,10 +42,21 @@ namespace Yaclops.Parsing
 
             return item;
         }
+
+
+
+        public ParsedValue AddValue(ParserParameter parameter, string value)
+        {
+            var item = new ParsedValue { Name = parameter.Key, Value = value };
+
+            _values.Add(item);
+
+            return item;
+        }
     }
 
 
-    // TODO - move this to a separate file?
+    // TODO - move this to a separate file? Or inside ParseResult?
     internal class ParsedValue
     {
         public string Name { get; set; }

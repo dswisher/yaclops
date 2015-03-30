@@ -33,10 +33,9 @@ namespace Yaclops.Parsing.States
                     switch (Context.Mapper.State)
                     {
                         case MapperState.Accepted:
-                            // TODO - advance to command state
                             Context.Command = Context.Mapper.Command;
                             Context.Result.Command = Context.Mapper.Command;
-                            return new SuccessState(Context);
+                            return new CommandState(Context);
 
                         case MapperState.Rejected:
                             Context.Result.AddError("Command '{0}' is not known.", Context.Mapper.CommandText);

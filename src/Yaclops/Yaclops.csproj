@@ -54,6 +54,8 @@
     <Compile Include="Parsing\ParserContext.cs" />
     <Compile Include="Parsing\States\AbstractState.cs" />
     <Compile Include="Parsing\States\AbstractTerminalState.cs" />
+    <Compile Include="Parsing\States\CommandState.cs" />
+    <Compile Include="Parsing\States\CommandValueState.cs" />
     <Compile Include="Parsing\States\GlobalState.cs" />
     <Compile Include="Parsing\States\FailureState.cs" />
     <Compile Include="Parsing\States\GlobalValueState.cs" />

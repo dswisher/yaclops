@@ -2,20 +2,18 @@
 
 namespace Yaclops.Parsing.States
 {
-    /// <summary>
-    /// We've seen a global parameter, and now just need the value to go with it.
-    /// </summary>
-    internal class GlobalValueState : AbstractState
+    internal class CommandValueState : AbstractState
     {
         private readonly ParserNamedParameter _param;
 
-
-        public GlobalValueState(ParserContext context, ParserNamedParameter param) : base(context)
+        public CommandValueState(ParserContext context, ParserNamedParameter param)
+            : base(context)
         {
             _param = param;
         }
 
 
+        // TODO - merge this with GlobalValueState, perhaps by having a ReturnState to go back to GlobalState/CommandState?
         public override AbstractState Advance()
         {
             Token token = Context.Lexer.Pop();
@@ -23,8 +21,8 @@ namespace Yaclops.Parsing.States
             switch (token.Kind)
             {
                 case TokenKind.Value:
-                    Context.Result.AddGlobalValue(_param, token.Text);
-                    return new GlobalState(Context);
+                    Context.Result.AddValue(_param, token.Text);
+                    return new CommandState(Context);
 
                 default:
                     Context.Result.AddError("Expected value for global parameter '{0}'.", _param.Key);

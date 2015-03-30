@@ -6,6 +6,8 @@ namespace Yaclops.Parsing
     internal class ParserCommand
     {
         private readonly List<string> _aliases = new List<string>();
+        private readonly List<ParserNamedParameter> _namedParameters = new List<ParserNamedParameter>();
+
 
         public ParserCommand(string text)
         {
@@ -20,6 +22,18 @@ namespace Yaclops.Parsing
         }
 
 
+        public ParserNamedParameter AddNamedParameter(string key)
+        {
+            var param = new ParserNamedParameter(key);
+
+            // TODO - check for duplicates
+
+            _namedParameters.Add(param);
+
+            return param;
+        }
+
+
         public override string ToString()
         {
             return Text;
@@ -28,6 +42,7 @@ namespace Yaclops.Parsing
 
         public string Text { get; private set; }
         public IEnumerable<string> Aliases { get { return _aliases; } }
+        public IEnumerable<ParserNamedParameter> NamedParameters { get {  return _namedParameters; } }
     }
 
 

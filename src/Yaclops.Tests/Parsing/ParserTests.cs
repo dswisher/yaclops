@@ -117,6 +117,39 @@ namespace Yaclops.Tests.Parsing
 
 
 
+        [Test]
+        public void CommandSpecificParameterNotAvailableGlobally()
+        {
+            _config.AddCommand("add").AddNamedParameter("File");
+
+            var result = DoParse("--file foo.txt add");
+            result.Command.ShouldBe(null);
+            result.Errors.ShouldContain(x => x.Contains("file"));
+        }
+
+
+
+        [Test]
+        public void CanParseCommandParameterByLongName()
+        {
+            var command = _config.AddCommand("add");
+            command.AddNamedParameter("File");
+
+            var result = DoParse("add --file foo.txt");
+            result.Command.ShouldBe(command);
+            result.GlobalValues.ShouldBeEmpty();
+
+            var value = result.Values.FirstOrDefault(x => x.Name == "File");
+
+            value.ShouldNotBe(null);
+            value.Name.ShouldBe("File");
+            value.Value.ShouldBe("foo.txt");
+        }
+
+
+        // TODO - test global long-name AFTER command: add --file foo.txt where --file is global, and not command-specific
+
+
         private ParseResult DoParse(string text)
         {
             Parser parser = new Parser(_config);
