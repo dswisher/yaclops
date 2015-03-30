@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Yaclops.Parsing
 {
@@ -34,6 +34,8 @@ namespace Yaclops.Parsing
 
     internal abstract class ParserParameter
     {
+        private readonly HashSet<string> _shortNames = new HashSet<string>();
+
         protected ParserParameter(string key)
         {
             Key = key;
@@ -41,9 +43,15 @@ namespace Yaclops.Parsing
 
         public string Key { get; private set; }
 
+        public bool HasShortName(string name)
+        {
+            return _shortNames.Contains(name);
+        }
+
+
         public ParserParameter ShortName(string name)
         {
-            // TODO
+            _shortNames.Add(name);
             return this;
         }
     }
@@ -62,19 +70,15 @@ namespace Yaclops.Parsing
     internal class ParserConfiguration
     {
         private readonly List<ParserCommand> _commands = new List<ParserCommand>();
-        private readonly HashSet<string> _commandsOld = new HashSet<string>();
+        private readonly List<ParserNamedParameter> _namedParameters = new List<ParserNamedParameter>();
 
 
-        // TODO - this should return an object so we can add stuff to it
         public ParserCommand AddCommand(string commandText)
         {
-            if (_commandsOld.Contains(commandText))
+            if (_commands.Any(x => x.Text == commandText))
             {
                 throw new ParserConfigurationException("Cannot add duplicate command '{0}'.", commandText);
             }
-
-            // TODO - hack to get first unit test to pass
-            _commandsOld.Add(commandText);
 
             var command = new ParserCommand(commandText);
 
@@ -86,19 +90,18 @@ namespace Yaclops.Parsing
 
         public ParserCommand DefaultCommand { get; set; }
         public IEnumerable<ParserCommand> Commands { get { return _commands; } }
+        public IEnumerable<ParserNamedParameter> GlobalNamedParameters { get { return _namedParameters; } }
 
 
         public ParserNamedParameter AddNamedParameter(string key)
         {
-            // TODO
-            return new ParserNamedParameter(key);
-        }
+            var param = new ParserNamedParameter(key);
 
+            // TODO - check for duplicates
 
-        [Obsolete]  // TODO - remove this!
-        public bool IsCommand(string text)
-        {
-            return _commandsOld.Contains(text);
+            _namedParameters.Add(param);
+
+            return param;
         }
     }
 }

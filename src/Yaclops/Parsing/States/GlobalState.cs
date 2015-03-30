@@ -1,5 +1,7 @@
 ﻿
 
+using System.Linq;
+
 namespace Yaclops.Parsing.States
 {
     /// <summary>
@@ -56,6 +58,16 @@ namespace Yaclops.Parsing.States
                         return new SuccessState(Context);
                     }
                     return this;
+
+                case TokenKind.ShortName:
+                    var param = Context.Configuration.GlobalNamedParameters.FirstOrDefault(x => x.HasShortName(token.Text));
+                    if (param == null)
+                    {
+                        Context.Result.AddError("Named parameter '{0}' is not known.", token.Text);
+                        return new FailureState(Context);
+                    }
+                    // TODO - what about a bool, that does not have a value (or at least, may not have a value)?
+                    return new GlobalValueState(Context, param);
 
                 default:
                     // TODO - hack, for the moment - just fail right away on anything else

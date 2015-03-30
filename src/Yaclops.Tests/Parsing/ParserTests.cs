@@ -81,7 +81,7 @@ namespace Yaclops.Tests.Parsing
 
 
 
-        [Test, Ignore("Get this working!")]
+        [Test]
         public void CanParseGlobalNamedParameterByShortName()
         {
             _config.AddNamedParameter("File").ShortName("f");
@@ -94,7 +94,7 @@ namespace Yaclops.Tests.Parsing
 
             value.ShouldNotBe(null);
             value.Name.ShouldBe("File");
-            // value.Value.ShouldBe("foo.txt");
+            value.Value.ShouldBe("foo.txt");
         }
 
 

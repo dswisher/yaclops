@@ -5,11 +5,8 @@ namespace Yaclops.Parsing
     internal class ParseResult
     {
         private readonly List<string> _errors = new List<string>();
+        private readonly List<ParsedValue> _globalValues = new List<ParsedValue>();
 
-        public ParseResult()
-        {
-            GlobalValues = new List<ParsedValue>();
-        }
 
 
         public void AddError(string format, params object[] args)
@@ -23,8 +20,19 @@ namespace Yaclops.Parsing
 
         public IEnumerable<string> Errors { get { return _errors; } }
 
-        // The list of parsed parameters that are global - not associated with a specific command
-        public IEnumerable<ParsedValue> GlobalValues { get; private set; }
+        /// <summary>
+        /// The list of parsed parameters that are global - not associated with a specific command
+        /// </summary>
+        public IEnumerable<ParsedValue> GlobalValues { get { return _globalValues; } }
+
+        public ParsedValue AddValue(ParserParameter parameter, string value)
+        {
+            var item = new ParsedValue { Name = parameter.Key, Value = value };
+
+            _globalValues.Add(item);
+
+            return item;
+        }
     }
 
 
@@ -32,6 +40,7 @@ namespace Yaclops.Parsing
     internal class ParsedValue
     {
         public string Name { get; set; }
+        public string Value { get; set; }
         // TODO - how to represent the value, given we want to support collections?
     }
 }
