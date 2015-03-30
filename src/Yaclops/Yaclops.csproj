@@ -42,6 +42,7 @@
     <Compile Include="Attributes\NamedParameterAttribute.cs" />
     <Compile Include="Attributes\PositionalParameterAttribute.cs" />
     <Compile Include="CommandLineParser.cs" />
+    <Compile Include="CommandLineParserEx.cs" />
     <Compile Include="CommandLineParserException.cs" />
     <Compile Include="Help\HelpCommand.cs" />
     <Compile Include="Help\HelpBuilder.cs" />
