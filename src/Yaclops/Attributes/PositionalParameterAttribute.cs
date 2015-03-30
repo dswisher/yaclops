@@ -1,13 +1,12 @@
 ﻿using System;
 
-namespace Yaclops
+namespace Yaclops.Attributes
 {
     /// <summary>
     /// Mark a property as a positional command-line parameter
     /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
-    public class CommandLineParameterAttribute : Attribute
+    public class PositionalParameterAttribute : Attribute
     {
-        // TODO - rename this to PositionalParameter?
     }
 }

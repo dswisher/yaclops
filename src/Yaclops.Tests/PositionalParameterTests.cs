@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using NUnit.Framework;
 using Shouldly;
+using Yaclops.Attributes;
 
 
 namespace Yaclops.Tests
@@ -91,10 +92,10 @@ namespace Yaclops.Tests
         // ReSharper disable CollectionNeverUpdated.Local
         private class StringCommand : ISubCommand
         {
-            [CommandLineParameter, Required]
+            [PositionalParameter, Required]
             public string Param1 { get; set; }
 
-            [CommandLineParameter]
+            [PositionalParameter]
             public string Param2 { get; set; }
 
             public void Execute() { }
@@ -103,7 +104,7 @@ namespace Yaclops.Tests
 
         private class IntCommand : ISubCommand
         {
-            [CommandLineParameter, Required]
+            [PositionalParameter, Required]
             public int Param { get; set; }
 
             public void Execute() { }
@@ -112,7 +113,7 @@ namespace Yaclops.Tests
 
         private class ListCommand : ISubCommand
         {
-            [CommandLineParameter]
+            [PositionalParameter]
             public List<string> Param { get; private set; }
 
             public void Execute() { }
@@ -121,7 +122,7 @@ namespace Yaclops.Tests
 
         private class OtherCommand : ISubCommand
         {
-            [CommandLineParameter, Required]
+            [PositionalParameter, Required]
             public List<string> Param { get; private set; }
 
             public void Execute() { }

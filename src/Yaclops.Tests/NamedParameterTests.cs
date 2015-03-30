@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using Shouldly;
+using Yaclops.Attributes;
 
 namespace Yaclops.Tests
 {
@@ -94,10 +95,10 @@ namespace Yaclops.Tests
 
         private class BoolCommand : ISubCommand
         {
-            [CommandLineOption]
+            [NamedParameter]
             public string Param1 { get; set; }
 
-            [CommandLineOption(ShortName = "flag")]
+            [NamedParameter(ShortName = "flag")]
             public bool Flag { get; set; }
 
             public void Execute() { }
@@ -106,10 +107,10 @@ namespace Yaclops.Tests
 
         private class StringCommand : ISubCommand
         {
-            [CommandLineOption]
+            [NamedParameter]
             public string Param1 { get; set; }
 
-            [CommandLineOption(ShortName = "n")]
+            [NamedParameter(ShortName = "n")]
             public string Name { get; set; }
 
             public void Execute() { }
@@ -118,10 +119,10 @@ namespace Yaclops.Tests
 
         private class LongCommand : ISubCommand
         {
-            [CommandLineOption]
+            [NamedParameter]
             public string Param1 { get; set; }
 
-            [CommandLineOption]
+            [NamedParameter]
             public long Value { get; set; }
 
             public void Execute() { }
@@ -130,7 +131,7 @@ namespace Yaclops.Tests
 
         private class AddCommand : ISubCommand
         {
-            [CommandLineOption]
+            [NamedParameter]
             public bool DryRun { get; set; }
 
             public void Execute() { }
@@ -139,7 +140,7 @@ namespace Yaclops.Tests
 
         private class UserCommand : ISubCommand
         {
-            [CommandLineOption(LongName = "add-user")]
+            [NamedParameter(LongName = "add-user")]
             public bool CreateUser { get; set; }
 
             public void Execute() { }

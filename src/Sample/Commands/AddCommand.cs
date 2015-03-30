@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using Sample.Helpers;
 using Yaclops;
+using Yaclops.Attributes;
 
 namespace Sample.Commands
 {
@@ -42,22 +43,22 @@ Please see `commit` for alternative ways to add content to a commit.")]
         }
 
 
-        [CommandLineParameter]
+        [PositionalParameter]
         public List<string> Paths { get; private set; }
 
-        [CommandLineOption(ShortName="n")]
+        [NamedParameter(ShortName="n")]
         [Description("Don’t actually add the file(s), just show if they exist and/or will be ignored.")]
         public bool DryRun { get; set; }
 
-        [CommandLineOption(ShortName = "v")]
+        [NamedParameter(ShortName = "v")]
         [Description("Be verbose.")]
         public bool Verbose { get; set; }
 
-        [CommandLineOption(ShortName = "f")]
+        [NamedParameter(ShortName = "f")]
         [Description("Allow adding otherwise ignored files.")]
         public bool Force { get; set; }
 
-        [CommandLineOption(ShortName = "i")]
+        [NamedParameter(ShortName = "i")]
         [Description(@"
 Add modified contents in the working tree interactively to the index.
 Optional path arguments may be supplied to limit operation to a subset of the working tree.
@@ -65,7 +66,7 @@ See ""Interactive mode"" for details.
 ")]
         public bool Interactive { get; set; }
 
-        [CommandLineOption(ShortName = "p")]
+        [NamedParameter(ShortName = "p")]
         [Description(@"
 Interactively choose hunks of patch between the index and the work tree and add them to the index.
 This gives the user a chance to review the difference before adding modified contents to the index.
@@ -75,7 +76,7 @@ See ""Interactive mode"" for details.
 ")]
         public bool Patch { get; set; }
 
-        [CommandLineOption(ShortName = "e")]
+        [NamedParameter(ShortName = "e")]
         [Description(@"
 Open the diff vs. the index in an editor and let the user edit it.
 After the editor was closed, adjust the hunk headers and apply the patch to the index.
@@ -87,25 +88,25 @@ See EDITING PATCHES below.
 ")]
         public bool Edit { get; set; }
 
-        [CommandLineOption(ShortName = "u")]
+        [NamedParameter(ShortName = "u")]
         public bool Update { get; set; }
 
-        [CommandLineOption(ShortName = "A")]    // TODO: support --no-ignore-removal
+        [NamedParameter(ShortName = "A")]    // TODO: support --no-ignore-removal
         public bool All { get; set; }
 
-        [CommandLineOption]    // TODO: support --ignore-removal
+        [NamedParameter]    // TODO: support --ignore-removal
         public bool NoAll { get; set; }
 
-        [CommandLineOption(ShortName = "N")]
+        [NamedParameter(ShortName = "N")]
         public bool IntentToAdd { get; set; }
 
-        [CommandLineOption]
+        [NamedParameter]
         public bool Refresh { get; set; }
 
-        [CommandLineOption]
+        [NamedParameter]
         public bool IgnoreErrors { get; set; }
 
-        [CommandLineOption]
+        [NamedParameter]
         public bool IgnoreMissing { get; set; }
 
 

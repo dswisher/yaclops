@@ -1,5 +1,6 @@
 ﻿using Sample.Helpers;
 using Yaclops;
+using Yaclops.Attributes;
 
 namespace Sample.Commands
 {

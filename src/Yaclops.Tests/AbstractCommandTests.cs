@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using NUnit.Framework;
 using Shouldly;
+using Yaclops.Attributes;
 
 namespace Yaclops.Tests
 {
@@ -39,7 +40,7 @@ namespace Yaclops.Tests
 
         protected class RequiredCommand : ISubCommand
         {
-            [CommandLineParameter, Required]
+            [PositionalParameter, Required]
             public string FileName { get; set; }
 
             public void Execute() { }

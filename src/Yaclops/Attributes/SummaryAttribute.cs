@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Yaclops
+namespace Yaclops.Attributes
 {
     /// <summary>
     /// Used to decorate a subcommand with a summary.

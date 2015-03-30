@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
+using Yaclops.Attributes;
 using Yaclops.Models;
 
 namespace Yaclops
@@ -78,11 +79,11 @@ namespace Yaclops
         public static IEnumerable<NamedParameterEntry> NamedParameters(this ISubCommand command)
         {
             return command.GetType().GetProperties()
-                .Where(x => x.GetCustomAttributes(typeof (CommandLineOptionAttribute), true).Any())
+                .Where(x => x.GetCustomAttributes(typeof (NamedParameterAttribute), true).Any())
                 .Select(x => new NamedParameterEntry
                 {
                     Property = x,
-                    Attribute = (CommandLineOptionAttribute) x.GetCustomAttributes(typeof (CommandLineOptionAttribute), true).First(),
+                    Attribute = (NamedParameterAttribute) x.GetCustomAttributes(typeof (NamedParameterAttribute), true).First(),
                     Description = x.Description()
                 });
         }
@@ -92,11 +93,11 @@ namespace Yaclops
         public static IEnumerable<PositionalParameterEntry> PositionalParameters(this ISubCommand command)
         {
             return command.GetType().GetProperties()
-                .Where(x => x.GetCustomAttributes(typeof (CommandLineParameterAttribute), true).Any())
+                .Where(x => x.GetCustomAttributes(typeof (PositionalParameterAttribute), true).Any())
                 .Select(x => new PositionalParameterEntry
                 {
                     Property = x,
-                    Attribute = (CommandLineParameterAttribute)x.GetCustomAttributes(typeof(CommandLineParameterAttribute), true).First(),
+                    Attribute = (PositionalParameterAttribute)x.GetCustomAttributes(typeof(PositionalParameterAttribute), true).First(),
                     Required = x.GetCustomAttributes(typeof(RequiredAttribute), true).Any()
                 });
         }

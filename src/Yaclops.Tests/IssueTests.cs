@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using Shouldly;
+using Yaclops.Attributes;
 
 namespace Yaclops.Tests
 {
@@ -23,7 +24,7 @@ namespace Yaclops.Tests
 
         private class LoadCommand : ISubCommand
         {
-            [CommandLineOption(ShortName = "m")]
+            [NamedParameter(ShortName = "m")]
             public int MaxRows { get; set; }
 
             public void Execute()

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Yaclops.Attributes;
 
 
 namespace Yaclops.Help
@@ -16,7 +17,7 @@ namespace Yaclops.Help
         }
 
 
-        [CommandLineParameter]
+        [PositionalParameter]
         public List<string> Commands { get; private set; }
 
 
