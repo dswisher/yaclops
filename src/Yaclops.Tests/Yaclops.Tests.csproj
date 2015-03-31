@@ -50,6 +50,7 @@
     <Compile Include="Parsing\ParserTests.cs" />
     <Compile Include="PositionalParameterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reflecting\ScannerTests.cs" />
     <Compile Include="TwoWordCommandTests.cs" />
   </ItemGroup>
   <ItemGroup>

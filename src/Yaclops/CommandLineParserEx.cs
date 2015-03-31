@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Yaclops.Parsing;
+using Yaclops.Reflecting;
 
 
 namespace Yaclops
@@ -13,6 +15,7 @@ namespace Yaclops
     /// </remarks>
     public class CommandLineParserEx
     {
+        private readonly ParserConfiguration _configuration = new ParserConfiguration();
         private readonly List<ISubCommand> _commands = new List<ISubCommand>();
         private bool _initialized;
 
@@ -80,6 +83,13 @@ namespace Yaclops
         {
             // Add the help command so it will be treated like any other command, even though it is internal
             // TODO - add help command
+
+            CommandScanner scanner = new CommandScanner(_configuration);
+
+            foreach (var c in _commands)
+            {
+                scanner.Scan(c);
+            }
 
             // TODO - reflect on the given commands and build the parser configuration
         }
