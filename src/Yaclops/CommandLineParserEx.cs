@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Yaclops.Help;
 using Yaclops.Parsing;
 using Yaclops.Reflecting;
 
@@ -54,6 +55,19 @@ namespace Yaclops
                 _initialized = true;
             }
 
+            Parser parser = new Parser(_configuration);
+
+            var result = parser.Parse(raw);
+
+            if (result.Errors.Any())
+            {
+                // TODO - build better error text if there are multiple errors
+                throw new CommandLineParserException(result.Errors.First());
+            }
+
+            // TODO - HACK!
+            Console.WriteLine("Command: {0}", result.Command.Text);
+
             // TODO - HACK!
             return _commands.First();
         }
@@ -83,6 +97,8 @@ namespace Yaclops
         {
             // Add the help command so it will be treated like any other command, even though it is internal
             // TODO - add help command
+            var help = _configuration.AddCommand("help");
+            _configuration.DefaultCommand = help;
 
             CommandScanner scanner = new CommandScanner(_configuration);
 
@@ -90,8 +106,6 @@ namespace Yaclops
             {
                 scanner.Scan(c);
             }
-
-            // TODO - reflect on the given commands and build the parser configuration
         }
     }
 }
