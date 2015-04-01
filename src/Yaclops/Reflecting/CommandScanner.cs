@@ -4,6 +4,13 @@ using Yaclops.Parsing;
 
 namespace Yaclops.Reflecting
 {
+    /// <summary>
+    /// Scan ISubCommand instance and add its info tot he parser configuration.
+    /// </summary>
+    /// <remarks>
+    /// This is the bridge between the attributes decorating an ISubCommand instance and
+    /// the ParserConfiguration.
+    /// </remarks>
     internal class CommandScanner
     {
         private readonly ParserConfiguration _configuration;
@@ -15,7 +22,7 @@ namespace Yaclops.Reflecting
 
 
 
-        public void Scan(ISubCommand subCommand)
+        public ParserCommand Scan(ISubCommand subCommand)
         {
             var type = subCommand.GetType();
 
@@ -38,6 +45,8 @@ namespace Yaclops.Reflecting
 
             // Pick out the positional parameters
             // TODO - positional parameters
+
+            return command;
         }
     }
 }

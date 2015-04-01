@@ -18,13 +18,15 @@ namespace Yaclops
     {
         private readonly ParserConfiguration _configuration = new ParserConfiguration();
         private readonly List<ISubCommand> _commands = new List<ISubCommand>();
+        private readonly Dictionary<string, ISubCommand> _commandMap = new Dictionary<string, ISubCommand>();
+        private readonly ISubCommand _helpCommand;
         private bool _initialized;
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="commands">List of command objects to reflect</param>
-        public CommandLineParserEx(IEnumerable<ISubCommand> commands)
+        public CommandLineParserEx(IEnumerable<ISubCommand> commands) : this()
         {
             _commands.AddRange(commands);
         }
@@ -38,6 +40,9 @@ namespace Yaclops
         /// </remarks>
         public CommandLineParserEx()
         {
+            // Seed the command list with the help command
+            _helpCommand = new HelpCommandEx();
+            _commands.Add(_helpCommand);
         }
 
 
@@ -65,11 +70,24 @@ namespace Yaclops
                 throw new CommandLineParserException(result.Errors.First());
             }
 
-            // TODO - HACK!
-            Console.WriteLine("Command: {0}", result.Command.Text);
+            // Find the command...
+            var command = _commandMap[result.Command.Text];
 
-            // TODO - HACK!
-            return _commands.First();
+            // Populate all the parameters on the command based on the parse result...
+            var pusher = new CommandPusher(result);
+
+            pusher.Push(command);
+
+            // If this is the help command, give it a little assist by looking up the help target (if any)...
+            if (command == _helpCommand)
+            {
+                // TODO - lookup help target and set it on the command?
+                // TODO - set ParseCommand onto the help object, too? Do we need both?
+                // TODO - what about the command list? Pull that from _commands or _configuration?
+            }
+
+            // Return the populated, ready-to-roll command...
+            return command;
         }
 
 
@@ -95,16 +113,21 @@ namespace Yaclops
 
         private void Initialize()
         {
-            // Add the help command so it will be treated like any other command, even though it is internal
-            // TODO - add help command
-            var help = _configuration.AddCommand("help");
-            _configuration.DefaultCommand = help;
-
             CommandScanner scanner = new CommandScanner(_configuration);
 
             foreach (var c in _commands)
             {
-                scanner.Scan(c);
+                // Add the command to the configuration based on attribute decorations...
+                var parserCommand = scanner.Scan(c);
+
+                // Add the command to the map so we can find it after parsing...
+                _commandMap.Add(parserCommand.Text, c);
+
+                // Set help as the default command
+                if (c == _helpCommand)
+                {
+                    _configuration.DefaultCommand = parserCommand;
+                }
             }
         }
     }

@@ -1,4 +1,4 @@
-﻿#define NEW_PARSER
+﻿//#define NEW_PARSER
 
 using System;
 using System.Diagnostics;

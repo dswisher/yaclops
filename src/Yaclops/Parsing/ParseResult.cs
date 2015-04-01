@@ -30,7 +30,7 @@ namespace Yaclops.Parsing
         /// <summary>
         /// The list of parameters that are tied to the command
         /// </summary>
-        public IEnumerable<ParsedValue> Values { get { return _values; } }
+        public IEnumerable<ParsedValue> CommandValues { get { return _values; } }
 
 
 
@@ -45,7 +45,7 @@ namespace Yaclops.Parsing
 
 
 
-        public ParsedValue AddValue(ParserParameter parameter, string value)
+        public ParsedValue AddCommandValue(ParserParameter parameter, string value)
         {
             var item = new ParsedValue { Name = parameter.Key, Value = value };
 

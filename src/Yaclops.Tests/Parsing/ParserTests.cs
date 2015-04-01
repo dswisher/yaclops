@@ -139,7 +139,7 @@ namespace Yaclops.Tests.Parsing
             result.Command.ShouldBe(command);
             result.GlobalValues.ShouldBeEmpty();
 
-            var value = result.Values.FirstOrDefault(x => x.Name == "File");
+            var value = result.CommandValues.FirstOrDefault(x => x.Name == "File");
 
             value.ShouldNotBe(null);
             value.Name.ShouldBe("File");

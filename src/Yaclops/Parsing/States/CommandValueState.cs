@@ -21,7 +21,7 @@ namespace Yaclops.Parsing.States
             switch (token.Kind)
             {
                 case TokenKind.Value:
-                    Context.Result.AddValue(_param, token.Text);
+                    Context.Result.AddCommandValue(_param, token.Text);
                     return new CommandState(Context);
 
                 default:
