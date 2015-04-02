@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Linq;
 using Yaclops.Parsing;
 
@@ -24,7 +25,31 @@ namespace Yaclops.Reflecting
 
         public void Push(ISubCommand command)
         {
-            Console.WriteLine("CommandPusher.Push is not yet implemented. Debug info:");
+            Console.WriteLine("CommandPusher.Push is not yet implemented.");
+            WriteDebugInfo();
+
+            var type = command.GetType();
+
+            foreach (var item in _result.CommandValues)
+            {
+                var prop = type.GetProperty(item.Name);
+
+                if (prop == null)
+                {
+                    throw new CommandLineParserException("Property mismatch: command does not contain property with name '" + item.Name + "'.");
+                }
+
+                TypeConverter typeConverter = TypeDescriptor.GetConverter(prop.PropertyType);
+                object propValue = typeConverter.ConvertFromString(item.Value);
+                prop.SetValue(command, propValue);
+            }
+        }
+
+
+
+        private void WriteDebugInfo()
+        {
+            Console.WriteLine("Debug info:");
 
             Console.WriteLine("Global Values:");
             if (_result.GlobalValues.Any())
@@ -52,6 +77,5 @@ namespace Yaclops.Reflecting
                 Console.WriteLine("   (none)");
             }
         }
-
     }
 }

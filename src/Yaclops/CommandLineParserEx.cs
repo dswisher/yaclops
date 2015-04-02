@@ -78,6 +78,8 @@ namespace Yaclops
 
             pusher.Push(command);
 
+            // TODO - what about the global values?
+
             // If this is the help command, give it a little assist by looking up the help target (if any)...
             if (command == _helpCommand)
             {

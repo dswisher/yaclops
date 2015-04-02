@@ -10,10 +10,10 @@ namespace Yaclops.Tests.Reflecting
     public class PusherTests
     {
 
-        [Test, Ignore("Get this working! TODO!")]
+        [Test]
         public void CanPushString()
         {
-            ParserParameter param = new ParserNamedParameter("name");
+            ParserParameter param = new ParserNamedParameter("Name");
             ParseResult result = new ParseResult();
             result.AddCommandValue(param, "value");
 
@@ -23,8 +23,24 @@ namespace Yaclops.Tests.Reflecting
 
             pusher.Push(command);
 
-            // TODO - get this working
             command.Name.ShouldBe("value");
+        }
+
+
+        [Test]
+        public void CanPushBool()
+        {
+            ParserParameter param = new ParserNamedParameter("Add");
+            ParseResult result = new ParseResult();
+            result.AddCommandValue(param, "true");
+
+            var pusher = new CommandPusher(result);
+
+            var command = new BoolCommand();
+
+            pusher.Push(command);
+
+            command.Add.ShouldBe(true);
         }
 
 
@@ -34,10 +50,18 @@ namespace Yaclops.Tests.Reflecting
         }
 
 
+        // ReSharper disable UnusedAutoPropertyAccessor.Local
         private class StringCommand : TestBase
         {
             [NamedParameter]
             public string Name { get; set; }
         }
+
+        private class BoolCommand : TestBase
+        {
+            [NamedParameter]
+            public bool Add { get; set; }
+        }
+        // ReSharper restore UnusedAutoPropertyAccessor.Local
     }
 }

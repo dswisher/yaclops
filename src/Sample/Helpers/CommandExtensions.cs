@@ -32,7 +32,8 @@ namespace Sample.Helpers
                     }
                     else
                     {
-                        val = p.GetValue(command).ToString();
+                        var raw = p.GetValue(command);
+                        val = raw != null ? p.GetValue(command).ToString() : "<null>";
                     }
 
                     Console.WriteLine("   {0,15}: {1}", p.Name, val);
