@@ -36,8 +36,7 @@ namespace Yaclops.Reflecting
 
             foreach (var prop in namedProps)
             {
-                // var propName = "-" + prop.Name.Decamel('-').ToLower();
-                /* var param = */ command.AddNamedParameter(prop.Name);
+                /* var param = */ command.AddNamedParameter(prop.Name, prop.PropertyType);
 
                 // TODO - add any explicitly specified long names
                 // TODO - add short any specified short names

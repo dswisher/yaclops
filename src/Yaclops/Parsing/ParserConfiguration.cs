@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Yaclops.Parsing
@@ -22,9 +23,9 @@ namespace Yaclops.Parsing
         }
 
 
-        public ParserNamedParameter AddNamedParameter(string key)
+        public ParserNamedParameter AddNamedParameter(string key, Type type)
         {
-            var param = new ParserNamedParameter(key);
+            var param = new ParserNamedParameter(key, type);
 
             // TODO - check for duplicates
 
@@ -58,7 +59,7 @@ namespace Yaclops.Parsing
             Key = key;
 
             // Set default long name
-            _longNames.Add(key.ToLower());
+            _longNames.Add(key.Decamel('-').ToLower());
             _longNameIsDefault = true;
         }
 
@@ -97,10 +98,14 @@ namespace Yaclops.Parsing
 
     internal class ParserNamedParameter : ParserParameter
     {
-        public ParserNamedParameter(string key)
+        public ParserNamedParameter(string key, Type type)
             : base(key)
         {
+            IsBool = type == typeof(bool);
         }
+
+
+        public bool IsBool { get; private set; }
     }
 
 
@@ -131,9 +136,9 @@ namespace Yaclops.Parsing
         public IEnumerable<ParserNamedParameter> GlobalNamedParameters { get { return _namedParameters; } }
 
 
-        public ParserNamedParameter AddNamedParameter(string key)
+        public ParserNamedParameter AddNamedParameter(string key, Type type)
         {
-            var param = new ParserNamedParameter(key);
+            var param = new ParserNamedParameter(key, type);
 
             // TODO - check for duplicates
 

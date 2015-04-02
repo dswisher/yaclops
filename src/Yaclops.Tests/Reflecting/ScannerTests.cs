@@ -37,31 +37,60 @@ namespace Yaclops.Tests.Reflecting
 
 
         [Test]
-        public void CanScanNamedParameter()
+        public void CanScanNamedStringParameter()
         {
-            var subCommand = new NamedParameterCommand();
+            var subCommand = new NamedStringParameterCommand();
             _scanner.Scan(subCommand);
 
             var command = _configuration.Commands.First();
-            command.NamedParameters.ShouldNotBeEmpty();
-            // TODO - verify parameter is correct
+            var param = command.NamedParameters.First();
+
+            param.Key.ShouldBe("File");
+            param.HasLongName("file").ShouldBe(true);
+            param.IsBool.ShouldBe(false);
+        }
+
+
+
+        [Test]
+        public void CanScanNamedBoolParameter()
+        {
+            var subCommand = new NamedBoolParameterCommand();
+            _scanner.Scan(subCommand);
+
+            var command = _configuration.Commands.First();
+            var param = command.NamedParameters.First();
+
+            param.Key.ShouldBe("DryRun");
+            param.HasLongName("dry-run").ShouldBe(true);
+            param.IsBool.ShouldBe(true);
         }
 
 
 
         // ReSharper disable UnusedMember.Local
-        private class EmptyCommand : ISubCommand
+        private abstract class AbstractSubCommand : ISubCommand
         {
             public void Execute() { }
         }
 
 
-        private class NamedParameterCommand : ISubCommand
+        private class EmptyCommand : AbstractSubCommand
+        {
+        }
+
+
+        private class NamedStringParameterCommand : AbstractSubCommand
         {
             [NamedParameter]
             public string File { get; set; }
+        }
 
-            public void Execute() { }
+
+        private class NamedBoolParameterCommand : AbstractSubCommand
+        {
+            [NamedParameter]
+            public bool DryRun { get; set; }
         }
         // ReSharper restore UnusedMember.Local
     }

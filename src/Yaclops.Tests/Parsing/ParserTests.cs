@@ -84,7 +84,7 @@ namespace Yaclops.Tests.Parsing
         [Test]
         public void CanParseGlobalNamedParameterByShortName()
         {
-            _config.AddNamedParameter("File").ShortName("f");
+            _config.AddNamedParameter("File", typeof(string)).ShortName("f");
 
             var result = DoParse("-f foo.txt");
 
@@ -102,7 +102,7 @@ namespace Yaclops.Tests.Parsing
         [Test]
         public void CanParseGlobalNamedParameterByLongName()
         {
-            _config.AddNamedParameter("File");
+            _config.AddNamedParameter("File", typeof(string));
 
             var result = DoParse("--file bar.txt");
 
@@ -120,7 +120,7 @@ namespace Yaclops.Tests.Parsing
         [Test]
         public void CommandSpecificParameterNotAvailableGlobally()
         {
-            _config.AddCommand("add").AddNamedParameter("File");
+            _config.AddCommand("add").AddNamedParameter("File", typeof(string));
 
             var result = DoParse("--file foo.txt add");
             result.Command.ShouldBe(null);
@@ -133,7 +133,7 @@ namespace Yaclops.Tests.Parsing
         public void CanParseCommandParameterByLongName()
         {
             var command = _config.AddCommand("add");
-            command.AddNamedParameter("File");
+            command.AddNamedParameter("File", typeof(string));
 
             var result = DoParse("add --file foo.txt");
             result.Command.ShouldBe(command);

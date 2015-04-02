@@ -13,7 +13,7 @@ namespace Yaclops.Tests.Reflecting
         [Test]
         public void CanPushString()
         {
-            ParserParameter param = new ParserNamedParameter("Name");
+            ParserParameter param = new ParserNamedParameter("Name", typeof(string));
             ParseResult result = new ParseResult();
             result.AddCommandValue(param, "value");
 
@@ -30,7 +30,7 @@ namespace Yaclops.Tests.Reflecting
         [Test]
         public void CanPushBool()
         {
-            ParserParameter param = new ParserNamedParameter("Add");
+            ParserParameter param = new ParserNamedParameter("Add", typeof(bool));
             ParseResult result = new ParseResult();
             result.AddCommandValue(param, "true");
 

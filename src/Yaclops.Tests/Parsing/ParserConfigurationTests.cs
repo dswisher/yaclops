@@ -28,7 +28,7 @@ namespace Yaclops.Tests.Parsing
         [Test]
         public void NamedParameterGetsDefaultLongName()
         {
-            var param = _config.AddNamedParameter("File");
+            var param = _config.AddNamedParameter("File", typeof(string));
 
             param.HasLongName("file").ShouldBe(true);
         }
@@ -37,7 +37,7 @@ namespace Yaclops.Tests.Parsing
         [Test]
         public void ExplicitLongNameOverridesDefault()
         {
-            var param = _config.AddNamedParameter("File").LongName("Monkey");
+            var param = _config.AddNamedParameter("File", typeof(string)).LongName("Monkey");
 
             param.HasLongName("file").ShouldBe(false);
             param.HasLongName("monkey").ShouldBe(false);
