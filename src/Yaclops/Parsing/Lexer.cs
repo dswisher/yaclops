@@ -48,22 +48,22 @@ namespace Yaclops.Parsing
                 }
 
                 _endSent = true;
-                return Return(TokenKind.EndOfInput, null);
+                return Return(TokenKind.EndOfInput, "<end>", null);
             }
 
             string item = _queue.Dequeue();
 
             if (item.StartsWith("--"))
             {
-                return Return(TokenKind.LongName, item.Substring(2));
+                return Return(TokenKind.LongName, item, item.Substring(2));
             }
 
             if (item.StartsWith("-"))
             {
-                return Return(TokenKind.ShortName, item.Substring(1));
+                return Return(TokenKind.ShortName, item, item.Substring(1));
             }
 
-            return Return(TokenKind.Value, item);
+            return Return(TokenKind.Value, item, item);
         }
 
 
@@ -80,9 +80,9 @@ namespace Yaclops.Parsing
 
 
 
-        private Token Return(TokenKind kind, string text)
+        private Token Return(TokenKind kind, string rawInput, string text)
         {
-            var token = new Token { Kind = kind, Text = text };
+            var token = new Token { Kind = kind, RawInput = rawInput, Text = text };
 
             _lastToken = token;
 
