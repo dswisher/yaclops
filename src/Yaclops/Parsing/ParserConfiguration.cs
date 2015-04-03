@@ -77,7 +77,10 @@ namespace Yaclops.Parsing
 
         public ParserParameter ShortName(string name)
         {
-            _shortNames.Add(name);
+            if (!string.IsNullOrEmpty(name))
+            {
+                _shortNames.Add(name);
+            }
             return this;
         }
 

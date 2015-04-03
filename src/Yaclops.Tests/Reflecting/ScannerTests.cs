@@ -63,6 +63,7 @@ namespace Yaclops.Tests.Reflecting
 
             param.Key.ShouldBe("DryRun");
             param.HasLongName("dry-run").ShouldBe(true);
+            param.HasShortName("x").ShouldBe(true);
             param.IsBool.ShouldBe(true);
         }
 
@@ -89,7 +90,7 @@ namespace Yaclops.Tests.Reflecting
 
         private class NamedBoolParameterCommand : AbstractSubCommand
         {
-            [NamedParameter]
+            [NamedParameter(ShortName="x")]
             public bool DryRun { get; set; }
         }
         // ReSharper restore UnusedMember.Local

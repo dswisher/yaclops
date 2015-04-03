@@ -36,10 +36,12 @@ namespace Yaclops.Reflecting
 
             foreach (var prop in namedProps)
             {
-                /* var param = */ command.AddNamedParameter(prop.Name, prop.PropertyType);
+                var namedProp = (NamedParameterAttribute)prop.GetCustomAttributes(typeof (NamedParameterAttribute), true).First();
+                var param = command.AddNamedParameter(prop.Name, prop.PropertyType);
 
                 // TODO - add any explicitly specified long names
-                // TODO - add short any specified short names
+
+                param.ShortName(namedProp.ShortName);
             }
 
             // Pick out the positional parameters

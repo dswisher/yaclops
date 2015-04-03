@@ -43,7 +43,13 @@ namespace Yaclops.Parsing.States
                 Context.Result.AddError("Named parameter '{0}' is not known.", token.RawInput);
                 return new FailureState(Context);
             }
-            // TODO - what about a bool, that does not have a value (or at least, may not have a value)?
+
+            if (param.IsBool)
+            {
+                Context.Result.AddCommandValue(param, "true");
+                return this;
+            }
+
             return new CommandValueState(Context, param);
         }
     }

@@ -130,12 +130,13 @@ namespace Yaclops.Tests.Parsing
 
 
         [Test]
-        public void CanParseCommandParameterByLongName()
+        public void CanParseCommandStringParameterByLongName()
         {
             var command = _config.AddCommand("add");
             command.AddNamedParameter("File", typeof(string));
 
             var result = DoParse("add --file foo.txt");
+            result.Errors.ShouldBeEmpty();
             result.Command.ShouldBe(command);
             result.GlobalValues.ShouldBeEmpty();
 
@@ -144,6 +145,59 @@ namespace Yaclops.Tests.Parsing
             value.ShouldNotBe(null);
             value.Name.ShouldBe("File");
             value.Value.ShouldBe("foo.txt");
+        }
+
+
+        [Test]
+        public void CanParseCommandStringParameterByShortName()
+        {
+            var command = _config.AddCommand("add");
+            command.AddNamedParameter("File", typeof(string)).ShortName("z");
+
+            var result = DoParse("add -z foo.txt");
+            result.Errors.ShouldBeEmpty();
+            result.Command.ShouldBe(command);
+            result.GlobalValues.ShouldBeEmpty();
+
+            var value = result.CommandValues.FirstOrDefault(x => x.Name == "File");
+
+            value.ShouldNotBe(null);
+            value.Name.ShouldBe("File");
+            value.Value.ShouldBe("foo.txt");
+        }
+
+
+        [Test]
+        public void CanParseCommandBoolByLongName()
+        {
+            var command = _config.AddCommand("unzip");
+            command.AddNamedParameter("List", typeof(bool));
+
+            var result = DoParse("unzip --list");
+
+            result.Errors.ShouldBeEmpty();
+
+            var value = result.CommandValues.FirstOrDefault(x => x.Name == "List");
+
+            value.ShouldNotBe(null);
+            value.Value.ShouldBe("true");
+        }
+
+
+        [Test]
+        public void CanParseCommandBoolByShortName()
+        {
+            var command = _config.AddCommand("unzip");
+            command.AddNamedParameter("List", typeof(bool)).ShortName("l");
+
+            var result = DoParse("unzip -l");
+
+            result.Errors.ShouldBeEmpty();
+
+            var value = result.CommandValues.FirstOrDefault(x => x.Name == "List");
+
+            value.ShouldNotBe(null);
+            value.Value.ShouldBe("true");
         }
 
 
