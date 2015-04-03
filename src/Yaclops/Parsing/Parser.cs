@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Yaclops.Parsing.Configuration;
 using Yaclops.Parsing.States;
 
 namespace Yaclops.Parsing

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Yaclops.Parsing.Configuration;
 
 
 namespace Yaclops.Parsing.States

@@ -2,6 +2,7 @@
 using Shouldly;
 using Yaclops.Attributes;
 using Yaclops.Parsing;
+using Yaclops.Parsing.Configuration;
 using Yaclops.Reflecting;
 
 namespace Yaclops.Tests.Reflecting

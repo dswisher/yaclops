@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using Shouldly;
 using Yaclops.Parsing;
+using Yaclops.Parsing.Configuration;
 
 namespace Yaclops.Tests.Parsing
 {

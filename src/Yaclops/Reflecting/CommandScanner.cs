@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using Yaclops.Attributes;
-using Yaclops.Parsing;
+using Yaclops.Parsing.Configuration;
 
 namespace Yaclops.Reflecting
 {

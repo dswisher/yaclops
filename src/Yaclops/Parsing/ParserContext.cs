@@ -1,5 +1,7 @@
 ﻿
 
+using Yaclops.Parsing.Configuration;
+
 namespace Yaclops.Parsing
 {
     internal class ParserContext
