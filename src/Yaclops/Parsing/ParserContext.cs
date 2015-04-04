@@ -1,5 +1,4 @@
 ﻿
-
 using Yaclops.Parsing.Configuration;
 
 namespace Yaclops.Parsing
@@ -19,7 +18,6 @@ namespace Yaclops.Parsing
         public Lexer Lexer { get; private set; }
         public CommandMapper Mapper { get; private set; }
 
-        // TODO - this needs to be a class on its own right, that knows how to pull the command object
         public ParserCommand Command { get; set; }
     }
 }

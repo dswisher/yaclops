@@ -7,6 +7,8 @@ namespace Yaclops.Parsing.Configuration
     {
         private readonly List<string> _aliases = new List<string>();
         private readonly List<ParserNamedParameter> _namedParameters = new List<ParserNamedParameter>();
+        private readonly List<ParserPositionalParameter> _positionalParameters = new List<ParserPositionalParameter>();
+        private readonly Queue<ParserPositionalParameter> _positionalQueue = new Queue<ParserPositionalParameter>();
 
 
         public ParserCommand(string text)
@@ -34,6 +36,17 @@ namespace Yaclops.Parsing.Configuration
         }
 
 
+        public ParserPositionalParameter AddPositionalParameter(string key)
+        {
+            var param = new ParserPositionalParameter(key);
+
+            _positionalParameters.Add(param);
+            _positionalQueue.Enqueue(param);
+
+            return param;
+        }
+
+
         public override string ToString()
         {
             return Text;
@@ -43,5 +56,18 @@ namespace Yaclops.Parsing.Configuration
         public string Text { get; private set; }
         public IEnumerable<string> Aliases { get { return _aliases; } }
         public IEnumerable<ParserNamedParameter> NamedParameters { get { return _namedParameters; } }
+
+
+        public ParserPositionalParameter PopPositionalParameter()
+        {
+            if (_positionalQueue.Count > 0)
+            {
+                // TODO - handle list parameter - if a list, don't pull it off the queue - just peek
+
+                return _positionalQueue.Dequeue();
+            }
+
+            return null;
+        }
     }
 }

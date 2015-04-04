@@ -27,10 +27,28 @@ namespace Yaclops.Parsing.States
                 case TokenKind.LongName:
                     return HandleNamedParameter(token, (t, p) => p.HasLongName(t.Text));
 
+                case TokenKind.Value:
+                    return HandlePositionalParameter(token);
+
                 default:
                     Context.Result.AddError("Unexpected input: '{0}'.", token.RawInput);
                     return new FailureState(Context);
             }
+        }
+
+
+
+        private AbstractState HandlePositionalParameter(Token token)
+        {
+            var param = Context.Command.PopPositionalParameter();
+            if (param == null)
+            {
+                Context.Result.AddError("Unexpected input: '{0}'.", token.RawInput);
+                return new FailureState(Context);
+            }
+
+            Context.Result.AddCommandValue(param, token.Text);
+            return this;
         }
 
 

@@ -55,6 +55,7 @@
     <Compile Include="Parsing\Configuration\ParserCommand.cs" />
     <Compile Include="Parsing\Configuration\ParserNamedParameter.cs" />
     <Compile Include="Parsing\Configuration\ParserParameter.cs" />
+    <Compile Include="Parsing\Configuration\ParserPositionalParameter.cs" />
     <Compile Include="Parsing\Lexer.cs" />
     <Compile Include="Parsing\ParserContext.cs" />
     <Compile Include="Parsing\States\AbstractState.cs" />

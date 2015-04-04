@@ -202,6 +202,37 @@ namespace Yaclops.Tests.Parsing
         }
 
 
+        [Test]
+        public void CanParseCommandPositionalString()
+        {
+            var command = _config.AddCommand("unzip");
+            command.AddPositionalParameter("File");
+
+            var result = DoParse("unzip foo.txt");
+
+            result.Errors.ShouldBeEmpty();
+
+            var value = result.CommandValues.FirstOrDefault(x => x.Name == "File");
+
+            value.ShouldNotBe(null);
+            value.Value.ShouldBe("foo.txt");
+        }
+
+
+
+        [Test]
+        public void ExtraPositionalValueReturnsError()
+        {
+            var command = _config.AddCommand("unzip");
+            command.AddPositionalParameter("File");
+
+            var result = DoParse("unzip foo.txt bar.txt");
+
+            result.Errors.ShouldContain(x => x.ToLower().Contains("unexpected"));
+        }
+
+
+
         // TODO - test global long-name AFTER command: add --file foo.txt where --file is global, and not command-specific
 
 
