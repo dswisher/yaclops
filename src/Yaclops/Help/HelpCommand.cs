@@ -10,6 +10,8 @@ namespace Yaclops.Help
     /// <summary>
     /// Internal help command.
     /// </summary>
+    [Summary("Provide help on the commands and options.")]
+    // TODO - add description
     internal class HelpCommand : ISubCommand
     {
         private readonly ParserConfiguration _configuration;
