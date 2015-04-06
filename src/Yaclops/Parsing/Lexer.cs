@@ -75,7 +75,6 @@ namespace Yaclops.Parsing
                     }
                     else if (Current == '-')
                     {
-                        Advance();
                         ConsumeParameter();
                     }
                     else if (Current == '"')
@@ -100,6 +99,7 @@ namespace Yaclops.Parsing
                 TokenKind kind = TokenKind.ShortName;
 
                 raw.Append(Current);
+                Advance();
                 while (!End && !Char.IsWhiteSpace(Current) && (Current != '='))
                 {
                     if ((Current == '-') && (text.Length == 0))

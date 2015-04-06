@@ -6,7 +6,7 @@ namespace Yaclops.Attributes
     /// <summary>
     /// Decorate a command with an alias
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class)]
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     public class CommandAliasAttribute : Attribute
     {
         /// <summary>

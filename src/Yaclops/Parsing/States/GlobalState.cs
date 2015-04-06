@@ -1,5 +1,6 @@
 ﻿
 
+using System;
 using System.Linq;
 
 namespace Yaclops.Parsing.States
@@ -47,11 +48,10 @@ namespace Yaclops.Parsing.States
                     return this;
 
                 case TokenKind.LongName:
-                    if (Context.Mapper.CanAccept(token.Text))
+                    if (Context.Mapper.CanAccept(token.RawInput))
                     {
-                        Context.Mapper.Advance(token.Text);
+                        Context.Mapper.Advance(token.RawInput);
                         // TODO - assert/throw if state is not Accepted?  Longname command shouldn't be multiple words...
-                        // TODO - advance to command state
                         Context.Command = Context.Mapper.Command;
                         Context.Result.Command = Context.Mapper.Command;
                         return new CommandState(Context);
@@ -66,6 +66,15 @@ namespace Yaclops.Parsing.States
                     return new GlobalValueState(Context, longParam);
 
                 case TokenKind.ShortName:
+                    Console.WriteLine("---> ShortName, token.Text='{0}', RawInput='{1}'", token.Text, token.RawInput);
+                    if (Context.Mapper.CanAccept(token.RawInput))
+                    {
+                        Context.Mapper.Advance(token.RawInput);
+                        // TODO - assert/throw if state is not Accepted?  Shortname command shouldn't be multiple words...
+                        Context.Command = Context.Mapper.Command;
+                        Context.Result.Command = Context.Mapper.Command;
+                        return new CommandState(Context);
+                    }
                     var shortParam = Context.Configuration.GlobalNamedParameters.FirstOrDefault(x => x.HasShortName(token.Text));
                     if (shortParam == null)
                     {

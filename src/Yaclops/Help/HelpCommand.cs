@@ -12,6 +12,10 @@ namespace Yaclops.Help
     /// </summary>
     [Summary("Provide help on the commands and options.")]
     [CommandAlias("--help")]
+    [CommandAlias("-?")]
+    [CommandAlias("-h")]
+    [CommandAlias("/?")]
+    // TODO - allow help aliases to be overridden via settings
     // TODO - add description
     internal class HelpCommand : ISubCommand
     {
