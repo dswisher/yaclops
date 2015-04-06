@@ -20,7 +20,7 @@ namespace Yaclops
         private readonly ParserConfiguration _configuration = new ParserConfiguration();
         private readonly List<ISubCommand> _commands = new List<ISubCommand>();
         private readonly Dictionary<string, ISubCommand> _commandMap = new Dictionary<string, ISubCommand>();
-        private readonly ISubCommand _helpCommand;
+        private readonly HelpCommandEx _helpCommand;
         private bool _initialized;
 
         /// <summary>
@@ -84,9 +84,20 @@ namespace Yaclops
             // If this is the help command, give it a little assist by looking up the help target (if any)...
             if (command == _helpCommand)
             {
-                // TODO - lookup help target and set it on the command?
-                // TODO - set ParseCommand onto the help object, too? Do we need both?
-                // TODO - what about the command list? Pull that from _commands or _configuration?
+                if ((_helpCommand.Commands != null) && (_helpCommand.Commands.Any()))
+                {
+                    string text = string.Join(" ", _helpCommand.Commands);
+
+                    var helpTarget = _commandMap[text];
+
+                    if (helpTarget == null)
+                    {
+                        // TODO - better error handling
+                        throw new CommandLineParserException("No help for command '{0}', as it is not known.", text);
+                    }
+
+                    _helpCommand.Target = _configuration.Commands.FirstOrDefault(x => x.Text == text);
+                }
             }
 
             // Return the populated, ready-to-roll command...

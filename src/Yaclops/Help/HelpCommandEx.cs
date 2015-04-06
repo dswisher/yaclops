@@ -23,10 +23,33 @@ namespace Yaclops.Help
         public List<string> Commands { get; set; }
 
 
+        public ParserCommand Target { get; set; }
+
+
         public void Execute()
         {
+            if (Target == null)
+            {
+                ListCommands();
+            }
+            else
+            {
+                OneCommand();
+            }
+        }
+
+
+        private void ListCommands()
+        {
+            Console.WriteLine("HelpCommandEx.Execute is not yet implemented - ListCommands.");
             // TODO - implement new help command
-            Console.WriteLine("HelpCommandEx.Execute is not yet implemented.");
+        }
+
+
+        private void OneCommand()
+        {
+            Console.WriteLine("HelpCommandEx.Execute is not yet implemented - OneCommand: '{0}'.", Target.Text);
+            // TODO - implement new help command
         }
     }
 }
