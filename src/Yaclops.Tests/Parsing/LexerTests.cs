@@ -87,9 +87,8 @@ namespace Yaclops.Tests.Parsing
                 yield return Content("value").Value("value");
                 yield return Content("-short value").ShortName("short").Value("value");
                 yield return Content("--long value").LongName("long").Value("value");
-
-                // TODO - add cases for more complex cases, like quoted strings:
-                // yield return Content("--file \"spacey value\"").LongName("file").Value("spacey value");
+                yield return Content("--long=value").LongName("long").Value("value");
+                yield return Content("--file \"spacey value\" -short").LongName("file").Value("spacey value").ShortName("short");
             }
 
 
