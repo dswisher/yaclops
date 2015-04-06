@@ -306,6 +306,26 @@ namespace Yaclops.Tests.Parsing
         }
 
 
+
+        [Test]
+        public void EnumerableOverloadCanHandleParameterWithSpaces()
+        {
+            var command = _config.AddCommand("exit");
+            command.AddNamedParameter("Speed");
+
+            Parser parser = new Parser(_config);
+
+            var result = parser.Parse(new[] { "exit", "--speed", "super fast" });
+
+            result.Errors.ShouldBeEmpty();
+
+            var value = result.CommandValues.FirstOrDefault(x => x.Name == "Speed");
+
+            value.ShouldNotBe(null);
+            value.Value.ShouldBe("super fast");
+        }
+
+
         // TODO - test global long-name AFTER command: add --file foo.txt where --file is global, and not command-specific
 
 
