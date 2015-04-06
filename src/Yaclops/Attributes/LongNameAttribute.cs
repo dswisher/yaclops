@@ -9,7 +9,6 @@ namespace Yaclops.Attributes
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Property)]
     public class LongNameAttribute : Attribute
     {
-
         /// <summary>
         /// Constructor
         /// </summary>

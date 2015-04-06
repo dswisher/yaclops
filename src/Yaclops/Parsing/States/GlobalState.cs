@@ -54,7 +54,7 @@ namespace Yaclops.Parsing.States
                         // TODO - advance to command state
                         Context.Command = Context.Mapper.Command;
                         Context.Result.Command = Context.Mapper.Command;
-                        return new SuccessState(Context);
+                        return new CommandState(Context);
                     }
                     var longParam = Context.Configuration.GlobalNamedParameters.FirstOrDefault(x => x.HasLongName(token.Text));
                     if (longParam == null)

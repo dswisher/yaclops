@@ -47,9 +47,8 @@ namespace Yaclops.Parsing.Configuration
         }
 
 
-        public void AddLongName(string name)
+        public void SetLongName(string name)
         {
-            // TODO - this needs to keep a list of long names, and only override the default - not other long names
             Text = name;
         }
 

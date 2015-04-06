@@ -50,10 +50,18 @@ namespace Yaclops.Reflecting
                 command.Description = descAtt.Description;
             }
 
-            // Add any long-name overrides to the command
-            foreach (LongNameAttribute att in type.GetCustomAttributes(typeof(LongNameAttribute), true))
+            // Allow long-name to be overridden
+            var longAtt = FindAttribute<LongNameAttribute>(type);
+            if (longAtt != null)
             {
-                command.AddLongName(att.Name);
+                // TODO - if there are multiple long names on command, throw?
+                command.SetLongName(longAtt.Name);
+            }
+
+            // Add any aliases
+            foreach (CommandAliasAttribute att in type.GetCustomAttributes(typeof(CommandAliasAttribute), true))
+            {
+                command.AddAlias(att.Alias);
             }
 
             // Pick out the named parameters

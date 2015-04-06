@@ -11,6 +11,7 @@ namespace Yaclops.Help
     /// Internal help command.
     /// </summary>
     [Summary("Provide help on the commands and options.")]
+    [CommandAlias("--help")]
     // TODO - add description
     internal class HelpCommand : ISubCommand
     {

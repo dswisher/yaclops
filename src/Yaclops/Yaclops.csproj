@@ -36,6 +36,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\CommandAliasAttribute.cs" />
     <Compile Include="Attributes\LongNameAttribute.cs" />
     <Compile Include="Attributes\NamedParameterAttribute.cs" />
     <Compile Include="Attributes\PositionalParameterAttribute.cs" />
