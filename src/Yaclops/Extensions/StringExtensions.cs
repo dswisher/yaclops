@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace Yaclops
+namespace Yaclops.Extensions
 {
     internal static class StringExtensions
     {

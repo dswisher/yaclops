@@ -36,20 +36,14 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ArgumentList.cs" />
     <Compile Include="Attributes\LongNameAttribute.cs" />
-    <Compile Include="CommandExtensions.cs" />
-    <Compile Include="CommandLineArgumentParser.cs" />
     <Compile Include="Attributes\NamedParameterAttribute.cs" />
     <Compile Include="Attributes\PositionalParameterAttribute.cs" />
-    <Compile Include="CommandLineParserEx.cs" />
+    <Compile Include="CommandLineParser.cs" />
     <Compile Include="CommandLineParserException.cs" />
-    <Compile Include="Help\HelpBuilder.cs" />
-    <Compile Include="Help\HelpCommandEx.cs" />
+    <Compile Include="Help\HelpCommand.cs" />
     <Compile Include="Help\WrappedConsole.cs" />
     <Compile Include="ISubCommand.cs" />
-    <Compile Include="Models\NamedParameterEntry.cs" />
-    <Compile Include="Models\PositionalParameterEntry.cs" />
     <Compile Include="Parsing\CommandMapper.cs" />
     <Compile Include="Parsing\Configuration\ParserCommand.cs" />
     <Compile Include="Parsing\Configuration\ParserNamedParameter.cs" />
@@ -75,7 +69,7 @@
     <Compile Include="Attributes\SummaryAttribute.cs" />
     <Compile Include="Reflecting\CommandPusher.cs" />
     <Compile Include="Reflecting\CommandScanner.cs" />
-    <Compile Include="StringExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

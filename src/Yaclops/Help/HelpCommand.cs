@@ -1,21 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Yaclops.Attributes;
 using Yaclops.Parsing.Configuration;
 
 namespace Yaclops.Help
 {
     /// <summary>
-    /// Newfangled help command. This will replace the existing HelpCommand once the new parser is done.
+    /// Internal help command.
     /// </summary>
-    [LongName("help")]
-    internal class HelpCommandEx : ISubCommand
+    internal class HelpCommand : ISubCommand
     {
         private readonly ParserConfiguration _configuration;
         private readonly IConsole _console;
 
-        public HelpCommandEx(ParserConfiguration configuration, IConsole console)
+        public HelpCommand(ParserConfiguration configuration, IConsole console)
         {
             _configuration = configuration;
             _console = console;
@@ -44,7 +44,7 @@ namespace Yaclops.Help
 
         private void ListCommands()
         {
-            _console.StartWrap("usage: {0}", HelpBuilder.ExeName());
+            _console.StartWrap("usage: {0}", ExeName());
 
             // TODO - write global flags
 
@@ -60,7 +60,7 @@ namespace Yaclops.Help
             }
 
             _console.WriteLine();
-            _console.WriteLine("See '{0} help <command>' to read about a specific subcommand.", HelpBuilder.ExeName());
+            _console.WriteLine("See '{0} help <command>' to read about a specific subcommand.", ExeName());
         }
 
 
@@ -72,12 +72,12 @@ namespace Yaclops.Help
 
             // Print the name
             _console.WriteTitle("Name");
-            _console.WriteLine("{0} {1} - {2}", HelpBuilder.ExeName(), Target.Text, Target.Summary);
+            _console.WriteLine("{0} {1} - {2}", ExeName(), Target.Text, Target.Summary);
 
             // Print the synopsis
             _console.WriteLine();
             _console.WriteTitle("Synopsis");
-            _console.StartWrap("{0} {1}", HelpBuilder.ExeName(), Target.Text);
+            _console.StartWrap("{0} {1}", ExeName(), Target.Text);
 
             // TODO - repeat global flags?
 
@@ -168,6 +168,14 @@ namespace Yaclops.Help
                     _console.EndIndent();
                 }
             }
+        }
+
+
+
+        private static string ExeName()
+        {
+            // TODO - allow the name to be overridden in settings
+            return Assembly.GetEntryAssembly().GetName().Name.ToLower();
         }
     }
 }

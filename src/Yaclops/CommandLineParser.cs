@@ -15,19 +15,19 @@ namespace Yaclops
     /// <remarks>
     /// Once this is fully functional, drop the old one, make this one public and drop the Ex suffix
     /// </remarks>
-    public class CommandLineParserEx
+    public class CommandLineParser
     {
         private readonly ParserConfiguration _configuration = new ParserConfiguration();
         private readonly List<ISubCommand> _commands = new List<ISubCommand>();
         private readonly Dictionary<string, ISubCommand> _commandMap = new Dictionary<string, ISubCommand>();
-        private readonly HelpCommandEx _helpCommand;
+        private readonly HelpCommand _helpCommand;
         private bool _initialized;
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="commands">List of command objects to reflect</param>
-        public CommandLineParserEx(IEnumerable<ISubCommand> commands) : this()
+        public CommandLineParser(IEnumerable<ISubCommand> commands) : this()
         {
             _commands.AddRange(commands);
         }
@@ -39,10 +39,10 @@ namespace Yaclops
         /// <remarks>
         /// Commands can be added using the AddCommand method.
         /// </remarks>
-        public CommandLineParserEx()
+        public CommandLineParser()
         {
             // Seed the command list with the help command
-            _helpCommand = new HelpCommandEx(_configuration, new WrappedConsole());
+            _helpCommand = new HelpCommand(_configuration, new WrappedConsole());
             _commands.Add(_helpCommand);
         }
 

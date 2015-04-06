@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using Yaclops.Attributes;
+using Yaclops.Extensions;
 using Yaclops.Parsing.Configuration;
 
 namespace Yaclops.Reflecting

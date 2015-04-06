@@ -15,7 +15,7 @@ namespace Sample
             {
                 var container = CreateContainer();
 
-                var parser = container.Resolve<CommandLineParserEx>();
+                var parser = container.Resolve<CommandLineParser>();
 
                 var command = parser.Parse(args);
 
@@ -50,7 +50,7 @@ namespace Sample
                 .SingleInstance()
                 .As<ISubCommand>();
 
-            builder.RegisterType<CommandLineParserEx>();
+            builder.RegisterType<CommandLineParser>();
 
             return builder.Build();
         }
