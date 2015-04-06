@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using Sample.Helpers;
 using Yaclops;
 using Yaclops.Attributes;
@@ -43,7 +44,7 @@ Please see `commit` for alternative ways to add content to a commit.")]
         }
 
 
-        [PositionalParameter]
+        [PositionalParameter, Required]
         public List<string> Paths { get; private set; }
 
         [NamedParameter(ShortName="n")]

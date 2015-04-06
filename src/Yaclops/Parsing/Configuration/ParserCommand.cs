@@ -7,6 +7,7 @@ namespace Yaclops.Parsing.Configuration
     {
         private readonly List<string> _aliases = new List<string>();
         private readonly List<ParserNamedParameter> _namedParameters = new List<ParserNamedParameter>();
+        private readonly List<ParserPositionalParameter> _positionalParameters = new List<ParserPositionalParameter>();
         private readonly Queue<ParserPositionalParameter> _positionalQueue = new Queue<ParserPositionalParameter>();
 
 
@@ -39,6 +40,7 @@ namespace Yaclops.Parsing.Configuration
         {
             var param = new ParserPositionalParameter(key, isCollection);
 
+            _positionalParameters.Add(param);
             _positionalQueue.Enqueue(param);
 
             return param;
@@ -60,8 +62,10 @@ namespace Yaclops.Parsing.Configuration
 
         public string Text { get; private set; }
         public string Summary { get; set; }
+        public string Description { get; set; }
         public IEnumerable<string> Aliases { get { return _aliases; } }
         public IEnumerable<ParserNamedParameter> NamedParameters { get { return _namedParameters; } }
+        public IEnumerable<ParserPositionalParameter> PositionalParameters { get { return _positionalParameters; } }
 
 
         public ParserPositionalParameter PopPositionalParameter()

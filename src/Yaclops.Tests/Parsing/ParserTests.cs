@@ -85,7 +85,7 @@ namespace Yaclops.Tests.Parsing
         [Test]
         public void CanParseGlobalNamedParameterByShortName()
         {
-            _config.AddNamedParameter("File", typeof(string)).ShortName("f");
+            _config.AddNamedParameter("File", typeof(string)).AddShortName("f");
 
             var result = DoParse("-f foo.txt");
 
@@ -153,7 +153,7 @@ namespace Yaclops.Tests.Parsing
         public void CanParseCommandStringParameterByShortName()
         {
             var command = _config.AddCommand("add");
-            command.AddNamedParameter("File", typeof(string)).ShortName("z");
+            command.AddNamedParameter("File", typeof(string)).AddShortName("z");
 
             var result = DoParse("add -z foo.txt");
 
@@ -187,7 +187,7 @@ namespace Yaclops.Tests.Parsing
         public void CanParseCommandBoolByShortName()
         {
             var command = _config.AddCommand("unzip");
-            command.AddNamedParameter("List", typeof(bool)).ShortName("l");
+            command.AddNamedParameter("List", typeof(bool)).AddShortName("l");
 
             var result = DoParse("unzip -l");
 

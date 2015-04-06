@@ -12,7 +12,7 @@ namespace Yaclops.Parsing
         /// </summary>
         public ParserConfigurationException(string format, params object[] args)
             : base(string.Format(format, args))
-        {            
+        {
         }
     }
 }

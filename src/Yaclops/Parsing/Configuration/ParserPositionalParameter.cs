@@ -12,5 +12,6 @@ namespace Yaclops.Parsing.Configuration
 
 
         public bool IsCollection { get; private set; }
+        public bool IsRequired { get; set; }
     }
 }

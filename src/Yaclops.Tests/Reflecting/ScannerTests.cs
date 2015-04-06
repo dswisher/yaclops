@@ -88,7 +88,7 @@ namespace Yaclops.Tests.Reflecting
 
             var command = _configuration.Commands.First();
 
-            var param = command.PopPositionalParameter();
+            var param = command.PositionalParameters.First();
             param.ShouldNotBe(null);
             param.Key.ShouldBe("Name");
         }

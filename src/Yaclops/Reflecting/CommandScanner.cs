@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Reflection;
 using Yaclops.Attributes;
 using Yaclops.Parsing.Configuration;
 
@@ -39,6 +42,13 @@ namespace Yaclops.Reflecting
                 command.Summary = summaryAtt.Summary;
             }
 
+            // Add the description, if there is one...
+            var descAtt = FindAttribute<DescriptionAttribute>(type);
+            if (descAtt != null)
+            {
+                command.Description = descAtt.Description;
+            }
+
             // Add any long-name overrides to the command
             foreach (LongNameAttribute att in type.GetCustomAttributes(typeof(LongNameAttribute), true))
             {
@@ -56,7 +66,13 @@ namespace Yaclops.Reflecting
 
                 // TODO - add any explicitly specified long names
 
-                param.ShortName(namedProp.ShortName);
+                param.AddShortName(namedProp.ShortName);
+
+                descAtt = FindAttribute<DescriptionAttribute>(prop);
+                if (descAtt != null)
+                {
+                    param.Description = descAtt.Description;
+                }
             }
 
             // Pick out the positional parameters
@@ -71,9 +87,11 @@ namespace Yaclops.Reflecting
                 bool isCollection = propType == typeof (List<string>);
 
                 // var positionalProp = (PositionalParameterAttribute)prop.GetCustomAttributes(typeof(PositionalParameterAttribute), true).First();
-                /* var param = */ command.AddPositionalParameter(prop.Name, isCollection);
+                var param = command.AddPositionalParameter(prop.Name, isCollection);
 
                 // TODO - add any explicitly specified long names
+
+                param.IsRequired = prop.GetCustomAttributes(typeof(RequiredAttribute), true).Any();
             }
 
             return command;
@@ -84,6 +102,14 @@ namespace Yaclops.Reflecting
         private T FindAttribute<T>(Type commandType)
         {
             var att = commandType.GetCustomAttributes(typeof(T), true).FirstOrDefault();
+
+            return (T)att;
+        }
+
+
+        private T FindAttribute<T>(PropertyInfo prop)
+        {
+            var att = prop.GetCustomAttributes(typeof(T), true).FirstOrDefault();
 
             return (T)att;
         }

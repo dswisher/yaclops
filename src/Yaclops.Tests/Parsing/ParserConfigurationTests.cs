@@ -38,7 +38,7 @@ namespace Yaclops.Tests.Parsing
         [Test]
         public void ExplicitLongNameOverridesDefault()
         {
-            var param = _config.AddNamedParameter("File", typeof(string)).LongName("Monkey");
+            var param = _config.AddNamedParameter("File", typeof(string)).AddLongName("Monkey");
 
             param.HasLongName("file").ShouldBe(false);
             param.HasLongName("monkey").ShouldBe(false);
@@ -46,5 +46,7 @@ namespace Yaclops.Tests.Parsing
         }
 
         // TODO - how to disable long name?
+
+        // TODO - add test to verify exception if required positional parameter follows optional positional parameter
     }
 }

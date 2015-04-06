@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Yaclops.Parsing.Configuration
 {
@@ -18,6 +19,11 @@ namespace Yaclops.Parsing.Configuration
         }
 
         public string Key { get; private set; }
+        public string Name { get { return _longNames.First(); } }
+        public string Description { get; set; }
+
+        public IEnumerable<string> LongNames { get { return _longNames; } }
+        public IEnumerable<string> ShortNames { get { return _shortNames; } }
 
         public bool HasShortName(string text)
         {
@@ -29,7 +35,7 @@ namespace Yaclops.Parsing.Configuration
             return _longNames.Contains(text);
         }
 
-        public ParserParameter ShortName(string name)
+        public ParserParameter AddShortName(string name)
         {
             if (!string.IsNullOrEmpty(name))
             {
@@ -38,7 +44,7 @@ namespace Yaclops.Parsing.Configuration
             return this;
         }
 
-        public ParserParameter LongName(string name)
+        public ParserParameter AddLongName(string name)
         {
             if (_longNameIsDefault)
             {
