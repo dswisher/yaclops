@@ -71,6 +71,7 @@ namespace Yaclops.Parsing
             else if (_current.ContainsChild(word))
             {
                 _current = _current.GetChild(word);
+                State = MapperState.Pending;
             }
             else
             {

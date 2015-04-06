@@ -40,8 +40,10 @@ namespace Yaclops.Tests.Parsing
             ParserCommand command1 = new ParserCommand("add file");
             ParserCommand command2 = new ParserCommand("add comment");
             var mapper = new CommandMapper(new[] { command1, command2 });
-            mapper.Advance("add");
             mapper.State.ShouldBe(MapperState.Initial);
+
+            mapper.Advance("add");
+            mapper.State.ShouldBe(MapperState.Pending);
 
             mapper.Advance("comment");
             mapper.State.ShouldBe(MapperState.Accepted);
@@ -68,7 +70,7 @@ namespace Yaclops.Tests.Parsing
             ParserCommand command2 = new ParserCommand("add comment");
             var mapper = new CommandMapper(new[] { command1, command2 });
             mapper.Advance("add");
-            mapper.State.ShouldBe(MapperState.Initial);
+            mapper.State.ShouldBe(MapperState.Pending);
 
             mapper.Advance("junk");
             mapper.State.ShouldBe(MapperState.Rejected);
