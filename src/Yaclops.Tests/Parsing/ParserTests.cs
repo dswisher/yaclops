@@ -85,7 +85,7 @@ namespace Yaclops.Tests.Parsing
         [Test]
         public void CanParseGlobalNamedParameterByShortName()
         {
-            _config.AddNamedParameter("File", typeof(string)).AddShortName("f");
+            _config.AddNamedParameter("File").AddShortName("f");
 
             var result = DoParse("-f foo.txt");
 
@@ -103,7 +103,7 @@ namespace Yaclops.Tests.Parsing
         [Test]
         public void CanParseGlobalNamedParameterByLongName()
         {
-            _config.AddNamedParameter("File", typeof(string));
+            _config.AddNamedParameter("File");
 
             var result = DoParse("--file bar.txt");
 
@@ -121,7 +121,7 @@ namespace Yaclops.Tests.Parsing
         [Test]
         public void CommandSpecificParameterNotAvailableGlobally()
         {
-            _config.AddCommand("add").AddNamedParameter("File", typeof(string));
+            _config.AddCommand("add").AddNamedParameter("File");
 
             var result = DoBadParse("--file foo.txt add");
             result.Command.ShouldBe(null);
@@ -134,7 +134,7 @@ namespace Yaclops.Tests.Parsing
         public void CanParseCommandStringParameterByLongName()
         {
             var command = _config.AddCommand("add");
-            command.AddNamedParameter("File", typeof(string));
+            command.AddNamedParameter("File");
 
             var result = DoParse("add --file foo.txt");
 
@@ -153,7 +153,7 @@ namespace Yaclops.Tests.Parsing
         public void CanParseCommandStringParameterByShortName()
         {
             var command = _config.AddCommand("add");
-            command.AddNamedParameter("File", typeof(string)).AddShortName("z");
+            command.AddNamedParameter("File").AddShortName("z");
 
             var result = DoParse("add -z foo.txt");
 
@@ -172,7 +172,7 @@ namespace Yaclops.Tests.Parsing
         public void CanParseCommandBoolByLongName()
         {
             var command = _config.AddCommand("unzip");
-            command.AddNamedParameter("List", typeof(bool));
+            command.AddNamedParameter("List", true);
 
             var result = DoParse("unzip --list");
 
@@ -187,7 +187,7 @@ namespace Yaclops.Tests.Parsing
         public void CanParseCommandBoolByShortName()
         {
             var command = _config.AddCommand("unzip");
-            command.AddNamedParameter("List", typeof(bool)).AddShortName("l");
+            command.AddNamedParameter("List", true).AddShortName("l");
 
             var result = DoParse("unzip -l");
 

@@ -71,7 +71,7 @@ namespace Yaclops.Reflecting
             foreach (var prop in namedProps)
             {
                 var namedProp = (NamedParameterAttribute)prop.GetCustomAttributes(typeof(NamedParameterAttribute), true).First();
-                var param = command.AddNamedParameter(prop.Name, prop.PropertyType);
+                var param = command.AddNamedParameter(prop.Name, prop.PropertyType == typeof(bool));
 
                 // TODO - add any explicitly specified long names
 

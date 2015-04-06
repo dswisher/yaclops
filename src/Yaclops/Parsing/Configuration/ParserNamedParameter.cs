@@ -1,13 +1,13 @@
-﻿using System;
+﻿
 
 namespace Yaclops.Parsing.Configuration
 {
     internal class ParserNamedParameter : ParserParameter
     {
-        public ParserNamedParameter(string key, Type type)
+        public ParserNamedParameter(string key, bool isBool)
             : base(key)
         {
-            IsBool = type == typeof(bool);
+            IsBool = isBool;
         }
 
 

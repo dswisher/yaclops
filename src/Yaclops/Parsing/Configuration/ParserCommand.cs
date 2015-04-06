@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Yaclops.Parsing.Configuration
 {
@@ -24,9 +23,9 @@ namespace Yaclops.Parsing.Configuration
         }
 
 
-        public ParserNamedParameter AddNamedParameter(string key, Type type)
+        public ParserNamedParameter AddNamedParameter(string key, bool isBool = false)
         {
-            var param = new ParserNamedParameter(key, type);
+            var param = new ParserNamedParameter(key, isBool);
 
             // TODO - check for duplicates
 
