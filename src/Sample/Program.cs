@@ -1,6 +1,4 @@
-﻿#define NEW_PARSER
-
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Reflection;
 using Autofac;
@@ -17,11 +15,7 @@ namespace Sample
             {
                 var container = CreateContainer();
 
-#if NEW_PARSER
                 var parser = container.Resolve<CommandLineParserEx>();
-#else
-                var parser = container.Resolve<CommandLineParser>();
-#endif
 
                 var command = parser.Parse(args);
 
@@ -56,11 +50,7 @@ namespace Sample
                 .SingleInstance()
                 .As<ISubCommand>();
 
-#if NEW_PARSER
             builder.RegisterType<CommandLineParserEx>();
-#else
-            builder.RegisterType<CommandLineParser>();
-#endif
 
             return builder.Build();
         }
