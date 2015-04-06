@@ -8,6 +8,7 @@ namespace Yaclops.Parsing
         private readonly List<string> _errors = new List<string>();
         private readonly List<ParsedValue> _globalValues = new List<ParsedValue>();
         private readonly List<ParsedValue> _values = new List<ParsedValue>();
+        private readonly Dictionary<string, ParsedListValue> _listValues = new Dictionary<string, ParsedListValue>();
 
 
 
@@ -33,6 +34,10 @@ namespace Yaclops.Parsing
         /// </summary>
         public IEnumerable<ParsedValue> CommandValues { get { return _values; } }
 
+        /// <summary>
+        /// The list of list (collection) parameters that are tied to the command
+        /// </summary>
+        public IEnumerable<ParsedListValue> CommandListValues { get { return _listValues.Values; } }
 
 
         public ParsedValue AddGlobalValue(ParserParameter parameter, string value)
@@ -54,14 +59,45 @@ namespace Yaclops.Parsing
 
             return item;
         }
+
+
+
+        public ParsedListValue AddCommandListValue(ParserParameter parameter, string value)
+        {
+            ParsedListValue item;
+
+            if (!_listValues.TryGetValue(parameter.Key, out item))
+            {
+                item = new ParsedListValue(parameter.Key);
+                _listValues.Add(parameter.Key, item);
+            }
+
+            item.Values.Add(value);
+
+            return item;
+        }
+
+
+
+        internal class ParsedListValue
+        {
+            private readonly List<string> _values = new List<string>();
+
+            public ParsedListValue(string name)
+            {
+                Name = name;
+            }
+
+            public string Name { get; private set; }
+            public List<string> Values { get { return _values; } }
+        }
     }
 
 
-    // TODO - move this to a separate file? Or inside ParseResult?
+    // TODO - move this inside ParseResult
     internal class ParsedValue
     {
         public string Name { get; set; }
         public string Value { get; set; }
-        // TODO - how to represent the value, given we want to support collections?
     }
 }

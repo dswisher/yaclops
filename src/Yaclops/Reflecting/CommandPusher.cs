@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using Yaclops.Parsing;
@@ -25,10 +26,12 @@ namespace Yaclops.Reflecting
 
         public void Push(ISubCommand command)
         {
-            Console.WriteLine("CommandPusher.Push is not yet implemented.");
             WriteDebugInfo();
 
             var type = command.GetType();
+
+            // TODO - reset all values to their defaults?
+            // TODO - initialize collections to empty?
 
             foreach (var item in _result.CommandValues)
             {
@@ -42,6 +45,34 @@ namespace Yaclops.Reflecting
                 TypeConverter typeConverter = TypeDescriptor.GetConverter(prop.PropertyType);
                 object propValue = typeConverter.ConvertFromString(item.Value);
                 prop.SetValue(command, propValue);
+            }
+
+            foreach (var item in _result.CommandListValues)
+            {
+                var prop = type.GetProperty(item.Name);
+
+                if (prop == null)
+                {
+                    throw new CommandLineParserException("Property mismatch: command does not contain property with name '" + item.Name + "'.");
+                }
+
+                if (prop.PropertyType == typeof (List<string>))
+                {
+                    var list = ((List<string>)prop.GetValue(command));
+
+                    // TODO - if collections are being initialized, we can skip this check
+                    if (list == null)
+                    {
+                        list = new List<string>();
+                        prop.SetValue(command, list);
+                    }
+
+                    list.AddRange(item.Values);
+                }
+                else
+                {
+                    throw new NotImplementedException("Collections other than List<string> are not yet handled.");
+                }
             }
         }
 
@@ -70,6 +101,19 @@ namespace Yaclops.Reflecting
                 foreach (var item in _result.CommandValues)
                 {
                     Console.WriteLine("   {0} = '{1}'", item.Name, item.Value);
+                }
+            }
+            else
+            {
+                Console.WriteLine("   (none)");
+            }
+
+            Console.WriteLine("Command List Values:");
+            if (_result.CommandListValues.Any())
+            {
+                foreach (var item in _result.CommandListValues)
+                {
+                    Console.WriteLine("   {0} = {1}", item.Name, string.Join(", ", item.Values.Select(x => "'" + x + "'")));
                 }
             }
             else

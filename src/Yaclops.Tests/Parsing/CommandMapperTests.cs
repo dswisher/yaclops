@@ -41,7 +41,7 @@ namespace Yaclops.Tests.Parsing
             ParserCommand command2 = new ParserCommand("add comment");
             var mapper = new CommandMapper(new[] { command1, command2 });
             mapper.Advance("add");
-            mapper.State.ShouldBe(MapperState.Pending);
+            mapper.State.ShouldBe(MapperState.Initial);
 
             mapper.Advance("comment");
             mapper.State.ShouldBe(MapperState.Accepted);
@@ -68,7 +68,7 @@ namespace Yaclops.Tests.Parsing
             ParserCommand command2 = new ParserCommand("add comment");
             var mapper = new CommandMapper(new[] { command1, command2 });
             mapper.Advance("add");
-            mapper.State.ShouldBe(MapperState.Pending);
+            mapper.State.ShouldBe(MapperState.Initial);
 
             mapper.Advance("junk");
             mapper.State.ShouldBe(MapperState.Rejected);
@@ -81,6 +81,7 @@ namespace Yaclops.Tests.Parsing
             ParserCommand command1 = new ParserCommand("add");
             ParserCommand command2 = new ParserCommand("add file");
 
+            // ReSharper disable once ObjectCreationAsStatement
             Should.Throw<ParserConfigurationException>(() => new CommandMapper(new[] { command1, command2 }));
         }
 
@@ -91,6 +92,7 @@ namespace Yaclops.Tests.Parsing
             ParserCommand command1 = new ParserCommand("add file");
             ParserCommand command2 = new ParserCommand("add");
 
+            // ReSharper disable once ObjectCreationAsStatement
             Should.Throw<ParserConfigurationException>(() => new CommandMapper(new[] { command1, command2 }));
         }
     }

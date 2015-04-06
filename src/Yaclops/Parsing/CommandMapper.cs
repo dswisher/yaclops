@@ -8,7 +8,8 @@ namespace Yaclops.Parsing
     {
         Accepted,   // Input string resulted in a command
         Rejected,   // Rejected the input string
-        Pending     // Still waiting more input
+        Pending,    // Still waiting more input
+        Initial     // Haven't seen anything, yet (similar to pending)
     }
 
 
@@ -28,7 +29,7 @@ namespace Yaclops.Parsing
             }
 
             _current = _root;
-            State = MapperState.Pending;
+            State = MapperState.Initial;
         }
 
 

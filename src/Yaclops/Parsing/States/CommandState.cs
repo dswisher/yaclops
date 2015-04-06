@@ -47,7 +47,15 @@ namespace Yaclops.Parsing.States
                 return new FailureState(Context);
             }
 
-            Context.Result.AddCommandValue(param, token.Text);
+            if (param.IsCollection)
+            {
+                Context.Result.AddCommandListValue(param, token.Text);
+            }
+            else
+            {
+                Context.Result.AddCommandValue(param, token.Text);
+            }
+
             return this;
         }
 

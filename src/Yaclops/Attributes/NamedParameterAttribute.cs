@@ -16,6 +16,7 @@ namespace Yaclops.Attributes
         /// <summary>
         /// The long name for the parameter. The default is the decamel of the property name.
         /// </summary>
+        [Obsolete("Use the LongName attribute instead.")]
         public string LongName { get; set; }
     }
 }

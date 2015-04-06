@@ -49,7 +49,7 @@ namespace Yaclops.Tests.Parsing
             _config.AddCommand("pull");
             _config.AddCommand("fetch");
 
-            var result = DoParse("add");
+            var result = DoBadParse("add");
             result.Command.ShouldBe(null);
             result.Errors.ShouldContain(x => x.Contains("add"));
         }
@@ -123,7 +123,7 @@ namespace Yaclops.Tests.Parsing
         {
             _config.AddCommand("add").AddNamedParameter("File", typeof(string));
 
-            var result = DoParse("--file foo.txt add");
+            var result = DoBadParse("--file foo.txt add");
             result.Command.ShouldBe(null);
             result.Errors.ShouldContain(x => x.Contains("file"));
         }
@@ -137,7 +137,7 @@ namespace Yaclops.Tests.Parsing
             command.AddNamedParameter("File", typeof(string));
 
             var result = DoParse("add --file foo.txt");
-            result.Errors.ShouldBeEmpty();
+
             result.Command.ShouldBe(command);
             result.GlobalValues.ShouldBeEmpty();
 
@@ -156,7 +156,7 @@ namespace Yaclops.Tests.Parsing
             command.AddNamedParameter("File", typeof(string)).ShortName("z");
 
             var result = DoParse("add -z foo.txt");
-            result.Errors.ShouldBeEmpty();
+
             result.Command.ShouldBe(command);
             result.GlobalValues.ShouldBeEmpty();
 
@@ -176,8 +176,6 @@ namespace Yaclops.Tests.Parsing
 
             var result = DoParse("unzip --list");
 
-            result.Errors.ShouldBeEmpty();
-
             var value = result.CommandValues.FirstOrDefault(x => x.Name == "List");
 
             value.ShouldNotBe(null);
@@ -193,8 +191,6 @@ namespace Yaclops.Tests.Parsing
 
             var result = DoParse("unzip -l");
 
-            result.Errors.ShouldBeEmpty();
-
             var value = result.CommandValues.FirstOrDefault(x => x.Name == "List");
 
             value.ShouldNotBe(null);
@@ -206,11 +202,9 @@ namespace Yaclops.Tests.Parsing
         public void CanParseCommandPositionalString()
         {
             var command = _config.AddCommand("unzip");
-            command.AddPositionalParameter("File");
+            command.AddPositionalParameter("File", false);
 
             var result = DoParse("unzip foo.txt");
-
-            result.Errors.ShouldBeEmpty();
 
             var value = result.CommandValues.FirstOrDefault(x => x.Name == "File");
 
@@ -224,19 +218,46 @@ namespace Yaclops.Tests.Parsing
         public void ExtraPositionalValueReturnsError()
         {
             var command = _config.AddCommand("unzip");
-            command.AddPositionalParameter("File");
+            command.AddPositionalParameter("File", false);
 
-            var result = DoParse("unzip foo.txt bar.txt");
+            var result = DoBadParse("unzip foo.txt bar.txt");
 
             result.Errors.ShouldContain(x => x.ToLower().Contains("unexpected"));
         }
 
+
+        [Test]
+        public void CanParseCommandPositionalList()
+        {
+            var command = _config.AddCommand("add");
+            command.AddPositionalParameter("Files", true);
+
+            var result = DoParse("add foo.txt bar.txt");
+
+            var value = result.CommandListValues.FirstOrDefault(x => x.Name == "Files");
+
+            value.ShouldNotBe(null);
+            value.Values.ShouldContain("foo.txt");
+            value.Values.ShouldContain("bar.txt");
+        }
 
 
         // TODO - test global long-name AFTER command: add --file foo.txt where --file is global, and not command-specific
 
 
         private ParseResult DoParse(string text)
+        {
+            Parser parser = new Parser(_config);
+
+            var result = parser.Parse(text);
+
+            result.Errors.ShouldBeEmpty();
+
+            return result;
+        }
+
+
+        private ParseResult DoBadParse(string text)
         {
             Parser parser = new Parser(_config);
 

@@ -80,6 +80,21 @@ namespace Yaclops.Tests.Reflecting
 
 
 
+        [Test]
+        public void CanScanPositionalParameter()
+        {
+            var subCommand = new PositionalStringParameterCommand();
+            _scanner.Scan(subCommand);
+
+            var command = _configuration.Commands.First();
+
+            var param = command.PopPositionalParameter();
+            param.ShouldNotBe(null);
+            param.Key.ShouldBe("Name");
+        }
+
+
+
         // ReSharper disable UnusedMember.Local
         private abstract class AbstractSubCommand : ISubCommand
         {
@@ -109,6 +124,13 @@ namespace Yaclops.Tests.Reflecting
         {
             [NamedParameter(ShortName="x")]
             public bool DryRun { get; set; }
+        }
+
+
+        private class PositionalStringParameterCommand : AbstractSubCommand
+        {
+            [PositionalParameter]
+            public string Name { get; set; }
         }
         // ReSharper restore UnusedMember.Local
     }

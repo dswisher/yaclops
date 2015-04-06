@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using Yaclops.Attributes;
+using Yaclops.Parsing.Configuration;
 
 namespace Yaclops.Help
 {
@@ -9,6 +11,18 @@ namespace Yaclops.Help
     [LongName("help")]
     internal class HelpCommandEx : ISubCommand
     {
+        private readonly ParserConfiguration _configuration;
+
+        public HelpCommandEx(ParserConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
+
+        [PositionalParameter]
+        public List<string> Commands { get; set; }
+
+
         public void Execute()
         {
             // TODO - implement new help command
