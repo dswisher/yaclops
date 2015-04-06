@@ -71,42 +71,56 @@ namespace Yaclops
                 throw new CommandLineParserException(result.Errors.First());
             }
 
+            // Find the command...
+            ISubCommand command = null;
             if (result.GlobalValues.Any(x => x.Name == "Help"))
             {
-                // TODO - help!
-                Console.WriteLine("**** HELP!");
+                // So, they want help. If we have a command that isn't help, swap 'em around (handles "myapp mycmd --help" case)
+                if ((result.Command != null))
+                {
+                    _helpCommand.Commands = new List<string> { result.Command.Text };
+                    command = _helpCommand;
+                }
+            }
+            else if (result.Command != null)
+            {
+                command = _commandMap[result.Command.Text];
+
+                if (command != null)
+                {
+                    // Populate all the parameters on the command based on the parse result...
+                    var pusher = new CommandPusher(result);
+
+                    pusher.Push(command);
+                }
             }
 
-            // Find the command...
-            var command = _commandMap[result.Command.Text];
-
-            // Populate all the parameters on the command based on the parse result...
-            var pusher = new CommandPusher(result);
-
-            pusher.Push(command);
-
-            // TODO - what about the global values?
-
-            // If this is the help command, give it a little assist by looking up the help target (if any)...
-            if (command == _helpCommand)
+            if (command != null)
             {
-                if ((_helpCommand.Commands != null) && (_helpCommand.Commands.Any()))
+                // TODO - what about the global values?
+
+                // If this is the help command, give it a little assist by looking up the help target (if any)...
+                if (command == _helpCommand)
                 {
-                    string text = string.Join(" ", _helpCommand.Commands);
-
-                    var helpTarget = _commandMap[text];
-
-                    if (helpTarget == null)
+                    if ((_helpCommand.Commands != null) && (_helpCommand.Commands.Any()))
                     {
-                        // TODO - better error handling
-                        throw new CommandLineParserException("No help for command '{0}', as it is not known.", text);
-                    }
+                        string text = string.Join(" ", _helpCommand.Commands);
 
-                    _helpCommand.Target = _configuration.Commands.FirstOrDefault(x => x.Text == text);
+                        var helpTarget = _commandMap[text];
+
+                        if (helpTarget == null)
+                        {
+                            // TODO - better error handling
+                            throw new CommandLineParserException("No help for command '{0}', as it is not known.", text);
+                        }
+
+                        _helpCommand.Target = _configuration.Commands.FirstOrDefault(x => x.Text == text);
+                    }
                 }
             }
 
             // Return the populated, ready-to-roll command...
+            // TODO - return an "empty" command instead of null?
             return command;
         }
 
@@ -134,7 +148,7 @@ namespace Yaclops
         private void Initialize()
         {
             // TODO - allow help options to be configured via settings
-            // _configuration.AddNamedParameter("Help", true).AddShortName("h").AddShortName("?");
+            _configuration.AddNamedParameter("Help", true).AddShortName("h").AddShortName("?");
 
             // Scan all the commands for their options...
             CommandScanner scanner = new CommandScanner(_configuration);
