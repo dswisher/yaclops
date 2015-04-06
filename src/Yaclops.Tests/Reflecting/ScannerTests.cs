@@ -69,6 +69,17 @@ namespace Yaclops.Tests.Reflecting
 
 
 
+        [Test]
+        public void LongNameAttributeOverridesClassNameForCommand()
+        {
+            var subCommand = new BlahCommand();
+            _scanner.Scan(subCommand);
+
+            _configuration.Commands.ShouldContain(x => x.Text == "monkey");
+        }
+
+
+
         // ReSharper disable UnusedMember.Local
         private abstract class AbstractSubCommand : ISubCommand
         {
@@ -77,6 +88,12 @@ namespace Yaclops.Tests.Reflecting
 
 
         private class EmptyCommand : AbstractSubCommand
+        {
+        }
+
+
+        [LongName("monkey")]
+        private class BlahCommand : AbstractSubCommand
         {
         }
 

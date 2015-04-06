@@ -21,6 +21,7 @@ namespace Yaclops.Attributes
         /// <summary>
         /// The summary.
         /// </summary>
+        // TODO - shouldn't this be internal??
         public string Summary { get; private set; }
     }
 }

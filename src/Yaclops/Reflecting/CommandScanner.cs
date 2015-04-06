@@ -30,6 +30,12 @@ namespace Yaclops.Reflecting
             var name = type.Name.Replace("Command", string.Empty).Decamel();
             var command = _configuration.AddCommand(name);
 
+            // Add any long-name overrides to the command
+            foreach (LongNameAttribute att in type.GetCustomAttributes(typeof (LongNameAttribute), true))
+            {
+                command.AddLongName(att.Name);
+            }
+
             // Pick out the named parameters
             var namedProps = type.GetProperties()
                 .Where(x => x.GetCustomAttributes(typeof (NamedParameterAttribute), true).Any());

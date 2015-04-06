@@ -37,6 +37,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArgumentList.cs" />
+    <Compile Include="Attributes\LongNameAttribute.cs" />
     <Compile Include="CommandExtensions.cs" />
     <Compile Include="CommandLineArgumentParser.cs" />
     <Compile Include="Attributes\NamedParameterAttribute.cs" />
