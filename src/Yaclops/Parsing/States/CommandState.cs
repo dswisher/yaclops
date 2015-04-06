@@ -63,21 +63,23 @@ namespace Yaclops.Parsing.States
 
         private AbstractState HandleNamedParameter(Token token, Func<Token, ParserNamedParameter, bool> hasName)
         {
+            // First, try command-level named parameter...
             var param = Context.Command.NamedParameters.FirstOrDefault(x => hasName(token, x));
-            if (param == null)
+            if (param != null)
             {
-                // TODO - check for global named parameter, too
-                Context.Result.AddError("Named parameter '{0}' is not known.", token.RawInput);
-                return new FailureState(Context);
+                return new ValueState(Context, param, false, this);
             }
 
-            if (param.IsBool)
+            // Next, try global named parameter
+            param = Context.Configuration.GlobalNamedParameters.FirstOrDefault(x => hasName(token, x));
+            if (param != null)
             {
-                Context.Result.AddCommandValue(param, "true");
-                return this;
+                return new ValueState(Context, param, true, this);
             }
 
-            return new CommandValueState(Context, param);
+            // No joy.
+            Context.Result.AddError("Named parameter '{0}' is not known.", token.RawInput);
+            return new FailureState(Context);
         }
     }
 }

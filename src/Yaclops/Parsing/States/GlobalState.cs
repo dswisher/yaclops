@@ -2,6 +2,7 @@
 
 using System;
 using System.Linq;
+using Yaclops.Parsing.Configuration;
 
 namespace Yaclops.Parsing.States
 {
@@ -48,46 +49,37 @@ namespace Yaclops.Parsing.States
                     return this;
 
                 case TokenKind.LongName:
-                    if (Context.Mapper.CanAccept(token.RawInput))
-                    {
-                        Context.Mapper.Advance(token.RawInput);
-                        // TODO - assert/throw if state is not Accepted?  Longname command shouldn't be multiple words...
-                        Context.Command = Context.Mapper.Command;
-                        Context.Result.Command = Context.Mapper.Command;
-                        return new CommandState(Context);
-                    }
-                    var longParam = Context.Configuration.GlobalNamedParameters.FirstOrDefault(x => x.HasLongName(token.Text));
-                    if (longParam == null)
-                    {
-                        Context.Result.AddError("Named parameter '{0}' is not known.", token.Text);
-                        return new FailureState(Context);
-                    }
-                    // TODO - what about a bool, that does not have a value (or at least, may not have a value)?
-                    return new GlobalValueState(Context, longParam);
+                    return HandleNamedParameter(token, (t, p) => p.HasLongName(t.Text));
 
                 case TokenKind.ShortName:
-                    Console.WriteLine("---> ShortName, token.Text='{0}', RawInput='{1}'", token.Text, token.RawInput);
-                    if (Context.Mapper.CanAccept(token.RawInput))
-                    {
-                        Context.Mapper.Advance(token.RawInput);
-                        // TODO - assert/throw if state is not Accepted?  Shortname command shouldn't be multiple words...
-                        Context.Command = Context.Mapper.Command;
-                        Context.Result.Command = Context.Mapper.Command;
-                        return new CommandState(Context);
-                    }
-                    var shortParam = Context.Configuration.GlobalNamedParameters.FirstOrDefault(x => x.HasShortName(token.Text));
-                    if (shortParam == null)
-                    {
-                        Context.Result.AddError("Named parameter '{0}' is not known.", token.Text);
-                        return new FailureState(Context);
-                    }
-                    // TODO - what about a bool, that does not have a value (or at least, may not have a value)?
-                    return new GlobalValueState(Context, shortParam);
+                    return HandleNamedParameter(token, (t, p) => p.HasShortName(t.Text));
 
                 default:
-                    // TODO - hack, for the moment - just fail right away on anything else
                     return new FailureState(Context);
             }
+        }
+
+
+
+        private AbstractState HandleNamedParameter(Token token, Func<Token, ParserNamedParameter, bool> hasName)
+        {
+            if (Context.Mapper.CanAccept(token.RawInput))
+            {
+                Context.Mapper.Advance(token.RawInput);
+                // TODO - assert/throw if state is not Accepted?  Short/Long-name command shouldn't be multiple words...
+                Context.Command = Context.Mapper.Command;
+                Context.Result.Command = Context.Mapper.Command;
+                return new CommandState(Context);
+            }
+
+            var param = Context.Configuration.GlobalNamedParameters.FirstOrDefault(x => hasName(token, x));
+            if (param == null)
+            {
+                Context.Result.AddError("Named parameter '{0}' is not known.", token.RawInput);
+                return new FailureState(Context);
+            }
+
+            return new ValueState(Context, param, true, this);
         }
     }
 }

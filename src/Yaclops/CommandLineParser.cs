@@ -71,6 +71,12 @@ namespace Yaclops
                 throw new CommandLineParserException(result.Errors.First());
             }
 
+            if (result.GlobalValues.Any(x => x.Name == "Help"))
+            {
+                // TODO - help!
+                Console.WriteLine("**** HELP!");
+            }
+
             // Find the command...
             var command = _commandMap[result.Command.Text];
 
@@ -127,6 +133,10 @@ namespace Yaclops
 
         private void Initialize()
         {
+            // TODO - allow help options to be configured via settings
+            // _configuration.AddNamedParameter("Help", true).AddShortName("h").AddShortName("?");
+
+            // Scan all the commands for their options...
             CommandScanner scanner = new CommandScanner(_configuration);
 
             foreach (var c in _commands)

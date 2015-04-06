@@ -119,6 +119,40 @@ namespace Yaclops.Tests.Parsing
 
 
         [Test]
+        public void CanParseGlobalNamedBoolByShortName()
+        {
+            _config.AddNamedParameter("Verbose", true).AddShortName("v");
+
+            var result = DoParse("-v");
+
+            result.Command.ShouldBe(null);
+
+            var value = result.GlobalValues.FirstOrDefault(x => x.Name == "Verbose");
+
+            value.ShouldNotBe(null);
+            value.Value.ShouldBe("true");
+        }
+
+
+
+        [Test]
+        public void CanParseGlobalNamedBoolByLongName()
+        {
+            _config.AddNamedParameter("Verbose", true).AddShortName("v");
+
+            var result = DoParse("--verbose");
+
+            result.Command.ShouldBe(null);
+
+            var value = result.GlobalValues.FirstOrDefault(x => x.Name == "Verbose");
+
+            value.ShouldNotBe(null);
+            value.Value.ShouldBe("true");
+        }
+
+
+
+        [Test]
         public void CommandSpecificParameterNotAvailableGlobally()
         {
             _config.AddCommand("add").AddNamedParameter("File");
@@ -239,6 +273,36 @@ namespace Yaclops.Tests.Parsing
             value.ShouldNotBe(null);
             value.Values.ShouldContain("foo.txt");
             value.Values.ShouldContain("bar.txt");
+        }
+
+
+        [Test]
+        public void CanParseCommandBoolByShortNameAfterCommand()
+        {
+            _config.AddCommand("run");
+            _config.AddNamedParameter("Help", true).AddShortName("h");
+
+            var result = DoParse("run -h");
+
+            var value = result.GlobalValues.FirstOrDefault(x => x.Name == "Help");
+
+            value.ShouldNotBe(null);
+            value.Value.ShouldBe("true");
+        }
+
+
+        [Test]
+        public void CanParseCommandBoolByLongNameAfterCommand()
+        {
+            _config.AddCommand("run");
+            _config.AddNamedParameter("Help", true).AddShortName("h");
+
+            var result = DoParse("run --help");
+
+            var value = result.GlobalValues.FirstOrDefault(x => x.Name == "Help");
+
+            value.ShouldNotBe(null);
+            value.Value.ShouldBe("true");
         }
 
 

@@ -55,12 +55,11 @@
     <Compile Include="Parsing\States\AbstractState.cs" />
     <Compile Include="Parsing\States\AbstractTerminalState.cs" />
     <Compile Include="Parsing\States\CommandState.cs" />
-    <Compile Include="Parsing\States\CommandValueState.cs" />
     <Compile Include="Parsing\States\GlobalState.cs" />
     <Compile Include="Parsing\States\FailureState.cs" />
-    <Compile Include="Parsing\States\GlobalValueState.cs" />
     <Compile Include="Parsing\States\InitialState.cs" />
     <Compile Include="Parsing\States\SuccessState.cs" />
+    <Compile Include="Parsing\States\ValueState.cs" />
     <Compile Include="Parsing\Token.cs" />
     <Compile Include="Parsing\Parser.cs" />
     <Compile Include="Parsing\Configuration\ParserConfiguration.cs" />
