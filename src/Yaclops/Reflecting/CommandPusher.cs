@@ -26,7 +26,7 @@ namespace Yaclops.Reflecting
 
         public void Push(ISubCommand command)
         {
-            WriteDebugInfo();
+            // WriteDebugInfo();
 
             var type = command.GetType();
 

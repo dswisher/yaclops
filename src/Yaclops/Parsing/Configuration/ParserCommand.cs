@@ -59,6 +59,7 @@ namespace Yaclops.Parsing.Configuration
 
 
         public string Text { get; private set; }
+        public string Summary { get; set; }
         public IEnumerable<string> Aliases { get { return _aliases; } }
         public IEnumerable<ParserNamedParameter> NamedParameters { get { return _namedParameters; } }
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Yaclops.Attributes;
 using Yaclops.Parsing.Configuration;
@@ -30,6 +31,13 @@ namespace Yaclops.Reflecting
             // Build the command itself
             var name = type.Name.Replace("Command", string.Empty).Decamel();
             var command = _configuration.AddCommand(name);
+
+            // Add the summary, if there is one...
+            var summaryAtt = FindAttribute<SummaryAttribute>(type);
+            if (summaryAtt != null)
+            {
+                command.Summary = summaryAtt.Summary;
+            }
 
             // Add any long-name overrides to the command
             foreach (LongNameAttribute att in type.GetCustomAttributes(typeof(LongNameAttribute), true))
@@ -69,6 +77,15 @@ namespace Yaclops.Reflecting
             }
 
             return command;
+        }
+
+
+
+        private T FindAttribute<T>(Type commandType)
+        {
+            var att = commandType.GetCustomAttributes(typeof(T), true).FirstOrDefault();
+
+            return (T)att;
         }
     }
 }

@@ -42,7 +42,7 @@ namespace Yaclops
         public CommandLineParserEx()
         {
             // Seed the command list with the help command
-            _helpCommand = new HelpCommandEx(_configuration);
+            _helpCommand = new HelpCommandEx(_configuration, new WrappedConsole());
             _commands.Add(_helpCommand);
         }
 
