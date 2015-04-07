@@ -70,6 +70,7 @@
     <Compile Include="Reflecting\CommandPusher.cs" />
     <Compile Include="Reflecting\CommandScanner.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Reflecting\EmptyCommand.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

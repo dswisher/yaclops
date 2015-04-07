@@ -79,8 +79,8 @@ namespace Yaclops
                 if ((result.Command != null))
                 {
                     _helpCommand.Commands = new List<string> { result.Command.Text };
-                    command = _helpCommand;
                 }
+                command = _helpCommand;
             }
             else if (result.Command != null)
             {
@@ -119,9 +119,8 @@ namespace Yaclops
                 }
             }
 
-            // Return the populated, ready-to-roll command...
-            // TODO - return an "empty" command instead of null?
-            return command;
+            // If we didn't find a command, return an empty one.
+            return command ?? new EmptyCommand();
         }
 
 
