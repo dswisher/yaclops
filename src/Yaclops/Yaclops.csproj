@@ -42,6 +42,11 @@
     <Compile Include="Attributes\PositionalParameterAttribute.cs" />
     <Compile Include="CommandLineParser.cs" />
     <Compile Include="CommandLineParserException.cs" />
+    <Compile Include="Formatting\AbstractDocumentItem.cs" />
+    <Compile Include="Formatting\ConsoleFormatter.cs" />
+    <Compile Include="Formatting\Document.cs" />
+    <Compile Include="Formatting\Paragraph.cs" />
+    <Compile Include="Formatting\TextBlock.cs" />
     <Compile Include="Help\HelpCommand.cs" />
     <Compile Include="Help\WrappedConsole.cs" />
     <Compile Include="ISubCommand.cs" />
