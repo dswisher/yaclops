@@ -14,7 +14,7 @@ namespace Yaclops.Tests.Formatting
         {
             var doc = new Document();
             doc.AddParagraph().AddBlock("Hello");
-            
+
             var lines = Render(doc);
 
             lines.ShouldNotBeEmpty();
@@ -22,7 +22,7 @@ namespace Yaclops.Tests.Formatting
         }
 
 
-        [Test, Ignore("Get this working!")]
+        [Test]
         public void TwoBlocks()
         {
             var doc = new Document();
@@ -38,9 +38,27 @@ namespace Yaclops.Tests.Formatting
 
 
 
-        private IList<string> Render(Document doc)
+        [Test]
+        public void CanWrapSingleBlock()
         {
-            var console = new MockConsole();
+            var doc = new Document();
+            doc.AddParagraph().AddBlock("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
+            //                           12345678901234567890
+
+            // Set console width to 20 to force wrapping
+            var lines = Render(doc, 20);
+
+            lines[0].ShouldBe("Lorem ipsum dolor");
+        }
+
+
+        // TODO - test indent
+        // TODO - test tab stops
+
+
+        private IList<string> Render(Document doc, int width = 80)
+        {
+            var console = new MockConsole(width);
             var formatter = new ConsoleFormatter(console);
             formatter.Format(doc);
             return console.Result;

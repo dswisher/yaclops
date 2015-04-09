@@ -17,11 +17,25 @@ namespace Yaclops.Formatting
         {
             foreach (var block in doc.Children)
             {
+                // TODO - handle indent
+                // TODO - handle wrapping
+
+                bool first = true;
                 foreach (var item in block.Children)
                 {
-                    // TODO - way too simplistic, but want to get the first unit test to pass!
-                    _console.WriteLine(item.Text);
+                    if (first)
+                    {
+                        first = false;
+                    }
+                    else
+                    {
+                        _console.Write(" ");
+                    }
+
+                    _console.Write(item.Text);
                 }
+
+                _console.WriteLine();
             }
         }
     }
