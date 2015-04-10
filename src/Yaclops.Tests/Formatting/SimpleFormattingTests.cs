@@ -44,11 +44,36 @@ namespace Yaclops.Tests.Formatting
             var doc = new Document();
             doc.AddParagraph().AddBlock("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
             //                           12345678901234567890
+            //                                             12345678901234567890
+            //                                                       12345678901234567890
+            //                                                                   12345678901234567890
 
             // Set console width to 20 to force wrapping
             var lines = Render(doc, 20);
 
             lines[0].ShouldBe("Lorem ipsum dolor");
+            lines[1].ShouldBe("sit amet,");
+            lines[2].ShouldBe("consectetur");
+            lines[3].ShouldBe("adipiscing elit.");
+        }
+
+
+        [Test]
+        public void CanWrapMultipleBlocks()
+        {
+            var doc = new Document();
+            doc.AddParagraph().AddBlock("Lorem");
+            doc.AddParagraph().AddBlock("ipsum dolor");
+            doc.AddParagraph().AddBlock("sit amet, consectetur adipiscing elit.");
+            doc.AddParagraph().AddBlock("adipiscing elit.");
+
+            // Set console width to 20 to force wrapping
+            var lines = Render(doc, 20);
+
+            lines[0].ShouldBe("Lorem ipsum dolor");
+            lines[1].ShouldBe("sit amet,");
+            lines[2].ShouldBe("consectetur");
+            lines[3].ShouldBe("adipiscing elit.");
         }
 
 

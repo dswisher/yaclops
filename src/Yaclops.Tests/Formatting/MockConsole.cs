@@ -7,16 +7,16 @@ namespace Yaclops.Tests.Formatting
 {
     internal class MockConsole : IConsole
     {
-        private readonly int _width;
         private readonly List<string> _lines = new List<string>();
         private StringBuilder _currentLine = new StringBuilder();
 
         public IList<string> Result { get { return _lines; } }
+        public int Width { get; private set; }
 
 
         public MockConsole(int width)
         {
-            _width = width;
+            Width = width;
         }
 
 

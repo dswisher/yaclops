@@ -1,10 +1,15 @@
-﻿using Yaclops.Help;
+﻿using System;
+using Yaclops.Help;
 
 namespace Yaclops.Formatting
 {
     internal class ConsoleFormatter
     {
         private readonly IConsole _console;
+        private int _position;
+        private bool _needSeparator;
+
+
 
         public ConsoleFormatter(IConsole console)
         {
@@ -17,26 +22,59 @@ namespace Yaclops.Formatting
         {
             foreach (var block in doc.Children)
             {
-                // TODO - handle indent
-                // TODO - handle wrapping
-
-                bool first = true;
                 foreach (var item in block.Children)
                 {
-                    if (first)
+                    if (string.IsNullOrEmpty(item.Text))
                     {
-                        first = false;
-                    }
-                    else
-                    {
-                        _console.Write(" ");
+                        continue;
                     }
 
-                    _console.Write(item.Text);
+                    var words = item.Text.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+                    foreach (var word in words)
+                    {
+                        if (_position + word.Length + (_needSeparator ? 1 : 0) > _console.Width)
+                        {
+                            NewLine();
+                            // TODO - indent; need to handle edge case of indent + first word > width
+                        }
+                        else if (_needSeparator)
+                        {
+                            Whitespace(1);
+                        }
+
+                        WriteText(word);
+                    }
                 }
 
-                _console.WriteLine();
+                NewLine();
             }
+        }
+
+
+
+        private void Whitespace(int length)
+        {
+            _console.Write(new string(' ', length));
+            _position += length;
+        }
+
+
+
+        private void WriteText(string text)
+        {
+            _console.Write(text);
+            _needSeparator = true;
+            _position += text.Length;
+        }
+
+
+
+        private void NewLine()
+        {
+            _console.WriteLine();
+            _position = 0;
+            _needSeparator = false;
         }
     }
 }

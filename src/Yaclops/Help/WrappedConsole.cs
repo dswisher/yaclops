@@ -15,6 +15,10 @@ namespace Yaclops.Help
         void WriteLine(string content);
         void WriteLine(string format, params object[] args);
 
+        int Width { get; }
+
+
+        // TODO - remove this cruft
         void StartWrap(string format, params object[] args);
         void EndWrap();
 
@@ -80,6 +84,9 @@ namespace Yaclops.Help
                 Console.Write(content);
             }
         }
+
+
+        public int Width { get { return Console.WindowWidth; } }
 
 
         public void StartWrap(string format, params object[] args)
