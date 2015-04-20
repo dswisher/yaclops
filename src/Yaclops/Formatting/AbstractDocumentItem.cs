@@ -9,12 +9,20 @@ namespace Yaclops.Formatting
 
         public IEnumerable<AbstractDocumentItem> Children { get { return _children; } }
 
+
+        protected AbstractDocumentItem()
+        {
+            Style = new Style();
+        }
+
+
         public void Add(AbstractDocumentItem child)
         {
             _children.Add(child);
         }
 
         public virtual string Text { get { return string.Empty; } }
+        public Style Style { get; set; }
 
 
         public TextBlock AddBlock(string text)

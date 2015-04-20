@@ -20,16 +20,18 @@ namespace Yaclops.Formatting
 
         public void Format(Document doc)
         {
-            foreach (var block in doc.Children)
+            foreach (var item in doc.Children)
             {
-                foreach (var item in block.Children)
+                int indent = item.Style.Indent;
+
+                foreach (var block in item.Children)
                 {
-                    if (string.IsNullOrEmpty(item.Text))
+                    if (string.IsNullOrEmpty(block.Text))
                     {
                         continue;
                     }
 
-                    var words = item.Text.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                    var words = block.Text.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
                     foreach (var word in words)
                     {
@@ -43,7 +45,7 @@ namespace Yaclops.Formatting
                             Whitespace(1);
                         }
 
-                        WriteText(word);
+                        WriteText(word, indent);
                     }
                 }
 
@@ -61,8 +63,9 @@ namespace Yaclops.Formatting
 
 
 
-        private void WriteText(string text)
+        private void WriteText(string text, int indent)
         {
+            // TODO - handle indent!
             _console.Write(text);
             _needSeparator = true;
             _position += text.Length;
