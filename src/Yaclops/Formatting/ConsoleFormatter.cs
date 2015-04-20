@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using Yaclops.Help;
 
 namespace Yaclops.Formatting
@@ -33,6 +34,8 @@ namespace Yaclops.Formatting
 
                     var words = block.Text.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
+                    // TODO - how to expand tabs?
+
                     foreach (var word in words)
                     {
                         if (_position + word.Length + (_needSeparator ? 1 : 0) > _console.Width)
@@ -65,6 +68,12 @@ namespace Yaclops.Formatting
 
         private void WriteText(string text, int indent)
         {
+            if (_position < indent)
+            {
+                _console.Write(new string(' ', indent - _position));
+                _position = indent;
+            }
+
             // TODO - handle indent!
             _console.Write(text);
             _needSeparator = true;

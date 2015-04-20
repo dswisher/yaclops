@@ -95,7 +95,43 @@ namespace Yaclops.Tests.Formatting
         }
 
 
-        // TODO - test indent
+
+        [Test]
+        public void CanIndentMultipleLines()
+        {
+            var doc = new Document();
+            var para = doc.AddParagraph();
+            para.AddBlock("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
+
+            para.Style.Indent = 4;
+
+            // Set console width to 20 to force wrapping
+            var lines = Render(doc, 20);
+
+            lines[0].ShouldBe("    Lorem ipsum");
+            lines[1].ShouldBe("    dolor sit amet,");
+            lines[2].ShouldBe("    consectetur");
+                            // 12345678901234567890
+        }
+
+
+
+        [Test, Ignore("Get this working!")]
+        public void TabStopAtStartWorks()
+        {
+            var doc = new Document();
+            var para = doc.AddParagraph();
+            para.AddBlock("\tLorem ipsum");
+
+            para.Style.Tabs = new[] { 3 };
+
+            // Set console width to 20 to force wrapping
+            var lines = Render(doc, 20);
+
+            lines[0].ShouldBe("   Lorem ipsum");
+        }
+
+
         // TODO - test tab stops
 
 
