@@ -260,6 +260,22 @@ namespace Yaclops.Tests.Parsing
         }
 
 
+
+        [Test]
+        public void UnspecifiedRequiredPositionalParameterReturnsError()
+        {
+            var command = _config.AddCommand("say");
+            var param = command.AddPositionalParameter("phrase", false);
+            param.IsRequired = true;
+
+            var result = DoBadParse("say");
+
+            result.Errors.ShouldContain(x => x.ToLower().Contains("phrase"));
+            result.Errors.ShouldContain(x => x.ToLower().Contains("required"));
+        }
+
+
+
         [Test]
         public void CanParseCommandPositionalList()
         {
@@ -274,6 +290,34 @@ namespace Yaclops.Tests.Parsing
             value.Values.ShouldContain("foo.txt");
             value.Values.ShouldContain("bar.txt");
         }
+
+
+
+        [Test]
+        public void UnspecifiedRequiredPositionalListParameterReturnsError()
+        {
+            var command = _config.AddCommand("walk");
+            var param = command.AddPositionalParameter("directions", true);
+            param.IsRequired = true;
+
+            var result = DoBadParse("walk");
+
+            result.Errors.ShouldContain(x => x.ToLower().Contains("directions"));
+            result.Errors.ShouldContain(x => x.ToLower().Contains("required"));
+        }
+
+
+
+        [Test]
+        public void SpecifiedRequiredPositionalListParameterDoesNotReturnError()
+        {
+            var command = _config.AddCommand("walk");
+            var param = command.AddPositionalParameter("directions", true);
+            param.IsRequired = true;
+
+            DoParse("walk north");
+        }
+
 
 
         [Test]

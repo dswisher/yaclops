@@ -82,5 +82,11 @@ namespace Yaclops.Parsing.Configuration
 
             return param;
         }
+
+
+        public IEnumerable<ParserPositionalParameter> RemainingPositionalParameters
+        {
+            get { return _positionalQueue; }
+        }
     }
 }
