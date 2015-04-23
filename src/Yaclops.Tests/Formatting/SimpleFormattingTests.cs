@@ -116,7 +116,24 @@ namespace Yaclops.Tests.Formatting
 
 
 
-        [Test, Ignore("Get this working!")]
+        [Test]
+        public void EmptyBlocksAreIgnored()
+        {
+            var doc = new Document();
+            var para = doc.AddParagraph();
+            para.AddBlock("Hello");
+            para.AddBlock("");
+            para.AddBlock("World!");
+
+            var lines = Render(doc);
+
+            lines.ShouldNotBeEmpty();
+            lines[0].ShouldBe("Hello World!");
+        }
+
+
+
+        [Test]
         public void TabStopAtStartWorks()
         {
             var doc = new Document();

@@ -40,6 +40,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\StringExtensionTests.cs" />
     <Compile Include="Formatting\MockConsole.cs" />
     <Compile Include="Formatting\SimpleFormattingTests.cs" />
     <Compile Include="Parsing\CommandMapperTests.cs" />

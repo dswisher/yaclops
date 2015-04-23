@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
+using Yaclops.Extensions;
 using Yaclops.Help;
 
 namespace Yaclops.Formatting
@@ -32,12 +34,26 @@ namespace Yaclops.Formatting
                         continue;
                     }
 
-                    var words = block.Text.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                    // var words = block.Text.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                    var words = block.Text.SplitText();
 
                     // TODO - how to expand tabs?
 
                     foreach (var word in words)
                     {
+                        if (word == "\t")
+                        {
+                            var spaces = item.Style.Tabs.FirstOrDefault(x => x > _position) - _position;
+                            if (spaces > 0)
+                            {
+                                // TODO - what if the tab stop is greater than the width?
+                                _console.Write(new string(' ', spaces));
+                                _position += spaces;
+                            }
+
+                            continue;
+                        }
+
                         if (_position + word.Length + (_needSeparator ? 1 : 0) > _console.Width)
                         {
                             NewLine();

@@ -49,6 +49,18 @@ namespace Yaclops.Tests.Parsing
 
 
 
+        [Test]
+        public void PopAfterEndThrows()
+        {
+            var lexer = new Lexer("foo");
+
+            lexer.Pop().Text.ShouldBe("foo");
+            lexer.Pop().Kind.ShouldBe(TokenKind.EndOfInput);
+
+            Should.Throw<InvalidOperationException>(() => lexer.Pop());
+        }
+
+
         [Test, TestCaseSource(typeof(TestCaseFactory))]
         public void CanLexSingleToken(string content, string kindList, string textList)
         {
