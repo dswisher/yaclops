@@ -142,14 +142,54 @@ namespace Yaclops.Tests.Formatting
 
             para.Style.Tabs = new[] { 3 };
 
-            // Set console width to 20 to force wrapping
-            var lines = Render(doc, 20);
+            var lines = Render(doc);
 
-            lines[0].ShouldBe("   Lorem ipsum");
+            lines[0].ShouldBe("  Lorem ipsum");
+            //                 123456789012345678
         }
 
 
-        // TODO - test tab stops
+
+        [Test]
+        public void TabStopInMiddleWorks()
+        {
+            var doc = new Document();
+            var para = doc.AddParagraph();
+            para.AddBlock("Lorem\tipsum");
+
+            para.Style.Tabs = new[] { 3, 15 };
+            para.Style.Indent = 5;
+
+            var lines = Render(doc);
+
+            // TODO - indent seems inconsistent with tab stop; should indent of 5 be five spaces or start at position 5??
+
+            lines[0].ShouldBe("     Lorem    ipsum");
+            //                 12345678901234567890
+        }
+
+
+        [Test]
+        public void FirstLineCanHaveNegativeIndent()
+        {
+            var doc = new Document();
+            var para = doc.AddParagraph();
+            para.AddBlock("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
+
+            para.Style.Indent = 5;
+            para.Style.FirstLineIndent = -3;
+
+            var lines = Render(doc, 20);
+
+            lines[0].ShouldBe("  Lorem ipsum dolor");
+            lines[1].ShouldBe("     sit amet,");
+            lines[2].ShouldBe("     sit amet,");
+            lines[2].ShouldBe("     consectetur");
+            //                 12345678901234567890
+        }
+
+
+        // TODO - styles should inherit from their parent - test that
 
 
         private IList<string> Render(Document doc, int width = 80)

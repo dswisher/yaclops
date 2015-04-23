@@ -43,12 +43,13 @@ namespace Yaclops.Formatting
                     {
                         if (word == "\t")
                         {
-                            var spaces = item.Style.Tabs.FirstOrDefault(x => x > _position) - _position;
+                            var spaces = item.Style.Tabs.FirstOrDefault(x => x > _position) - _position - 1;
                             if (spaces > 0)
                             {
                                 // TODO - what if the tab stop is greater than the width?
                                 _console.Write(new string(' ', spaces));
                                 _position += spaces;
+                                _needSeparator = false;
                             }
 
                             continue;
