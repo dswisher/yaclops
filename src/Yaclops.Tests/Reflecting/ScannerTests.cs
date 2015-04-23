@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using NUnit.Framework;
 using Shouldly;
@@ -113,6 +114,22 @@ namespace Yaclops.Tests.Reflecting
 
 
 
+        [Test]
+        public void CanScanRequiredPositionalListParameter()
+        {
+            var subCommand = new RequiredPositionalListParameterCommand();
+            _scanner.Scan(subCommand);
+
+            var command = _configuration.Commands.First();
+
+            var param = command.PositionalParameters.First();
+            param.ShouldNotBe(null);
+            param.Key.ShouldBe("Names");
+            param.IsRequired.ShouldBe(true);
+        }
+
+
+
         // ReSharper disable UnusedMember.Local
         private abstract class AbstractSubCommand : ISubCommand
         {
@@ -156,6 +173,13 @@ namespace Yaclops.Tests.Reflecting
         {
             [PositionalParameter, Required]
             public string Name { get; set; }
+        }
+
+
+        private class RequiredPositionalListParameterCommand : AbstractSubCommand
+        {
+            [PositionalParameter, Required]
+            public List<string> Names { get; set; }
         }
         // ReSharper restore UnusedMember.Local
     }
