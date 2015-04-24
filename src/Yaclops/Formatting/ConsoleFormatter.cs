@@ -25,7 +25,7 @@ namespace Yaclops.Formatting
         {
             foreach (var item in doc.Children)
             {
-                int indent = item.Style.Indent;
+                int indent = item.Style.Indent + item.Style.FirstLineIndent;
 
                 foreach (var block in item.Children)
                 {
@@ -34,10 +34,7 @@ namespace Yaclops.Formatting
                         continue;
                     }
 
-                    // var words = block.Text.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                     var words = block.Text.SplitText();
-
-                    // TODO - how to expand tabs?
 
                     foreach (var word in words)
                     {
@@ -58,6 +55,7 @@ namespace Yaclops.Formatting
                         if (_position + word.Length + (_needSeparator ? 1 : 0) > _console.Width)
                         {
                             NewLine();
+                            indent = item.Style.Indent;
                             // TODO - indent; need to handle edge case of indent + first word > width
                         }
                         else if (_needSeparator)

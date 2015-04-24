@@ -183,7 +183,6 @@ namespace Yaclops.Tests.Formatting
 
             lines[0].ShouldBe("  Lorem ipsum dolor");
             lines[1].ShouldBe("     sit amet,");
-            lines[2].ShouldBe("     sit amet,");
             lines[2].ShouldBe("     consectetur");
             //                 12345678901234567890
         }
