@@ -43,6 +43,7 @@
     <Compile Include="Extensions\StringExtensionTests.cs" />
     <Compile Include="Formatting\MockConsole.cs" />
     <Compile Include="Formatting\SimpleFormattingTests.cs" />
+    <Compile Include="Formatting\StyleTests.cs" />
     <Compile Include="Parsing\CommandMapperTests.cs" />
     <Compile Include="Parsing\LexerTests.cs" />
     <Compile Include="Parsing\ParserConfigurationTests.cs" />
