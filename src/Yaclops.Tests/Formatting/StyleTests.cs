@@ -1,5 +1,4 @@
 
-using System.Collections.Generic;
 using NUnit.Framework;
 using Shouldly;
 using Yaclops.Formatting;
@@ -10,6 +9,7 @@ namespace Yaclops.Tests.Formatting
 	public class StyleTests
 	{
 
+        [Test]
 		public void CanSetStyle()
 		{
             var doc = new Document();
@@ -17,10 +17,14 @@ namespace Yaclops.Tests.Formatting
 
 			var style = new StyleEx();
 
-			// TODO - verify the style info
-			false.ShouldBe(true);
+            style.SetIndent("p", 5);
+
+            style.GetIndent(para).ShouldBe(5);
 		}
 
+
+        // TODO - verify inheritance - set indent on doc and pull via para
+        // TODO - verify override - set indent on doc, then para, pull via para
 	}
 }
 

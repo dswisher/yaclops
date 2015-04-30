@@ -22,6 +22,7 @@ namespace Yaclops.Formatting
         }
 
         public virtual string Text { get { return string.Empty; } }
+        public abstract string Tag { get; }
         public Style Style { get; set; }
 
 
