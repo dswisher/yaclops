@@ -5,14 +5,36 @@ using System.Linq;
 
 namespace Yaclops.Formatting
 {
+    internal enum StyleProperty
+    {
+        Indent,
+        FirstLineIndent
+    }
+
+
+
     internal class StyleEx
 	{
         private readonly List<Entry<int>> _indents = new List<Entry<int>>();
 
 
+        public T GetProperty<T>(AbstractDocumentItem item, StyleProperty prop)
+        {
+            // TODO!
+            return default(T);
+        }
+
+
+
         public int GetIndent(AbstractDocumentItem item)
         {
             var entry = _indents.FirstOrDefault(x => x.Selector == item.Tag);
+
+            while ((entry == null) && (item.Parent != null))
+            {
+                item = item.Parent;
+                entry = _indents.FirstOrDefault(x => x.Selector == item.Tag);
+            }
 
             return (entry == null) ? 0 : entry.Value;
         }

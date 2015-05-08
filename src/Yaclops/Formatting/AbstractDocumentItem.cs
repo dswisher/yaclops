@@ -8,6 +8,7 @@ namespace Yaclops.Formatting
         private readonly List<AbstractDocumentItem> _children = new List<AbstractDocumentItem>();
 
         public IEnumerable<AbstractDocumentItem> Children { get { return _children; } }
+        public AbstractDocumentItem Parent { get; private set; }
 
 
         protected AbstractDocumentItem()
@@ -18,6 +19,8 @@ namespace Yaclops.Formatting
 
         public void Add(AbstractDocumentItem child)
         {
+            child.Parent = this;
+
             _children.Add(child);
         }
 

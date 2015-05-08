@@ -5,7 +5,7 @@ namespace Yaclops.Formatting
     {
         public override string Tag
         {
-            get { return "doc"; }
+            get { return "body"; }
         }
 
         // Convenience methods
