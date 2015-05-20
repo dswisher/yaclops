@@ -2,6 +2,9 @@
 
 ### Core ###
 
+* BUG: missing required commands break `--help` functionality; `sample add --help` prints error about missing required parameter, rather than print the help
+* Add ability to set default command to something other than help
+* Allow commands to be abbreviated: `sample cl` should be equivalent to `sample clone` (assuming no other commands start with "cl").
 * Allow aliases; see sample AddCommand: `-A`, `--all` and `--no-ignore-removal`
 * Create default short name for options, as long as it does not conflict. For example, the `Name` option should get `-n` as a short name, unless another option explicitly sets `-n` or there is a conflict such as a `Network` option.
 * Handle global options that do not require a command, for things like `--version` or `--help`.
