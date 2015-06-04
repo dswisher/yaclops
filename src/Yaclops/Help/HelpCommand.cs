@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using Yaclops.Attributes;
@@ -178,7 +179,14 @@ namespace Yaclops.Help
         private static string ExeName()
         {
             // TODO - allow the name to be overridden in settings
-            return Assembly.GetEntryAssembly().GetName().Name.ToLower();
+
+            var path = Environment.GetCommandLineArgs()[0];
+            if (string.IsNullOrEmpty(path))
+            {
+                path = "Unknown";
+            }
+
+            return Path.GetFileNameWithoutExtension(path).ToLower();
         }
     }
 }
