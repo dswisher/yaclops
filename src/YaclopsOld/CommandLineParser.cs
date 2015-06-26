@@ -12,9 +12,6 @@ namespace Yaclops
     /// <summary>
     /// Parse a command line
     /// </summary>
-    /// <remarks>
-    /// Once this is fully functional, drop the old one, make this one public and drop the Ex suffix
-    /// </remarks>
     public class CommandLineParser
     {
         private readonly ParserConfiguration _configuration = new ParserConfiguration();
