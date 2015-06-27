@@ -20,6 +20,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <DocumentationFile>bin\Debug\Yaclops.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -39,12 +41,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\NamedParameterAttribute.cs" />
     <Compile Include="CommandLineParser.cs" />
     <Compile Include="CommandLineParserException.cs" />
     <Compile Include="CommandLineParserSettings.cs" />
     <Compile Include="Commands\HelpCommand.cs" />
     <Compile Include="Commands\NullSubCommand.cs" />
     <Compile Include="Commands\YaclopsDumpTreeCommand.cs" />
+    <Compile Include="Extensions\PropertyInfoExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="ISubCommand.cs" />
     <Compile Include="Model\Command.cs" />
@@ -60,6 +64,7 @@
     <Compile Include="Parsing\Token.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reflecting\ReflectedCommand.cs" />
+    <Compile Include="Reflecting\ReflectedNamedParameter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -7,10 +7,13 @@ namespace Yaclops.Tests.Mocks
     internal class MockReflectedCommand : IReflectedCommand<object>
     {
         private static readonly Func<object> _factory = () => new object();
+
         private readonly List<string> _verbs = new List<string>();
+        private readonly List<ReflectedNamedParameter> _namedParameters = new List<ReflectedNamedParameter>();
 
 
-        public IList<string> Verbs { get { return _verbs; } }
+        public IReadOnlyList<string> Verbs { get { return _verbs; } }
+        public IReadOnlyList<ReflectedNamedParameter> NamedParameters { get { return _namedParameters; } }
         public Func<object> Factory { get { return _factory; } }
 
 

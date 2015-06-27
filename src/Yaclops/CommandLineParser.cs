@@ -67,11 +67,8 @@ namespace Yaclops
 
 
         /// <summary>
-        /// Add a command object to the list of commands.
+        /// Add a single command object to the parser's list of known commands.
         /// </summary>
-        /// <remarks>
-        /// This must be called before the first call to Parse().
-        /// </remarks>
         /// <param name="command">The command to add.</param>
         public void AddCommand(T command)
         {
@@ -80,6 +77,10 @@ namespace Yaclops
 
 
 
+        /// <summary>
+        /// Add multiple command objects to the parser's list of known commands.
+        /// </summary>
+        /// <param name="commands"></param>
         public void AddCommands(IEnumerable<T> commands)
         {
             foreach (var command in commands)
@@ -90,6 +91,11 @@ namespace Yaclops
 
 
 
+        /// <summary>
+        /// Add a type to the parser's list of known commands.
+        /// </summary>
+        /// <param name="commandType">The type to add.</param>
+        /// <param name="factory">A factory to create the command object, if parsed.</param>
         public void AddType(Type commandType, Func<T> factory)
         {
             _initialized = false;
@@ -98,6 +104,11 @@ namespace Yaclops
 
 
 
+        /// <summary>
+        /// Add a set of types to the parser's list of known commands.
+        /// </summary>
+        /// <param name="commandTypes">The list of types to add.</param>
+        /// <param name="factory">A factory to create the command objects, if parsed.</param>
         public void AddTypes(IEnumerable<Type> commandTypes, Func<Type, T> factory)
         {
             foreach (var commandType in commandTypes)
@@ -210,16 +221,28 @@ namespace Yaclops
 
 
 
+    /// <summary>
+    /// A command line parser using the built-in ISubCommand.
+    /// </summary>
     public class CommandLineParser : CommandLineParser<ISubCommand>
     {
         // Doesn't seem like these constructors would be needed, but they help out Autofac
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="settings">Optional settings for the parser.</param>
         public CommandLineParser(CommandLineParserSettings<ISubCommand> settings = null)
             : base(settings ?? new DefaultSubCommandSettings())
         {
         }
 
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="commands">A list of command objects to add to the parser.</param>
+        /// <param name="settings">Optional settings for the parser.</param>
         public CommandLineParser(IEnumerable<ISubCommand> commands, CommandLineParserSettings<ISubCommand> settings = null)
             : base(commands, settings ?? new DefaultSubCommandSettings())
         {
