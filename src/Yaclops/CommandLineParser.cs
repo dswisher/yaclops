@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Yaclops.Model;
+using Yaclops.Reflecting;
 
 
 namespace Yaclops
@@ -12,6 +14,7 @@ namespace Yaclops
     {
         private readonly CommandLineParserSettings _settings;
         private readonly List<TypeEntry> _types = new List<TypeEntry>();
+        private CommandRoot _commandRoot;
         private bool _initialized;
 
 
@@ -88,11 +91,7 @@ namespace Yaclops
 
         public void AddType(Type commandType, Func<T> factory)
         {
-            if (_initialized)
-            {
-                throw new InvalidOperationException("Cannot add a command after Parse has been called.");
-            }
-
+            _initialized = false;
             _types.Add(new TypeEntry { Type = commandType, Factory = factory });
         }
 
@@ -107,6 +106,10 @@ namespace Yaclops
             }
         }
 
+
+        // TODO - BOTH of the following should also be on the settings object
+        // TODO - add a method to add details about a group, including group-specific options
+        // TODO - add a method to add global-option objects
 
 
         /// <summary>
@@ -161,7 +164,23 @@ namespace Yaclops
                 throw new CommandLineParserException("At least one command or type must be added to the parser.");
             }
 
-            // TODO
+            // Create the command graph
+            _commandRoot = new CommandRoot();
+
+            foreach (var type in _types)
+            {
+                var reflected = new ReflectedCommand<T>(type.Type, type.Factory);
+                CommandGroup group = _commandRoot;
+
+                for (int i = 0; i < reflected.Verbs.Count - 1; i++)
+                {
+                    group = group.GetOrAddGroup(reflected.Verbs[i]);
+                }
+
+                var command = group.AddCommand(reflected.Verbs[reflected.Verbs.Count - 1]);
+
+                // TODO - add options and func and whatnot to the command
+            }
         }
 
 

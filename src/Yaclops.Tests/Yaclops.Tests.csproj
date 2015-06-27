@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="CommandLineParserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reflecting\ReflectedCommandTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
