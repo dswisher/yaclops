@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Yaclops.Commands;
 using Yaclops.Model;
+using Yaclops.Parsing;
 
 
 namespace Yaclops
@@ -14,7 +15,7 @@ namespace Yaclops
     {
         private readonly CommandLineParserSettings<T> _settings;
         private readonly List<TypeEntry<T>> _types = new List<TypeEntry<T>>();
-        private CommandRoot _commandRoot;
+        private Parser _parser;
         private bool _initialized;
 
 
@@ -146,12 +147,15 @@ namespace Yaclops
             if (string.IsNullOrWhiteSpace(input))
             {
                 // TODO - restore proper help command - dump internals is a hack!
-                new YaclopsDumpTreeCommand(_commandRoot).Execute();
+                new YaclopsDumpTreeCommand(_parser.CommandRoot).Execute();
                 // HelpCommand.Make(_commandRoot).Execute();
                 return _settings.NullCommand();
             }
 
-            // TODO - we have input - parse it!!
+            var result = _parser.Parse(input);
+
+            // TODO - examine the result and do the right thing!
+
             return _settings.NullCommand();
         }
 
@@ -184,7 +188,7 @@ namespace Yaclops
             builder.AddTypes(_types);
             // TODO - pull info from settings, too!
 
-            _commandRoot = builder.Root;
+            _parser = new Parser(builder.Root);
         }
     }
 

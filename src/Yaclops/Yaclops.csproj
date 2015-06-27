@@ -53,6 +53,11 @@
     <Compile Include="Model\CommandRoot.cs" />
     <Compile Include="Model\ModelBuilder.cs" />
     <Compile Include="Model\TypeEntry.cs" />
+    <Compile Include="Parsing\Lexer.cs" />
+    <Compile Include="Parsing\Parser.cs" />
+    <Compile Include="Parsing\ParseResult.cs" />
+    <Compile Include="Parsing\ParserState.cs" />
+    <Compile Include="Parsing\Token.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reflecting\ReflectedCommand.cs" />
   </ItemGroup>

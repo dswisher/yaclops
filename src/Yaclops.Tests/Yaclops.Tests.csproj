@@ -50,6 +50,7 @@
     <Compile Include="CommandLineParserTests.cs" />
     <Compile Include="Mocks\MockReflectedCommand.cs" />
     <Compile Include="Model\ModelBuilderTests.cs" />
+    <Compile Include="Parsing\LexerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reflecting\ReflectedCommandTests.cs" />
   </ItemGroup>
