@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Yaclops.Commands;
 using Yaclops.Model;
-using Yaclops.Reflecting;
 
 
 namespace Yaclops
@@ -12,8 +12,8 @@ namespace Yaclops
     /// </summary>
     public class CommandLineParser<T>
     {
-        private readonly CommandLineParserSettings _settings;
-        private readonly List<TypeEntry> _types = new List<TypeEntry>();
+        private readonly CommandLineParserSettings<T> _settings;
+        private readonly List<TypeEntry<T>> _types = new List<TypeEntry<T>>();
         private CommandRoot _commandRoot;
         private bool _initialized;
 
@@ -25,9 +25,9 @@ namespace Yaclops
         /// Commands can be added using the AddCommand or AddType methods.
         /// </remarks>
         /// <param name="settings">Additional settings for the parser</param>
-        public CommandLineParser(CommandLineParserSettings settings = null)
+        public CommandLineParser(CommandLineParserSettings<T> settings = null)
         {
-            _settings = settings ?? new CommandLineParserSettings();
+            _settings = settings ?? new CommandLineParserSettings<T>();
         }
 
 
@@ -36,7 +36,7 @@ namespace Yaclops
         /// </summary>
         /// <param name="commands">List of command objects to reflect</param>
         /// /// <param name="settings">Additional settings for the parser</param>
-        public CommandLineParser(IEnumerable<T> commands, CommandLineParserSettings settings = null)
+        public CommandLineParser(IEnumerable<T> commands, CommandLineParserSettings<T> settings = null)
             : this(settings)
         {
             foreach (var command in commands)
@@ -53,7 +53,7 @@ namespace Yaclops
         /// <param name="commandTypes">List of command types on which to reflect</param>
         /// <param name="factory">A factory that can be used to create objects of the various command types</param>
         /// <param name="settings">Additional settings for the parser</param>
-        public CommandLineParser(IEnumerable<Type> commandTypes, Func<Type, T> factory, CommandLineParserSettings settings = null)
+        public CommandLineParser(IEnumerable<Type> commandTypes, Func<Type, T> factory, CommandLineParserSettings<T> settings = null)
             : this(settings)
         {
             foreach (var commandType in commandTypes)
@@ -92,7 +92,7 @@ namespace Yaclops
         public void AddType(Type commandType, Func<T> factory)
         {
             _initialized = false;
-            _types.Add(new TypeEntry { Type = commandType, Factory = factory });
+            _types.Add(new TypeEntry<T> { Type = commandType, Factory = factory });
         }
 
 
@@ -131,14 +131,28 @@ namespace Yaclops
         /// <returns>The parsed command</returns>
         public T Parse(string input)
         {
+            if (input == null)
+            {
+                throw new ArgumentException("Input cannot be null", "input");
+            }
+
             if (!_initialized)
             {
                 Initialize();
                 _initialized = true;
             }
 
-            // TODO
-            return default(T);
+            // Special case easily handled here
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                // TODO - restore proper help command - dump internals is a hack!
+                new YaclopsDumpTreeCommand(_commandRoot).Execute();
+                // HelpCommand.Make(_commandRoot).Execute();
+                return _settings.NullCommand();
+            }
+
+            // TODO - we have input - parse it!!
+            return _settings.NullCommand();
         }
 
 
@@ -165,30 +179,12 @@ namespace Yaclops
             }
 
             // Create the command graph
-            _commandRoot = new CommandRoot();
+            ModelBuilder builder = new ModelBuilder();
 
-            foreach (var type in _types)
-            {
-                var reflected = new ReflectedCommand<T>(type.Type, type.Factory);
-                CommandGroup group = _commandRoot;
+            builder.AddTypes(_types);
+            // TODO - pull info from settings, too!
 
-                for (int i = 0; i < reflected.Verbs.Count - 1; i++)
-                {
-                    group = group.GetOrAddGroup(reflected.Verbs[i]);
-                }
-
-                var command = group.AddCommand(reflected.Verbs[reflected.Verbs.Count - 1]);
-
-                // TODO - add options and func and whatnot to the command
-            }
-        }
-
-
-
-        private class TypeEntry
-        {
-            public Type Type { get; set; }
-            public Func<T> Factory { get; set; }
+            _commandRoot = builder.Root;
         }
     }
 
@@ -198,14 +194,14 @@ namespace Yaclops
     {
         // Doesn't seem like these constructors would be needed, but they help out Autofac
 
-        public CommandLineParser(CommandLineParserSettings settings = null)
-            : base(settings)
+        public CommandLineParser(CommandLineParserSettings<ISubCommand> settings = null)
+            : base(settings ?? new DefaultSubCommandSettings())
         {
         }
 
 
-        public CommandLineParser(IEnumerable<ISubCommand> commands, CommandLineParserSettings settings = null)
-            : base(commands, settings)
+        public CommandLineParser(IEnumerable<ISubCommand> commands, CommandLineParserSettings<ISubCommand> settings = null)
+            : base(commands, settings ?? new DefaultSubCommandSettings())
         {
         }
     }

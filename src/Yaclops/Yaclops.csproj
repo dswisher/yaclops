@@ -42,12 +42,17 @@
     <Compile Include="CommandLineParser.cs" />
     <Compile Include="CommandLineParserException.cs" />
     <Compile Include="CommandLineParserSettings.cs" />
+    <Compile Include="Commands\HelpCommand.cs" />
+    <Compile Include="Commands\NullSubCommand.cs" />
+    <Compile Include="Commands\YaclopsDumpTreeCommand.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="ISubCommand.cs" />
     <Compile Include="Model\Command.cs" />
     <Compile Include="Model\CommandGroup.cs" />
     <Compile Include="Model\CommandNode.cs" />
     <Compile Include="Model\CommandRoot.cs" />
+    <Compile Include="Model\ModelBuilder.cs" />
+    <Compile Include="Model\TypeEntry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reflecting\ReflectedCommand.cs" />
   </ItemGroup>

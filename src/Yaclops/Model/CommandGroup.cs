@@ -15,6 +15,9 @@ namespace Yaclops.Model
 
 
 
+        public IList<CommandNode> Nodes { get { return _nodes; } }
+
+
         public CommandGroup GetOrAddGroup(string verb)
         {
             var group = _nodes.OfType<CommandGroup>().FirstOrDefault(x => x.Verb == verb);
