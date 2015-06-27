@@ -1,14 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Yaclops.Reflecting;
 
 namespace Yaclops.Tests.Mocks
 {
-    internal class MockReflectedCommand : IReflectedCommand
+    internal class MockReflectedCommand : IReflectedCommand<object>
     {
+        private static readonly Func<object> _factory = () => new object();
         private readonly List<string> _verbs = new List<string>();
 
 
         public IList<string> Verbs { get { return _verbs; } }
+        public Func<object> Factory { get { return _factory; } }
 
 
         public void AddVerbs(params string[] verbs)

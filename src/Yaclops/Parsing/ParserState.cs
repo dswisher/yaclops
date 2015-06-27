@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Yaclops.Model;
 
 namespace Yaclops.Parsing
@@ -10,43 +7,44 @@ namespace Yaclops.Parsing
     internal class ParserState
     {
         private readonly Lexer _lexer;
-        private CommandNode _currentNode;
-        private Token _currentToken;
 
         public ParserState(CommandNode startNode, Lexer lexer)
         {
-            _currentNode = startNode;
-            ExtractParameters(_currentNode);
+            CurrentNode = startNode;
+            ExtractParameters(CurrentNode);
 
             _lexer = lexer;
-            _currentToken = _lexer.Pop();
+            CurrentToken = _lexer.Pop();
         }
+
+
+        public CommandNode CurrentNode { get; private set; }
+        public Token CurrentToken { get; private set; }
 
 
         public bool Advance()
         {
-            switch (_currentToken.Kind)
+            switch (CurrentToken.Kind)
             {
                 case TokenKind.EndOfInput:
                     return false;
 
                 case TokenKind.LongName:
                 case TokenKind.ShortName:
-                    // TODO - for now, just skip
-                    _currentToken = _lexer.Pop();
-                    break;
+                    // TODO - named parameters
+                    throw new NotImplementedException("Named parameter handling is TBD");
 
                 case TokenKind.Value:
-                    if (_currentNode is Command)
+                    if (CurrentNode is Command)
                     {
                         // TODO - at a terminal - this must be a value we need to squirrel away
-                        return false;   // TODO - for now, just stop
+                        throw new NotImplementedException("Positional parameter handling is TBD");
                     }
 
-                    if (_currentNode is CommandGroup)
+                    if (CurrentNode is CommandGroup)
                     {
                         // TODO - handle substring matching ("comm" should match "commit", if unique)
-                        var next = ((CommandGroup)_currentNode).Nodes.FirstOrDefault(x => x.Verb.Equals(_currentToken.Text, StringComparison.InvariantCultureIgnoreCase));
+                        var next = ((CommandGroup)CurrentNode).Nodes.FirstOrDefault(x => x.Verb.Equals(CurrentToken.Text, StringComparison.InvariantCultureIgnoreCase));
                         if (next == null)
                         {
                             // TODO - check for help verb and handle it
@@ -54,13 +52,13 @@ namespace Yaclops.Parsing
                         if (next == null)
                         {
                             // TODO - build up a pretty message
-                            throw new CommandLineParserException("Ambiguous/incomplete command!");
+                            throw new CommandLineParserException("Unknown command!");
                         }
 
                         // Advance
-                        _currentNode = next;
-                        ExtractParameters(_currentNode);
-                        _currentToken = _lexer.Pop();
+                        CurrentNode = next;
+                        ExtractParameters(CurrentNode);
+                        CurrentToken = _lexer.Pop();
                         return true;
                     }
 

@@ -29,8 +29,9 @@ namespace Yaclops.Tests.Model
 
             var node = _builder.Root.Nodes[0];
 
-            node.ShouldBeOfType<Command>();
+            node.ShouldBeOfType<Command<object>>();
             node.Verb.ShouldBe(verb);
+            ((Command<object>)node).Factory.ShouldNotBe(null);
         }
 
 
@@ -52,8 +53,9 @@ namespace Yaclops.Tests.Model
             ((CommandGroup)node).Nodes.Count.ShouldBe(1);
             node = ((CommandGroup)node).Nodes[0];
 
-            node.ShouldBeOfType<Command>();
+            node.ShouldBeOfType<Command<object>>();
             node.Verb.ShouldBe(verb2);
+            ((Command<object>)node).Factory.ShouldNotBe(null);
         }
     }
 }

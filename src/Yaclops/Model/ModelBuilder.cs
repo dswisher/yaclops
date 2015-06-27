@@ -21,7 +21,7 @@ namespace Yaclops.Model
         }
 
 
-        public void AddType(IReflectedCommand reflected)
+        public void AddType<T>(IReflectedCommand<T> reflected)
         {
             CommandGroup group = Root;
 
@@ -30,9 +30,9 @@ namespace Yaclops.Model
                 group = group.GetOrAddGroup(reflected.Verbs[i]);
             }
 
-            var command = group.AddCommand(reflected.Verbs[reflected.Verbs.Count - 1]);
+            var command = group.AddCommand(reflected.Verbs[reflected.Verbs.Count - 1], reflected.Factory);
 
-            // TODO - add options and func and whatnot to the command
+            // TODO - add options and whatnot to the command
         }
 
 

@@ -10,15 +10,21 @@ namespace Yaclops.Reflecting
     }
 
 
-    internal class ReflectedCommand<T> : IReflectedCommand
+    internal interface IReflectedCommand<T> : IReflectedCommand
+    {
+        Func<T> Factory { get; }
+    }
+
+
+
+    internal class ReflectedCommand<T> : IReflectedCommand<T>
     {
         private readonly List<string> _verbs = new List<string>();
-        private readonly Func<T> _factory;
 
 
         public ReflectedCommand(Type type, Func<T> factory)
         {
-            _factory = factory;
+            Factory = factory;
 
             // TODO - look for attribute to override the name verbs
             _verbs.AddRange(type.Name.Replace("Command", string.Empty).Decamel());
@@ -30,5 +36,6 @@ namespace Yaclops.Reflecting
 
 
         public IList<string> Verbs { get { return _verbs; } }
+        public Func<T> Factory { get; private set; }
     }
 }

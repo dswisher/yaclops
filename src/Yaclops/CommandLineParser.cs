@@ -143,20 +143,36 @@ namespace Yaclops
                 _initialized = true;
             }
 
-            // Special case easily handled here
-            if (string.IsNullOrWhiteSpace(input))
-            {
-                // TODO - restore proper help command - dump internals is a hack!
-                new YaclopsDumpTreeCommand(_parser.CommandRoot).Execute();
-                // HelpCommand.Make(_commandRoot).Execute();
-                return _settings.NullCommand();
-            }
-
             var result = _parser.Parse(input);
 
-            // TODO - examine the result and do the right thing!
+            switch (result.Kind)
+            {
+                case ParseResultKind.Help:
+                    // TODO - restore proper help command - dump internals is a hack!
+                    new YaclopsDumpTreeCommand(_parser.CommandRoot).Execute();
+                    // HelpCommand.Make(_commandRoot).Execute();
+                    return _settings.NullCommand();
 
-            return _settings.NullCommand();
+                case ParseResultKind.Command:
+                    return HandleExternalCommand(result);
+
+                default:
+                    throw new NotImplementedException("Internal parser error! Unhandled result state: " + result.Kind);
+            }
+        }
+
+
+
+        private T HandleExternalCommand(ParseResult result)
+        {
+            // TODO - determine if it is an internal command or external command
+            var commandNode = (Command<T>)result.FinalNode;
+
+            T command = commandNode.Factory();
+
+            // TODO - stuff all the parameters into the command
+
+            return command;
         }
 
 

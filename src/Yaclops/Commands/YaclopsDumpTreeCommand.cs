@@ -7,16 +7,16 @@ namespace Yaclops.Commands
 {
     internal class YaclopsDumpTreeCommand
     {
-        private readonly Dictionary<Type, TypeEntry> _map = new Dictionary<Type, TypeEntry>();
+        private readonly List<TypeEntry> _entries = new List<TypeEntry>();
         private readonly CommandNode _start;
 
         public YaclopsDumpTreeCommand(CommandNode start)
         {
             _start = start;
 
-            _map.Add(typeof(CommandGroup), new TypeEntry { Code = "G", HasChildren = true });
-            _map.Add(typeof(Command), new TypeEntry { Code = "C", HasChildren = false });
-            _map.Add(typeof(CommandRoot), new TypeEntry { Code = "R", HasChildren = true });
+            _entries.Add(new TypeEntry { Type = typeof(CommandRoot), Code = "R", HasChildren = true });
+            _entries.Add(new TypeEntry { Type = typeof(CommandGroup), Code = "G", HasChildren = true });
+            _entries.Add(new TypeEntry { Type = typeof(Command), Code = "C", HasChildren = false });
         }
 
 
@@ -28,8 +28,8 @@ namespace Yaclops.Commands
 
         private void DumpNode(CommandNode node, int indent)
         {
-            TypeEntry entry;
-            if (!_map.TryGetValue(node.GetType(), out entry))
+            TypeEntry entry = _entries.FirstOrDefault(x => x.Type.IsInstanceOfType(node));
+            if (entry == null)
             {
                 throw new ArgumentException("Node is of an unknown type: " + node.GetType().Name, "node");
             }
@@ -51,6 +51,7 @@ namespace Yaclops.Commands
 
         private class TypeEntry
         {
+            public Type Type { get; set; }
             public bool HasChildren { get; set; }
             public string Code { get; set; }
         }

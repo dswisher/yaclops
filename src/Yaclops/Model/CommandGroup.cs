@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Yaclops.Model
@@ -32,7 +33,7 @@ namespace Yaclops.Model
 
 
 
-        public Command AddCommand(string verb)
+        public Command<T> AddCommand<T>(string verb, Func<T> factory)
         {
             if (_nodes.Any(x => x.Verb == verb))
             {
@@ -40,7 +41,7 @@ namespace Yaclops.Model
                 throw new CommandLineParserException("Duplicate command: " + verb);
             }
 
-            var command = new Command(verb);
+            var command = new Command<T>(verb, factory);
             _nodes.Add(command);
             return command;
         }
