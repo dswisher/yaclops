@@ -4,6 +4,9 @@ using System.Linq;
 using Yaclops.Attributes;
 using Yaclops.Extensions;
 
+#pragma warning disable 618
+
+
 namespace Yaclops.Reflecting
 {
     internal interface IReflectedCommand
@@ -60,10 +63,35 @@ namespace Yaclops.Reflecting
                 ReflectedNamedParameter namedParam = new ReflectedNamedParameter(prop.Name, prop.IsBool());
                 _namedParameters.Add(namedParam);
 
-                // TODO - build default long name
-                // TODO - pull out long and short names from namedAtt
+                var longNames = prop.FindAttribute<LongNameAttribute>();
+                if (string.IsNullOrEmpty(namedAtt.LongName) && !longNames.Any())
+                {
+                    namedParam.AddLongName(string.Join("-", prop.Name.Decamel()).ToLower());
+                }
+                else
+                {
+                    if (!string.IsNullOrEmpty(namedAtt.LongName))
+                    {
+                        namedParam.AddLongName(namedAtt.LongName);
+                    }
 
-                // TODO - look for LongName and ShortName attributes on the property
+                    foreach (var att in longNames)
+                    {
+                        namedParam.AddLongName(att.Name);
+                    }
+                }
+
+                var shortNames = prop.FindAttribute<ShortNameAttribute>();
+                if (!string.IsNullOrEmpty(namedAtt.ShortName))
+                {
+                    namedParam.AddShortName(namedAtt.ShortName);
+                }
+
+                foreach (var att in shortNames)
+                {
+                    namedParam.AddShortName(att.Name);
+                }
+
                 // TODO - pick up the description (if any)
             }
         }

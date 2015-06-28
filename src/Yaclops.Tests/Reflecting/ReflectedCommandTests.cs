@@ -4,6 +4,9 @@ using Shouldly;
 using Yaclops.Attributes;
 using Yaclops.Reflecting;
 
+#pragma warning disable 618
+
+
 namespace Yaclops.Tests.Reflecting
 {
     [TestFixture]
@@ -49,6 +52,7 @@ namespace Yaclops.Tests.Reflecting
             var param = command.NamedParameters[0];
             param.PropertyName.ShouldBe("Flag");
             param.IsBool.ShouldBe(true);
+            param.HasLongName("flag").ShouldBe(true);
         }
 
 
@@ -62,6 +66,8 @@ namespace Yaclops.Tests.Reflecting
             var param = command.NamedParameters[0];
             param.PropertyName.ShouldBe("Num");
             param.IsBool.ShouldBe(false);
+            param.HasLongName("magic").ShouldBe(true);
+            param.HasShortName("n").ShouldBe(true);
         }
 
 
@@ -81,7 +87,7 @@ namespace Yaclops.Tests.Reflecting
 
         private class NamedLong
         {
-            [NamedParameter]
+            [NamedParameter(LongName = "magic", ShortName = "n")]
             public long Num { get; set; }
         }
 

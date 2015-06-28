@@ -41,7 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\LongNameAttribute.cs" />
     <Compile Include="Attributes\NamedParameterAttribute.cs" />
+    <Compile Include="Attributes\ShortNameAttribute.cs" />
     <Compile Include="CommandLineParser.cs" />
     <Compile Include="CommandLineParserException.cs" />
     <Compile Include="CommandLineParserSettings.cs" />
