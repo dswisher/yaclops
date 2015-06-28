@@ -88,8 +88,14 @@ namespace Yaclops.Parsing
                     throw new CommandLineParserException("Unknown named parameter: " + CurrentToken.Text);
 
                 case TokenKind.ShortName:
-                    // TODO - named parameters
-                    throw new NotImplementedException("Short-named parameter handling is TBD");
+                    if (_shortNames.ContainsKey(CurrentToken.Text))
+                    {
+                        _currentParameter = _shortNames[CurrentToken.Text];
+                        CurrentToken = _lexer.Pop();
+                        return true;
+                    }
+                    // TODO - check for help flag
+                    throw new CommandLineParserException("Unknown named parameter: " + CurrentToken.Text);
 
                 case TokenKind.Value:
                     if (CurrentNode is Command)
