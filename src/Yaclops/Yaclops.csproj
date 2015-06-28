@@ -44,6 +44,7 @@
     <Compile Include="Attributes\LongNameAttribute.cs" />
     <Compile Include="Attributes\NamedParameterAttribute.cs" />
     <Compile Include="Attributes\ShortNameAttribute.cs" />
+    <Compile Include="Attributes\SummaryAttribute.cs" />
     <Compile Include="CommandLineParser.cs" />
     <Compile Include="CommandLineParserException.cs" />
     <Compile Include="CommandLineParserSettings.cs" />
@@ -55,6 +56,7 @@
     <Compile Include="ISubCommand.cs" />
     <Compile Include="Model\Command.cs" />
     <Compile Include="Model\CommandGroup.cs" />
+    <Compile Include="Model\CommandNamedParameter.cs" />
     <Compile Include="Model\CommandNode.cs" />
     <Compile Include="Model\CommandRoot.cs" />
     <Compile Include="Model\ModelBuilder.cs" />

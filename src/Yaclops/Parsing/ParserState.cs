@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Yaclops.Model;
 
@@ -7,6 +8,8 @@ namespace Yaclops.Parsing
     internal class ParserState
     {
         private readonly Lexer _lexer;
+        private readonly Dictionary<string, CommandNamedParameter> _longNames = new Dictionary<string, CommandNamedParameter>();
+        private readonly Dictionary<string, CommandNamedParameter> _shortNames = new Dictionary<string, CommandNamedParameter>();
 
         public ParserState(CommandNode startNode, Lexer lexer)
         {
@@ -72,6 +75,11 @@ namespace Yaclops.Parsing
 
         private void ExtractParameters(CommandNode node)
         {
+            foreach (var p in node.NamedParameters)
+            {
+                // TODO
+            }
+
             // TODO - extract any positional or named parameters from the current node
         }
     }

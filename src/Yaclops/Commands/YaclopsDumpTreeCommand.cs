@@ -34,8 +34,22 @@ namespace Yaclops.Commands
                 throw new ArgumentException("Node is of an unknown type: " + node.GetType().Name, "node");
             }
 
+            var shortNames = node.NamedParameters.SelectMany(x => x.ShortNames, (x, l) => l).OrderBy(x => x).ToList();
+            var longNames = node.NamedParameters.SelectMany(x => x.LongNames, (x, l) => l).OrderBy(x => x).ToList();
+
             var chars = new string('.', indent);
+            var spaces = new string(' ', indent + 7);
             Console.WriteLine("{0}[{1}]: {2}", chars, entry.Code, node.Verb);
+
+            if (shortNames.Any())
+            {
+                Console.WriteLine("{0}SN: {1}", spaces, string.Join("|", shortNames));
+            }
+
+            if (longNames.Any())
+            {
+                Console.WriteLine("{0}LN: {1}", spaces, string.Join("|", longNames));
+            }
 
             if (entry.HasChildren)
             {

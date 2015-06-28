@@ -32,7 +32,17 @@ namespace Yaclops.Model
 
             var command = group.AddCommand(reflected.Verbs[reflected.Verbs.Count - 1], reflected.Factory);
 
-            // TODO - add options and whatnot to the command
+            foreach (var reflectedParam in reflected.NamedParameters)
+            {
+                var commandParam = new CommandNamedParameter(reflectedParam.PropertyName);
+
+                commandParam.LongNames.AddRange(reflectedParam.LongNames);
+                commandParam.ShortNames.AddRange(reflectedParam.ShortNames);
+
+                command.NamedParameters.Add(commandParam);
+            }
+
+            // TODO - add positional parameters to the command
         }
 
 
