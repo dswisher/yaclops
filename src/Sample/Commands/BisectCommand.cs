@@ -3,16 +3,6 @@ using Yaclops;
 
 namespace Sample.Commands
 {
-    public class BisectHelpCommand : ISubCommand
-    {
-        public void Execute()
-        {
-            // Execute the command. For demo purposes, just dump out the parameters...
-            this.Dump();
-        }
-    }
-
-
     public class BisectStartCommand : ISubCommand
     {
         public void Execute()
