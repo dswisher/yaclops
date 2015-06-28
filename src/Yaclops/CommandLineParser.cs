@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Yaclops.Commands;
+using Yaclops.Injecting;
 using Yaclops.Model;
 using Yaclops.Parsing;
 
@@ -165,6 +166,7 @@ namespace Yaclops
                     return _settings.NullCommand();
 
                 case ParseResultKind.Command:
+                    // TODO - determine if it is an internal command or external command
                     return HandleExternalCommand(result);
 
                 default:
@@ -176,12 +178,12 @@ namespace Yaclops
 
         private T HandleExternalCommand(ParseResult result)
         {
-            // TODO - determine if it is an internal command or external command
             var commandNode = (Command<T>)result.FinalNode;
 
             T command = commandNode.Factory();
 
-            // TODO - stuff all the parameters into the command
+            PropertyInjector injector = new PropertyInjector(result);
+            injector.Populate(command);
 
             return command;
         }

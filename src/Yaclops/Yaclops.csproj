@@ -53,6 +53,7 @@
     <Compile Include="Commands\YaclopsDumpTreeCommand.cs" />
     <Compile Include="Extensions\PropertyInfoExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Injecting\PropertyInjector.cs" />
     <Compile Include="ISubCommand.cs" />
     <Compile Include="Model\Command.cs" />
     <Compile Include="Model\CommandGroup.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="Parsing\Lexer.cs" />
     <Compile Include="Parsing\Parser.cs" />
     <Compile Include="Parsing\ParseResult.cs" />
+    <Compile Include="Parsing\ParserNamedParameterResult.cs" />
     <Compile Include="Parsing\ParserState.cs" />
     <Compile Include="Parsing\Token.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

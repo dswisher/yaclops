@@ -36,6 +36,7 @@ namespace Yaclops.Parsing
                     // TODO - determine if the command is internal or external...
                     result.Kind = ParseResultKind.Command;
                     result.FinalNode = state.CurrentNode;
+                    result.NamedParameters = state.NamedParameters;
                 }
                 else
                 {

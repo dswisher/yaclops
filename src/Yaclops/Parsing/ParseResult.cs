@@ -1,4 +1,5 @@
-﻿using Yaclops.Model;
+﻿using System.Collections.Generic;
+using Yaclops.Model;
 
 namespace Yaclops.Parsing
 {
@@ -15,5 +16,6 @@ namespace Yaclops.Parsing
     {
         public ParseResultKind Kind { get; set; }
         public CommandNode FinalNode { get; set; }
+        public IList<ParserNamedParameterResult> NamedParameters { get; set; }
     }
 }

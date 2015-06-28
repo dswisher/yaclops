@@ -14,6 +14,7 @@ namespace Yaclops.Parsing
 
         public ParserState(CommandNode startNode, Lexer lexer)
         {
+            NamedParameters = new List<ParserNamedParameterResult>();
             CurrentNode = startNode;
             ExtractParameters(CurrentNode);
 
@@ -24,6 +25,7 @@ namespace Yaclops.Parsing
 
         public CommandNode CurrentNode { get; private set; }
         public Token CurrentToken { get; private set; }
+        public List<ParserNamedParameterResult> NamedParameters { get; private set; }
 
 
         public bool Advance()
@@ -42,7 +44,7 @@ namespace Yaclops.Parsing
                         break;
 
                     case TokenKind.Value:
-                        // TODO - squirrel away the value
+                        NamedParameters.Add(new ParserNamedParameterResult(_currentParameter, CurrentToken.Text));
                         _currentParameter = null;
                         CurrentToken = _lexer.Pop();
                         return true;
@@ -61,6 +63,7 @@ namespace Yaclops.Parsing
                 throw new CommandLineParserException("No value specified for parameter: " + _currentParameter.PropertyName);
             }
 
+            NamedParameters.Add(new ParserNamedParameterResult(_currentParameter, true.ToString()));
             _currentParameter = null;
         }
 
