@@ -34,7 +34,7 @@ namespace Yaclops.Model
 
             foreach (var reflectedParam in reflected.NamedParameters)
             {
-                var commandParam = new CommandNamedParameter(reflectedParam.PropertyName);
+                var commandParam = new CommandNamedParameter(reflectedParam.PropertyName, reflectedParam.IsBool);
 
                 commandParam.LongNames.AddRange(reflectedParam.LongNames);
                 commandParam.ShortNames.AddRange(reflectedParam.ShortNames);

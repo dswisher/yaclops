@@ -10,6 +10,7 @@ namespace Yaclops.Parsing
         private readonly Lexer _lexer;
         private readonly Dictionary<string, CommandNamedParameter> _longNames = new Dictionary<string, CommandNamedParameter>();
         private readonly Dictionary<string, CommandNamedParameter> _shortNames = new Dictionary<string, CommandNamedParameter>();
+        private CommandNamedParameter _currentParameter;
 
         public ParserState(CommandNode startNode, Lexer lexer)
         {
@@ -27,15 +28,65 @@ namespace Yaclops.Parsing
 
         public bool Advance()
         {
+            if (_currentParameter != null)
+            {
+                switch (CurrentToken.Kind)
+                {
+                    case TokenKind.EndOfInput:
+                        HandleMissingNamedParameterValue();
+                        return false;
+
+                    case TokenKind.LongName:
+                    case TokenKind.ShortName:
+                        HandleMissingNamedParameterValue();
+                        break;
+
+                    case TokenKind.Value:
+                        // TODO - squirrel away the value
+                        _currentParameter = null;
+                        CurrentToken = _lexer.Pop();
+                        return true;
+                }
+            }
+
+            return HandleDefaultState();
+        }
+
+
+
+        private void HandleMissingNamedParameterValue()
+        {
+            if (!_currentParameter.IsBool)
+            {
+                throw new CommandLineParserException("No value specified for parameter: " + _currentParameter.PropertyName);
+            }
+
+            _currentParameter = null;
+        }
+
+
+
+        private bool HandleDefaultState()
+        {
             switch (CurrentToken.Kind)
             {
                 case TokenKind.EndOfInput:
                     return false;
 
                 case TokenKind.LongName:
+                    // TODO - check for prefixes?
+                    if (_longNames.ContainsKey(CurrentToken.Text))
+                    {
+                        _currentParameter = _longNames[CurrentToken.Text];
+                        CurrentToken = _lexer.Pop();
+                        return true;
+                    }
+                    // TODO - check for help flag
+                    throw new CommandLineParserException("Unknown named parameter: " + CurrentToken.Text);
+
                 case TokenKind.ShortName:
                     // TODO - named parameters
-                    throw new NotImplementedException("Named parameter handling is TBD");
+                    throw new NotImplementedException("Short-named parameter handling is TBD");
 
                 case TokenKind.Value:
                     if (CurrentNode is Command)
@@ -73,14 +124,23 @@ namespace Yaclops.Parsing
         }
 
 
+
         private void ExtractParameters(CommandNode node)
         {
             foreach (var p in node.NamedParameters)
             {
-                // TODO
+                foreach (var name in p.LongNames)
+                {
+                    _longNames[name] = p;
+                }
+
+                foreach (var name in p.ShortNames)
+                {
+                    _shortNames[name] = p;
+                }
             }
 
-            // TODO - extract any positional or named parameters from the current node
+            // TODO - extract any positional from the node
         }
     }
 }
