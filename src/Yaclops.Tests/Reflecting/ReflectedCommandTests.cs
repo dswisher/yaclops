@@ -96,6 +96,18 @@ namespace Yaclops.Tests.Reflecting
         }
 
 
+        [Test]
+        public void PositionalDoubleListParameterGetsPickedUp()
+        {
+            var command = new ReflectedCommand<object>(typeof(PositionalDoubleList), _factory);
+
+            command.PositionalParameters.Count.ShouldBe(1);
+            var param = command.PositionalParameters[0];
+            param.PropertyName.ShouldBe("Fractions");
+            param.IsList.ShouldBe(true);
+        }
+
+
         #region Test Commands
         // ReSharper disable UnusedMember.Local
 
@@ -125,6 +137,12 @@ namespace Yaclops.Tests.Reflecting
         {
             [PositionalParameter]
             public List<string> Stuffs { get; set; }
+        }
+
+        private class PositionalDoubleList
+        {
+            [PositionalParameter]
+            public List<double> Fractions { get; set; }
         }
 
         // ReSharper restore UnusedMember.Local

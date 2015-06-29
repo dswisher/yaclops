@@ -15,8 +15,7 @@ namespace Yaclops.Extensions
 
         public static bool IsList(this PropertyInfo info)
         {
-            // TODO - handle more than just list of string!!
-            return info.PropertyType == typeof(List<string>);
+            return info.PropertyType.IsGenericType && (info.PropertyType.GetGenericTypeDefinition() == typeof(List<>));
         }
 
 
