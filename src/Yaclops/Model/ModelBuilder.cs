@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Yaclops.Commands;
 using Yaclops.Reflecting;
 
@@ -61,6 +62,17 @@ namespace Yaclops.Model
             CommandGroup yaclops = Root.GetOrAddGroup("yaclops");
 
             yaclops.AddInternalCommand("dump", (r, n) => new YaclopsDumpTreeCommand(r).Execute());
+        }
+
+
+
+        public void AddGroupOptions(IEnumerable<GroupOptionsEntry> groupOptions)
+        {
+            foreach (var entry in groupOptions)
+            {
+                // TODO - find the group and add options to it
+                throw new NotImplementedException();
+            }
         }
     }
 }

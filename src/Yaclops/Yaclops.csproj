@@ -64,6 +64,7 @@
     <Compile Include="Model\CommandPositionalParameter.cs" />
     <Compile Include="Model\CommandRoot.cs" />
     <Compile Include="Model\ExternalCommand.cs" />
+    <Compile Include="Model\GroupOptionsEntry.cs" />
     <Compile Include="Model\InternalCommand.cs" />
     <Compile Include="Model\ModelBuilder.cs" />
     <Compile Include="Model\TypeEntry.cs" />
@@ -78,6 +79,9 @@
     <Compile Include="Reflecting\ReflectedCommand.cs" />
     <Compile Include="Reflecting\ReflectedNamedParameter.cs" />
     <Compile Include="Reflecting\ReflectedPositionalParameter.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ToDo.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

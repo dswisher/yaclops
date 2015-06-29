@@ -16,6 +16,7 @@ namespace Yaclops
     {
         private readonly CommandLineParserSettings<T> _settings;
         private readonly List<TypeEntry<T>> _types = new List<TypeEntry<T>>();
+        private readonly List<GroupOptionsEntry> _groupOptions = new List<GroupOptionsEntry>();
         private Parser _parser;
         private bool _initialized;
 
@@ -120,9 +121,21 @@ namespace Yaclops
         }
 
 
-        // TODO - BOTH of the following should also be on the settings object
         // TODO - add a method to add details about a group, including group-specific options
-        // TODO - add a method to add global-option objects
+
+
+        /// <summary>
+        /// Add global options
+        /// </summary>
+        /// <remarks>
+        /// This can be called multiple times with multiple objects, and their options are combined.
+        /// </remarks>
+        /// <param name="rootOptions"></param>
+        public void AddGlobalOptions<TO>(TO rootOptions)
+        {
+            _initialized = false;
+            _groupOptions.Add(new GroupOptionsEntry<TO>(rootOptions));
+        }
 
 
         /// <summary>
@@ -231,6 +244,8 @@ namespace Yaclops
             {
                 builder.AddInternalCommands();
             }
+
+            builder.AddGroupOptions(_groupOptions);
 
             _parser = new Parser(builder.Root);
         }
