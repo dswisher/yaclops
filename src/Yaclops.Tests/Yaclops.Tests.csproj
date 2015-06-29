@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandLineParserTests.cs" />
+    <Compile Include="Injecting\PropertyInjectorTests.cs" />
     <Compile Include="Mocks\MockReflectedCommand.cs" />
     <Compile Include="Model\ModelBuilderTests.cs" />
     <Compile Include="Parsing\LexerTests.cs" />

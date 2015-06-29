@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
@@ -44,8 +45,24 @@ namespace Yaclops.Injecting
 
             if (param.Parameter.IsList)
             {
-                // TODO - push list value(s)
-                throw new NotImplementedException("Pushing list values is not yet implemente!");
+                var listType = typeof(List<>);
+                var genericArgs = prop.PropertyType.GetGenericArguments();
+                var concreteType = listType.MakeGenericType(genericArgs);
+
+                var list = prop.GetValue(target);
+                if (list == null)
+                {
+                    list = Activator.CreateInstance(concreteType);
+                    prop.SetValue(target, list);
+                }
+
+                var add = concreteType.GetMethod("Add");
+                TypeConverter typeConverter = TypeDescriptor.GetConverter(genericArgs.First());
+                foreach (var stringVal in param.Values)
+                {
+                    var val = typeConverter.ConvertFromString(stringVal);
+                    add.Invoke(list, new[] { val });
+                }
             }
             else
             {
