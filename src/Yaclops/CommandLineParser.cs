@@ -168,7 +168,7 @@ namespace Yaclops
                 _initialized = true;
             }
 
-            var result = _parser.Parse(input, _settings.HelpFlags, _settings.HelpVerb);
+            var result = _parser.Parse(input);
 
             switch (result.Kind)
             {
@@ -247,7 +247,7 @@ namespace Yaclops
 
             builder.AddGroupOptions(_groupOptions);
 
-            _parser = new Parser(builder.Root);
+            _parser = new Parser(builder.Root, _settings.HelpFlags, _settings.HelpVerb);
         }
     }
 

@@ -5,8 +5,13 @@ namespace Yaclops.Parsing
 {
     internal class Parser
     {
-        public Parser(CommandRoot commandRoot)
+        private readonly IEnumerable<string> _helpFlags;
+        private readonly string _helpVerb;
+
+        public Parser(CommandRoot commandRoot, IEnumerable<string> helpFlags = null, string helpVerb = null)
         {
+            _helpFlags = helpFlags ?? new[] { "-h" };
+            _helpVerb = helpVerb ?? "help";
             CommandRoot = commandRoot;
         }
 
@@ -14,11 +19,11 @@ namespace Yaclops.Parsing
         public CommandRoot CommandRoot { get; private set; }
 
 
-        public ParseResult Parse(string input, IEnumerable<string> helpFlags, string helpVerb)
+        public ParseResult Parse(string input)
         {
             var result = new ParseResult();
             var lexer = new Lexer(input);
-            var state = new ParserState(CommandRoot, lexer, helpFlags, helpVerb);
+            var state = new ParserState(CommandRoot, lexer, _helpFlags, _helpVerb);
 
             // Special case
             if (state.CurrentToken.Kind == TokenKind.EndOfInput)
