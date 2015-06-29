@@ -1,4 +1,6 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using Sample.Helpers;
 using Yaclops;
 using Yaclops.Attributes;
@@ -35,15 +37,8 @@ to add ignored files with the -f (force) option.
 Please see `commit` for alternative ways to add content to a commit.")]
     public class AddCommand : ISubCommand
     {
-        public AddCommand()
-        {
-            // TODO - shouldn't library create list if it does not exist?
-            //Paths = new List<string>();
-        }
-
-
-        //[PositionalParameter, Required]
-        //public List<string> Paths { get; private set; }
+        [PositionalParameter, Required]
+        public List<string> Paths { get; set; }
 
         [NamedParameter, ShortName("n")]
         [Description("Don’t actually add the file(s), just show if they exist and/or will be ignored.")]
