@@ -17,7 +17,7 @@ namespace Yaclops.Reflecting
 
 
         public string PropertyName { get; private set; }
-        public bool IsBool { get; set; }
+        public bool IsBool { get; private set; }
         public IEnumerable<string> LongNames { get { return _longNames; } }
         public IEnumerable<string> ShortNames { get { return _shortNames; } }
 

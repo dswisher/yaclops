@@ -27,6 +27,7 @@ namespace Yaclops.Reflecting
     {
         private readonly List<string> _verbs = new List<string>();
         private readonly List<ReflectedNamedParameter> _namedParameters = new List<ReflectedNamedParameter>();
+        private readonly List<ReflectedPositionalParameter> _positionalParameters = new List<ReflectedPositionalParameter>();
 
 
         public ReflectedCommand(Type type, Func<T> factory)
@@ -41,26 +42,42 @@ namespace Yaclops.Reflecting
             // TODO - pull out summary and description
 
             ExtractNamedParameters(type);
+            ExtractPositionalParameters(type);
         }
 
 
 
         public IReadOnlyList<string> Verbs { get { return _verbs; } }
         public IReadOnlyList<ReflectedNamedParameter> NamedParameters { get { return _namedParameters; } }
+        public IReadOnlyList<ReflectedPositionalParameter> PositionalParameters { get { return _positionalParameters; } }
         public Func<T> Factory { get; private set; }
+
+
+
+        private void ExtractPositionalParameters(Type type)
+        {
+            var props = type.FindProperties<PositionalParameterAttribute>();
+
+            foreach (var prop in props)
+            {
+                var posParam = new ReflectedPositionalParameter(prop.Name, prop.IsList());
+                _positionalParameters.Add(posParam);
+
+                // TODO - pick up the description (if any)
+            }
+        }
 
 
 
         private void ExtractNamedParameters(Type type)
         {
-            var namedProps = type.GetProperties()
-                .Where(x => x.GetCustomAttributes(typeof (NamedParameterAttribute), true).Any());
+            var props = type.FindProperties<NamedParameterAttribute>();
 
-            foreach (var prop in namedProps)
+            foreach (var prop in props)
             {
-                var namedAtt = (NamedParameterAttribute)prop.GetCustomAttributes(typeof(NamedParameterAttribute), true).First();
+                var namedAtt = prop.FindAttribute<NamedParameterAttribute>().First();
 
-                ReflectedNamedParameter namedParam = new ReflectedNamedParameter(prop.Name, prop.IsBool());
+                var namedParam = new ReflectedNamedParameter(prop.Name, prop.IsBool());
                 _namedParameters.Add(namedParam);
 
                 var longNames = prop.FindAttribute<LongNameAttribute>();

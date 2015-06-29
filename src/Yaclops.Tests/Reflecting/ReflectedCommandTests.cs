@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using NUnit.Framework;
 using Shouldly;
 using Yaclops.Attributes;
@@ -71,6 +72,29 @@ namespace Yaclops.Tests.Reflecting
         }
 
 
+        [Test]
+        public void PositionalStringParameterGetsPickedUp()
+        {
+            var command = new ReflectedCommand<object>(typeof(PositionalString), _factory);
+
+            command.PositionalParameters.Count.ShouldBe(1);
+            var param = command.PositionalParameters[0];
+            param.PropertyName.ShouldBe("Stuff");
+            param.IsList.ShouldBe(false);
+        }
+
+
+        [Test]
+        public void PositionalStringListParameterGetsPickedUp()
+        {
+            var command = new ReflectedCommand<object>(typeof(PositionalStringList), _factory);
+
+            command.PositionalParameters.Count.ShouldBe(1);
+            var param = command.PositionalParameters[0];
+            param.PropertyName.ShouldBe("Stuffs");
+            param.IsList.ShouldBe(true);
+        }
+
 
         #region Test Commands
         // ReSharper disable UnusedMember.Local
@@ -89,6 +113,18 @@ namespace Yaclops.Tests.Reflecting
         {
             [NamedParameter(LongName = "magic", ShortName = "n")]
             public long Num { get; set; }
+        }
+
+        private class PositionalString
+        {
+            [PositionalParameter]
+            public string Stuff { get; set; }
+        }
+
+        private class PositionalStringList
+        {
+            [PositionalParameter]
+            public List<string> Stuffs { get; set; }
         }
 
         // ReSharper restore UnusedMember.Local

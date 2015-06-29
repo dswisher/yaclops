@@ -54,6 +54,7 @@
     <Compile Include="Commands\YaclopsDumpTreeCommand.cs" />
     <Compile Include="Extensions\PropertyInfoExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Injecting\PropertyInjector.cs" />
     <Compile Include="ISubCommand.cs" />
     <Compile Include="Model\Command.cs" />
