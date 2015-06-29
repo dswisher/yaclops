@@ -14,6 +14,12 @@ namespace Yaclops.Tests.Mocks
 
         public IReadOnlyList<string> Verbs { get { return _verbs; } }
         public IReadOnlyList<ReflectedNamedParameter> NamedParameters { get { return _namedParameters; } }
+
+        public IReadOnlyList<ReflectedPositionalParameter> PositionalParameters
+        {
+            get { throw new NotImplementedException(); }
+        }
+
         public Func<object> Factory { get { return _factory; } }
 
 

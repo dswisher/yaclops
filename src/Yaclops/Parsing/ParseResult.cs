@@ -17,5 +17,6 @@ namespace Yaclops.Parsing
         public ParseResultKind Kind { get; set; }
         public CommandNode FinalNode { get; set; }
         public IList<ParserNamedParameterResult> NamedParameters { get; set; }
+        public IList<ParserPositionalParameterResult> PositionalParameters { get; set; }
     }
 }

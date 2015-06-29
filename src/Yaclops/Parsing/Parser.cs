@@ -37,6 +37,7 @@ namespace Yaclops.Parsing
                     result.Kind = ParseResultKind.Command;
                     result.FinalNode = state.CurrentNode;
                     result.NamedParameters = state.NamedParameters;
+                    result.PositionalParameters = state.PositionalParameters;
                 }
                 else
                 {

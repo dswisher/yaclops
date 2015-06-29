@@ -42,7 +42,12 @@ namespace Yaclops.Model
                 command.NamedParameters.Add(commandParam);
             }
 
-            // TODO - add positional parameters to the command
+            foreach (var reflectedParam in reflected.PositionalParameters)
+            {
+                var commandParam = new CommandPositionalParameter(reflectedParam.PropertyName, reflectedParam.IsList);
+
+                command.PositionalParameters.Add(commandParam);
+            }
         }
 
 

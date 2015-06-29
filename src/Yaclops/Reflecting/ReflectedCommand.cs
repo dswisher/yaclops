@@ -13,6 +13,7 @@ namespace Yaclops.Reflecting
     {
         IReadOnlyList<string> Verbs { get; }
         IReadOnlyList<ReflectedNamedParameter> NamedParameters { get; }
+        IReadOnlyList<ReflectedPositionalParameter> PositionalParameters { get; }
     }
 
 

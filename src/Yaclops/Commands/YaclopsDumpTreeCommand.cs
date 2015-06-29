@@ -51,6 +51,11 @@ namespace Yaclops.Commands
                 Console.WriteLine("{0}LN: {1}", spaces, string.Join("|", longNames));
             }
 
+            if (node.PositionalParameters.Any())
+            {
+                Console.WriteLine("{0}PP: {1}", spaces, string.Join("|", node.PositionalParameters.Select(x => x.PropertyName)));
+            }
+
             if (entry.HasChildren)
             {
                 var group = (CommandGroup) node;

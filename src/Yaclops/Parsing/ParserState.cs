@@ -10,11 +10,13 @@ namespace Yaclops.Parsing
         private readonly Lexer _lexer;
         private readonly Dictionary<string, CommandNamedParameter> _longNames = new Dictionary<string, CommandNamedParameter>();
         private readonly Dictionary<string, CommandNamedParameter> _shortNames = new Dictionary<string, CommandNamedParameter>();
+        private readonly Queue<CommandPositionalParameter> _positionalParameters = new Queue<CommandPositionalParameter>();
         private CommandNamedParameter _currentParameter;
 
         public ParserState(CommandNode startNode, Lexer lexer)
         {
             NamedParameters = new List<ParserNamedParameterResult>();
+            PositionalParameters = new List<ParserPositionalParameterResult>();
             CurrentNode = startNode;
             ExtractParameters(CurrentNode);
 
@@ -26,6 +28,7 @@ namespace Yaclops.Parsing
         public CommandNode CurrentNode { get; private set; }
         public Token CurrentToken { get; private set; }
         public List<ParserNamedParameterResult> NamedParameters { get; private set; }
+        public List<ParserPositionalParameterResult> PositionalParameters { get; private set; }
 
 
         public bool Advance()
@@ -100,8 +103,33 @@ namespace Yaclops.Parsing
                 case TokenKind.Value:
                     if (CurrentNode is Command)
                     {
-                        // TODO - at a terminal - this must be a value we need to squirrel away
-                        throw new NotImplementedException("Positional parameter handling is TBD");
+                        if (_positionalParameters.Count > 0)
+                        {
+                            var commandParam = _positionalParameters.Peek();
+                            if (commandParam.IsList)
+                            {
+                                // A list; create a new param or add to an existing one
+                                if ((PositionalParameters.Count == 0) || (PositionalParameters.Last().Parameter != commandParam))
+                                {
+                                    PositionalParameters.Add(new ParserPositionalParameterResult(commandParam, CurrentToken.Text));
+                                }
+                                else
+                                {
+                                    PositionalParameters.Last().Values.Add(CurrentToken.Text);
+                                }
+                            }
+                            else
+                            {
+                                // Not a list; always create a new param
+                                PositionalParameters.Add(new ParserPositionalParameterResult(commandParam, CurrentToken.Text));
+                                _positionalParameters.Dequeue();
+                            }
+
+                            CurrentToken = _lexer.Pop();
+                            return true;
+                        }
+
+                        throw new CommandLineParserException("Unexpected positional parameter: " + CurrentToken.Text);
                     }
 
                     if (CurrentNode is CommandGroup)
@@ -149,7 +177,10 @@ namespace Yaclops.Parsing
                 }
             }
 
-            // TODO - extract any positional from the node
+            foreach (var p in node.PositionalParameters)
+            {
+                _positionalParameters.Enqueue(p);
+            }
         }
     }
 }
