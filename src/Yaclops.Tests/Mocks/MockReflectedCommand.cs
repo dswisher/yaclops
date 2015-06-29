@@ -10,15 +10,12 @@ namespace Yaclops.Tests.Mocks
 
         private readonly List<string> _verbs = new List<string>();
         private readonly List<ReflectedNamedParameter> _namedParameters = new List<ReflectedNamedParameter>();
+        private readonly List<ReflectedPositionalParameter> _positionalParameters = new List<ReflectedPositionalParameter>();
 
 
         public IReadOnlyList<string> Verbs { get { return _verbs; } }
         public IReadOnlyList<ReflectedNamedParameter> NamedParameters { get { return _namedParameters; } }
-
-        public IReadOnlyList<ReflectedPositionalParameter> PositionalParameters
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public IReadOnlyList<ReflectedPositionalParameter> PositionalParameters { get { return _positionalParameters; } }
 
         public Func<object> Factory { get { return _factory; } }
 
