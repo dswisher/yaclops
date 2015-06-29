@@ -33,7 +33,7 @@ namespace Yaclops.Model
 
 
 
-        public Command<T> AddCommand<T>(string verb, Func<T> factory)
+        public ExternalCommand<T> AddExternalCommand<T>(string verb, Func<T> factory)
         {
             if (_nodes.Any(x => x.Verb == verb))
             {
@@ -41,7 +41,22 @@ namespace Yaclops.Model
                 throw new CommandLineParserException("Duplicate command: " + verb);
             }
 
-            var command = new Command<T>(verb, factory);
+            var command = new ExternalCommand<T>(verb, factory);
+            _nodes.Add(command);
+            return command;
+        }
+
+
+
+        public InternalCommand AddInternalCommand(string verb, Action<CommandRoot, CommandNode> worker)
+        {
+            if (_nodes.Any(x => x.Verb == verb))
+            {
+                // TODO - better error message - need context - add links to parent and walk up the stack?
+                throw new CommandLineParserException("Duplicate command: " + verb);
+            }
+
+            var command = new InternalCommand(verb, worker);
             _nodes.Add(command);
             return command;
         }

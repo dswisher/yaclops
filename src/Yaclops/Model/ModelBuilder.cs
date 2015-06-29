@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Yaclops.Commands;
 using Yaclops.Reflecting;
 
 namespace Yaclops.Model
@@ -10,6 +11,9 @@ namespace Yaclops.Model
         {
             Root = new CommandRoot();
         }
+
+
+        public CommandRoot Root { get; private set; }
 
 
         public void AddTypes<T>(IEnumerable<TypeEntry<T>> types)
@@ -30,7 +34,7 @@ namespace Yaclops.Model
                 group = group.GetOrAddGroup(reflected.Verbs[i]);
             }
 
-            var command = group.AddCommand(reflected.Verbs[reflected.Verbs.Count - 1], reflected.Factory);
+            var command = group.AddExternalCommand(reflected.Verbs[reflected.Verbs.Count - 1], reflected.Factory);
 
             foreach (var reflectedParam in reflected.NamedParameters)
             {
@@ -51,6 +55,12 @@ namespace Yaclops.Model
         }
 
 
-        public CommandRoot Root { get; private set; }
+
+        public void AddInternalCommands()
+        {
+            CommandGroup yaclops = Root.GetOrAddGroup("yaclops");
+
+            yaclops.AddInternalCommand("dump", (r, n) => new YaclopsDumpTreeCommand(r).Execute());
+        }
     }
 }

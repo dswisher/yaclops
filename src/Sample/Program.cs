@@ -22,10 +22,6 @@ namespace Sample
                 {
                     command.Execute();
                 }
-                else
-                {
-                    Console.WriteLine("-> No command found...");
-                }
             }
             catch (CommandLineParserException ex)
             {
@@ -48,6 +44,9 @@ namespace Sample
 
         private static IContainer CreateContainer()
         {
+            var settings = new CommandLineParserSettings<ISubCommand>();
+            settings.EnableYaclopsCommands = true;
+
             ContainerBuilder builder = new ContainerBuilder();
 
             // Command-line specific stuff
@@ -56,7 +55,7 @@ namespace Sample
                 .SingleInstance()
                 .As<ISubCommand>();
 
-            builder.RegisterType<CommandLineParser>();
+            builder.RegisterType<CommandLineParser>().WithParameter("settings", settings);
 
             return builder.Build();
         }

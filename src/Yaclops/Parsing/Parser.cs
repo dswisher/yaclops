@@ -1,4 +1,5 @@
-﻿using Yaclops.Model;
+﻿using System.Collections.Generic;
+using Yaclops.Model;
 
 namespace Yaclops.Parsing
 {
@@ -13,11 +14,11 @@ namespace Yaclops.Parsing
         public CommandRoot CommandRoot { get; private set; }
 
 
-        public ParseResult Parse(string input)
+        public ParseResult Parse(string input, IEnumerable<string> helpFlags, string helpVerb)
         {
             var result = new ParseResult();
             var lexer = new Lexer(input);
-            var state = new ParserState(CommandRoot, lexer);
+            var state = new ParserState(CommandRoot, lexer, helpFlags, helpVerb);
 
             // Special case
             if (state.CurrentToken.Kind == TokenKind.EndOfInput)
@@ -31,13 +32,24 @@ namespace Yaclops.Parsing
                 {
                 }
 
-                if (state.CurrentNode is Command)
+                result.FinalNode = state.CurrentNode;
+                result.NamedParameters = state.NamedParameters;
+                result.PositionalParameters = state.PositionalParameters;
+
+                if (state.HelpWanted)
                 {
-                    // TODO - determine if the command is internal or external...
-                    result.Kind = ParseResultKind.Command;
-                    result.FinalNode = state.CurrentNode;
-                    result.NamedParameters = state.NamedParameters;
-                    result.PositionalParameters = state.PositionalParameters;
+                    result.Kind = ParseResultKind.Help;
+                }
+                else if (state.CurrentNode is Command)
+                {
+                    if (state.CurrentNode is ExternalCommand)
+                    {
+                        result.Kind = ParseResultKind.ExternalCommand;
+                    }
+                    else if (state.CurrentNode is InternalCommand)
+                    {
+                        result.Kind = ParseResultKind.InternalCommand;
+                    }
                 }
                 else
                 {

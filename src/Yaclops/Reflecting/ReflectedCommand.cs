@@ -39,7 +39,6 @@ namespace Yaclops.Reflecting
             _verbs.AddRange(type.Name.Replace("Command", string.Empty).Decamel());
 
             // TODO - look for [Group] attribute to help build up verbs
-            // TODO - pull out positional parameters
             // TODO - pull out summary and description
 
             ExtractNamedParameters(type);

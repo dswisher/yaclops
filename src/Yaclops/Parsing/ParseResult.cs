@@ -7,7 +7,8 @@ namespace Yaclops.Parsing
     {
         Unknown,
         Help,
-        Command
+        ExternalCommand,
+        InternalCommand
     }
 
 

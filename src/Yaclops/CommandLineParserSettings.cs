@@ -35,6 +35,11 @@ namespace Yaclops
         /// A func that returns the command that is returned when help or another internal command is parsed.
         /// </summary>
         public Func<T> NullCommand { get; set; }
+
+        /// <summary>
+        /// Enable (hidden) internal Yaclops command used for debugging.
+        /// </summary>
+        public bool EnableYaclopsCommands { get; set; }
     }
 
 

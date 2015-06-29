@@ -155,19 +155,19 @@ namespace Yaclops
                 _initialized = true;
             }
 
-            var result = _parser.Parse(input);
+            var result = _parser.Parse(input, _settings.HelpFlags, _settings.HelpVerb);
 
             switch (result.Kind)
             {
                 case ParseResultKind.Help:
-                    // TODO - restore proper help command - dump internals is a hack!
-                    new YaclopsDumpTreeCommand(_parser.CommandRoot).Execute();
-                    // HelpCommand.Make(_commandRoot).Execute();
+                    HelpCommand.Make(result.FinalNode).Execute();
                     return _settings.NullCommand();
 
-                case ParseResultKind.Command:
-                    // TODO - determine if it is an internal command or external command
+                case ParseResultKind.ExternalCommand:
                     return HandleExternalCommand(result);
+
+                case ParseResultKind.InternalCommand:
+                    return HandleInternalCommand(result);
 
                 default:
                     throw new NotImplementedException("Internal parser error! Unhandled result state: " + result.Kind);
@@ -176,11 +176,22 @@ namespace Yaclops
 
 
 
+        private T HandleInternalCommand(ParseResult result)
+        {
+            var node = (InternalCommand)result.FinalNode;
+
+            node.Worker(_parser.CommandRoot, result.FinalNode);
+
+            return _settings.NullCommand();
+        }
+
+
+
         private T HandleExternalCommand(ParseResult result)
         {
-            var commandNode = (Command<T>)result.FinalNode;
+            var node = (ExternalCommand<T>)result.FinalNode;
 
-            T command = commandNode.Factory();
+            T command = node.Factory();
 
             PropertyInjector injector = new PropertyInjector(result);
             injector.Populate(command);
@@ -215,7 +226,11 @@ namespace Yaclops
             ModelBuilder builder = new ModelBuilder();
 
             builder.AddTypes(_types);
-            // TODO - pull info from settings, too!
+
+            if (_settings.EnableYaclopsCommands)
+            {
+                builder.AddInternalCommands();
+            }
 
             _parser = new Parser(builder.Root);
         }

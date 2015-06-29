@@ -8,23 +8,40 @@ namespace Yaclops.Parsing
     internal class ParserState
     {
         private readonly Lexer _lexer;
+        private readonly string _helpVerb;
         private readonly Dictionary<string, CommandNamedParameter> _longNames = new Dictionary<string, CommandNamedParameter>();
         private readonly Dictionary<string, CommandNamedParameter> _shortNames = new Dictionary<string, CommandNamedParameter>();
+        private readonly HashSet<string> _shortHelpFlags = new HashSet<string>();
+        private readonly HashSet<string> _longHelpFlags = new HashSet<string>();
         private readonly Queue<CommandPositionalParameter> _positionalParameters = new Queue<CommandPositionalParameter>();
         private CommandNamedParameter _currentParameter;
 
-        public ParserState(CommandNode startNode, Lexer lexer)
+        public ParserState(CommandNode startNode, Lexer lexer, IEnumerable<string> helpFlags, string helpVerb)
         {
             NamedParameters = new List<ParserNamedParameterResult>();
             PositionalParameters = new List<ParserPositionalParameterResult>();
             CurrentNode = startNode;
             ExtractParameters(CurrentNode);
 
+            foreach (var flag in helpFlags)
+            {
+                if (flag.StartsWith("--"))
+                {
+                    _longHelpFlags.Add(flag.Substring(2));
+                }
+                else if (flag.StartsWith("-"))
+                {
+                    _shortHelpFlags.Add(flag.Substring(1));
+                }
+            }
+
             _lexer = lexer;
+            _helpVerb = helpVerb;
             CurrentToken = _lexer.Pop();
         }
 
 
+        public bool HelpWanted { get; private set; }
         public CommandNode CurrentNode { get; private set; }
         public Token CurrentToken { get; private set; }
         public List<ParserNamedParameterResult> NamedParameters { get; private set; }
@@ -87,7 +104,12 @@ namespace Yaclops.Parsing
                         CurrentToken = _lexer.Pop();
                         return true;
                     }
-                    // TODO - check for help flag
+                    if (_longHelpFlags.Contains(CurrentToken.Text))
+                    {
+                        HelpWanted = true;
+                        CurrentToken = _lexer.Pop();
+                        return true;
+                    }
                     throw new CommandLineParserException("Unknown named parameter: " + CurrentToken.Text);
 
                 case TokenKind.ShortName:
@@ -97,7 +119,12 @@ namespace Yaclops.Parsing
                         CurrentToken = _lexer.Pop();
                         return true;
                     }
-                    // TODO - check for help flag
+                    if (_shortHelpFlags.Contains(CurrentToken.Text))
+                    {
+                        HelpWanted = true;
+                        CurrentToken = _lexer.Pop();
+                        return true;
+                    }
                     throw new CommandLineParserException("Unknown named parameter: " + CurrentToken.Text);
 
                 case TokenKind.Value:
@@ -138,7 +165,12 @@ namespace Yaclops.Parsing
                         var next = ((CommandGroup)CurrentNode).Nodes.FirstOrDefault(x => x.Verb.Equals(CurrentToken.Text, StringComparison.InvariantCultureIgnoreCase));
                         if (next == null)
                         {
-                            // TODO - check for help verb and handle it
+                            if (CurrentToken.Text == _helpVerb)
+                            {
+                                HelpWanted = true;
+                                CurrentToken = _lexer.Pop();
+                                return true;
+                            }
                         }
                         if (next == null)
                         {

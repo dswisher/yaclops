@@ -23,7 +23,7 @@ namespace Yaclops.Commands
         public void Execute()
         {
             // TODO
-            Console.WriteLine("Help is not yet implemented!");
+            Console.WriteLine("Help is not yet implemented! Node.verb={0}, type={1}", _start.Verb, _start.GetType().Name);
         }
     }
 }
