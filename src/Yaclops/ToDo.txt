@@ -1,4 +1,5 @@
 ﻿
 - Add tests (and code) for required positional parameters
 - Continue work on group options
+- Add support for fields (in addition to properties)
 - Add support for complex meta-rules (if -b is specified, field X is required or w/e - custom Func passed by user)

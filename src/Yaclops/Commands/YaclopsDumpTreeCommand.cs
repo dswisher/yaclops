@@ -53,7 +53,7 @@ namespace Yaclops.Commands
 
             if (node.PositionalParameters.Any())
             {
-                Console.WriteLine("{0}PP: {1}", spaces, string.Join("|", node.PositionalParameters.Select(x => x.PropertyName)));
+                Console.WriteLine("{0}PP: {1}", spaces, string.Join("|", node.PositionalParameters.Select(x => x.PropertyName + (x.IsRequired ? "(r)" : string.Empty))));
             }
 
             if (entry.HasChildren)

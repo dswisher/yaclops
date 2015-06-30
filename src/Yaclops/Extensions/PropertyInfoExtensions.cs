@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 
@@ -16,6 +17,12 @@ namespace Yaclops.Extensions
         public static bool IsList(this PropertyInfo info)
         {
             return info.PropertyType.IsGenericType && (info.PropertyType.GetGenericTypeDefinition() == typeof(List<>));
+        }
+
+
+        public static bool IsRequired(this PropertyInfo info)
+        {
+            return FindAttribute<RequiredAttribute>(info).Any();
         }
 
 

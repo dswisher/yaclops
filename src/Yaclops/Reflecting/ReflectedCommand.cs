@@ -60,7 +60,7 @@ namespace Yaclops.Reflecting
 
             foreach (var prop in props)
             {
-                var posParam = new ReflectedPositionalParameter(prop.Name, prop.IsList());
+                var posParam = new ReflectedPositionalParameter(prop.Name, prop.IsList(), prop.IsRequired());
                 _positionalParameters.Add(posParam);
 
                 // TODO - pick up the description (if any)

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.CompilerServices;
 using NUnit.Framework;
 using Shouldly;
 using Yaclops.Attributes;
@@ -80,6 +82,7 @@ namespace Yaclops.Tests.Reflecting
             command.PositionalParameters.Count.ShouldBe(1);
             var param = command.PositionalParameters[0];
             param.PropertyName.ShouldBe("Stuff");
+            param.IsRequired.ShouldBe(false);
             param.IsList.ShouldBe(false);
         }
 
@@ -92,6 +95,7 @@ namespace Yaclops.Tests.Reflecting
             command.PositionalParameters.Count.ShouldBe(1);
             var param = command.PositionalParameters[0];
             param.PropertyName.ShouldBe("Stuffs");
+            param.IsRequired.ShouldBe(false);
             param.IsList.ShouldBe(true);
         }
 
@@ -104,7 +108,19 @@ namespace Yaclops.Tests.Reflecting
             command.PositionalParameters.Count.ShouldBe(1);
             var param = command.PositionalParameters[0];
             param.PropertyName.ShouldBe("Fractions");
+            param.IsRequired.ShouldBe(false);
             param.IsList.ShouldBe(true);
+        }
+
+
+        [Test]
+        public void RequiredParameterIsMarkedAsRequired()
+        {
+            var command = new ReflectedCommand<object>(typeof(PositionalRequired), _factory);
+
+            command.PositionalParameters.Count.ShouldBe(1);
+            var param = command.PositionalParameters[0];
+            param.IsRequired.ShouldBe(true);
         }
 
 
@@ -143,6 +159,12 @@ namespace Yaclops.Tests.Reflecting
         {
             [PositionalParameter]
             public List<double> Fractions { get; set; }
+        }
+
+        private class PositionalRequired
+        {
+            [PositionalParameter, Required]
+            public int Count { get; set; }
         }
 
         // ReSharper restore UnusedMember.Local

@@ -49,7 +49,7 @@ namespace Yaclops.Model
 
             foreach (var reflectedParam in reflected.PositionalParameters)
             {
-                var commandParam = new CommandPositionalParameter(reflectedParam.PropertyName, reflectedParam.IsList);
+                var commandParam = new CommandPositionalParameter(reflectedParam.PropertyName, reflectedParam.IsList, reflectedParam.IsRequired);
 
                 command.PositionalParameters.Add(commandParam);
             }
