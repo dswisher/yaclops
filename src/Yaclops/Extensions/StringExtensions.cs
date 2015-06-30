@@ -32,5 +32,12 @@ namespace Yaclops.Extensions
                 yield return builder.ToString();
             }
         }
+
+
+        public static bool IsBool(this string text)
+        {
+            bool scratch;
+            return bool.TryParse(text, out scratch);
+        }
     }
 }

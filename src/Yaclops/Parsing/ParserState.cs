@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Yaclops.Extensions;
 using Yaclops.Model;
 
 namespace Yaclops.Parsing
@@ -64,6 +65,12 @@ namespace Yaclops.Parsing
                         break;
 
                     case TokenKind.Value:
+                        if (_currentParameter.IsBool && !CurrentToken.Text.IsBool())
+                        {
+                            NamedParameters.Add(new ParserNamedParameterResult(_currentParameter, true.ToString()));
+                            _currentParameter = null;
+                            return true;
+                        }
                         NamedParameters.Add(new ParserNamedParameterResult(_currentParameter, CurrentToken.Text));
                         _currentParameter = null;
                         CurrentToken = _lexer.Pop();
