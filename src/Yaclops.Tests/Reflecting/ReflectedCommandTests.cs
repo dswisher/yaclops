@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Runtime.CompilerServices;
 using NUnit.Framework;
 using Shouldly;
 using Yaclops.Attributes;

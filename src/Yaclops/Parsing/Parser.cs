@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Yaclops.Model;
 
 namespace Yaclops.Parsing
@@ -47,6 +48,12 @@ namespace Yaclops.Parsing
                 }
                 else if (state.CurrentNode is Command)
                 {
+                    if (state.PendingRequired.Any())
+                    {
+                        var missing = string.Join(", ", state.PendingRequired);
+                        throw new CommandLineParserException(string.Concat("Missing required parameters: ", missing));
+                    }
+
                     if (state.CurrentNode is ExternalCommand)
                     {
                         result.Kind = ParseResultKind.ExternalCommand;
@@ -68,6 +75,5 @@ namespace Yaclops.Parsing
 
             return result;
         }
-
     }
 }
