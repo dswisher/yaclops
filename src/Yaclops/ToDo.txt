@@ -1,5 +1,6 @@
 ﻿
 - Continue work on group options
+- Allow mix-ins in addition to inheritence; if command object includes specially-attributed object, grab its props, too
 - Handle enums and list of enums
 - Add support for fields (in addition to properties)
 - Add support for complex meta-rules (if -b is specified, field X is required or w/e - custom Func passed by user)
