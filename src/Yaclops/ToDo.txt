@@ -1,5 +1,5 @@
 ﻿
-- Continue work on group options
+- Continue work on group options - injection - try: sample add foo --show-logo
 - Allow mix-ins in addition to inheritence; if command object includes specially-attributed object, grab its props, too
 - Handle enums and list of enums
 - Add support for fields (in addition to properties)

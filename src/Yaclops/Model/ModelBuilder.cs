@@ -37,15 +37,7 @@ namespace Yaclops.Model
 
             var command = group.AddExternalCommand(reflected.Verbs[reflected.Verbs.Count - 1], reflected.Factory);
 
-            foreach (var reflectedParam in reflected.NamedParameters)
-            {
-                var commandParam = new CommandNamedParameter(reflectedParam.PropertyName, reflectedParam.IsBool);
-
-                commandParam.LongNames.AddRange(reflectedParam.LongNames);
-                commandParam.ShortNames.AddRange(reflectedParam.ShortNames);
-
-                command.NamedParameters.Add(commandParam);
-            }
+            AddNamedParameters(reflected, command);
 
             foreach (var reflectedParam in reflected.PositionalParameters)
             {
@@ -70,8 +62,27 @@ namespace Yaclops.Model
         {
             foreach (var entry in groupOptions)
             {
-                // TODO - find the group and add options to it
-                throw new NotImplementedException();
+                // TODO - support options on more than just the root group
+                CommandGroup group = Root;
+
+                var reflected = entry.ReflectedObject;
+
+                AddNamedParameters(reflected, group);
+            }
+        }
+
+
+
+        private void AddNamedParameters(IReflectedObject reflected, CommandNode target)
+        {
+            foreach (var reflectedParam in reflected.NamedParameters)
+            {
+                var commandParam = new CommandNamedParameter(reflectedParam.PropertyName, reflectedParam.IsBool);
+
+                commandParam.LongNames.AddRange(reflectedParam.LongNames);
+                commandParam.ShortNames.AddRange(reflectedParam.ShortNames);
+
+                target.NamedParameters.Add(commandParam);
             }
         }
     }

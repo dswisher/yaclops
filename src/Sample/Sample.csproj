@@ -50,6 +50,7 @@
     <Compile Include="Commands\BisectCommand.cs" />
     <Compile Include="Commands\CheckoutCommand.cs" />
     <Compile Include="Commands\CommitCommand.cs" />
+    <Compile Include="GlobalSettings.cs" />
     <Compile Include="Helpers\CommandExtensions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

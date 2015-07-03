@@ -14,7 +14,15 @@ namespace Sample
             {
                 var container = CreateContainer();
 
+                var globals = new GlobalSettings();
+
                 var parser = container.Resolve<CommandLineParser>();
+                parser.AddGlobalOptions(globals);
+
+                if (globals.ShowLogo)
+                {
+                    PrintLogo();
+                }
 
                 var command = parser.Parse(args);
 
@@ -38,6 +46,23 @@ namespace Sample
                 Console.Write("<press ENTER to continue>");
                 Console.ReadLine();
             }
+        }
+
+
+
+        private static void PrintLogo()
+        {
+            // From the most excellent site: http://www.patorjk.com/software/taag
+            const string logo = @"
+  ____                        _      
+ / ___|  __ _ _ __ ___  _ __ | | ___ 
+ \___ \ / _` | '_ ` _ \| '_ \| |/ _ \
+  ___) | (_| | | | | | | |_) | |  __/
+ |____/ \__,_|_| |_| |_| .__/|_|\___|
+                       |_|           
+";
+
+            Console.WriteLine(logo);
         }
 
 
