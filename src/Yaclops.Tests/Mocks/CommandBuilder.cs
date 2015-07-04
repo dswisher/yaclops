@@ -26,7 +26,7 @@ namespace Yaclops.Tests.Mocks
 
         public CommandBuilder WithNamedBool(string name)
         {
-            var param = new CommandNamedParameter(name, true);
+            var param = new CommandNamedParameter(name, true, x => x);
             param.ShortNames.Add(name.Substring(0, 1).ToLower());
             param.LongNames.Add(name);
             _lastCommand.NamedParameters.Add(param);

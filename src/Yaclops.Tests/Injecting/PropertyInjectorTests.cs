@@ -105,7 +105,7 @@ namespace Yaclops.Tests.Injecting
 
             public ResultMaker NamedParam(string propertyName, string value, bool isBool = false)
             {
-                _result.NamedParameters.Add(new ParserNamedParameterResult(new CommandNamedParameter(propertyName, isBool), value));
+                _result.NamedParameters.Add(new ParserNamedParameterResult(new CommandNamedParameter(propertyName, isBool, x => x), value));
                 return this;
             }
 

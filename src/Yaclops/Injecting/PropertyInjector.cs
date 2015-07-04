@@ -74,7 +74,9 @@ namespace Yaclops.Injecting
 
         private void Push(ParserNamedParameterResult param, object target)
         {
-            var type = target.GetType();
+            var propertyTarget = param.Parameter.PropertyTarget(target);
+
+            var type = propertyTarget.GetType();
 
             var prop = type.GetProperty(param.Parameter.PropertyName);
 
@@ -83,7 +85,7 @@ namespace Yaclops.Injecting
                 throw new CommandLineParserException("Property mismatch: command does not contain property with name '" + param.Parameter.PropertyName + "'.");
             }
 
-            Push(target, prop, param.Value);
+            Push(propertyTarget, prop, param.Value);
         }
 
 

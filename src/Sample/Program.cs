@@ -19,12 +19,12 @@ namespace Sample
                 var parser = container.Resolve<CommandLineParser>();
                 parser.AddGlobalOptions(globals);
 
+                var command = parser.Parse(args);
+
                 if (globals.ShowLogo)
                 {
                     PrintLogo();
                 }
-
-                var command = parser.Parse(args);
 
                 if (command != null)
                 {

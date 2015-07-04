@@ -37,7 +37,7 @@ namespace Yaclops.Model
 
             var command = group.AddExternalCommand(reflected.Verbs[reflected.Verbs.Count - 1], reflected.Factory);
 
-            AddNamedParameters(reflected, command);
+            AddNamedParameters(reflected, command, x => x);
 
             foreach (var reflectedParam in reflected.PositionalParameters)
             {
@@ -67,17 +67,17 @@ namespace Yaclops.Model
 
                 var reflected = entry.ReflectedObject;
 
-                AddNamedParameters(reflected, group);
+                AddNamedParameters(reflected, group, entry.PropertyTarget);
             }
         }
 
 
 
-        private void AddNamedParameters(IReflectedObject reflected, CommandNode target)
+        private void AddNamedParameters(IReflectedObject reflected, CommandNode target, Func<object, object> propertyTarget)
         {
             foreach (var reflectedParam in reflected.NamedParameters)
             {
-                var commandParam = new CommandNamedParameter(reflectedParam.PropertyName, reflectedParam.IsBool);
+                var commandParam = new CommandNamedParameter(reflectedParam.PropertyName, reflectedParam.IsBool, propertyTarget);
 
                 commandParam.LongNames.AddRange(reflectedParam.LongNames);
                 commandParam.ShortNames.AddRange(reflectedParam.ShortNames);

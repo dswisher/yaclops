@@ -7,6 +7,7 @@ namespace Yaclops.Model
     {
         public abstract Type OptionType { get; }
         public abstract IReflectedObject ReflectedObject { get; }
+        public abstract Func<object, object> PropertyTarget { get; }
     }
 
 
@@ -30,6 +31,11 @@ namespace Yaclops.Model
         public override IReflectedObject ReflectedObject
         {
             get { return new ReflectedObject<T>(Options.GetType()); }
+        }
+
+        public override Func<object, object> PropertyTarget
+        {
+            get { return x => Options; }
         }
     }
 }
