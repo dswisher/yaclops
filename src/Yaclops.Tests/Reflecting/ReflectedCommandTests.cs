@@ -23,7 +23,7 @@ namespace Yaclops.Tests.Reflecting
         {
             var command = new ReflectedCommand<object>(typeof(Single), _factory);
 
-            command.Verbs.ShouldBe(new[] { "Single" });
+            command.Verbs.ShouldBe(new[] { "single" });
         }
 
 
@@ -32,7 +32,7 @@ namespace Yaclops.Tests.Reflecting
         {
             var command = new ReflectedCommand<object>(typeof(SingleCommand), _factory);
 
-            command.Verbs.ShouldBe(new[] { "Single" });
+            command.Verbs.ShouldBe(new[] { "single" });
         }
 
 
@@ -41,7 +41,7 @@ namespace Yaclops.Tests.Reflecting
         {
             var command = new ReflectedCommand<object>(typeof(TwoWords), _factory);
 
-            command.Verbs.ShouldBe(new[] { "Two", "Words" });
+            command.Verbs.ShouldBe(new[] { "two", "words" });
         }
 
 
