@@ -1,20 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YaclopsOld", "YaclopsOld\YaclopsOld.csproj", "{8FA0C3EF-0236-4B3D-B8A7-9AB7744F1AEB}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YaclopsOld.Tests", "YaclopsOld.Tests\YaclopsOld.Tests.csproj", "{D4A57B22-74C0-4426-B5D3-F3B75A8FF7CB}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleOld", "SampleOld\SampleOld.csproj", "{DF7C6514-7305-44AC-95FC-19EEA60B8CF0}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D225F641-15E5-40A9-9B48-9FEBDACF707F}"
 	ProjectSection(SolutionItems) = preProject
 		..\nuget\Yaclops.nuspec = ..\nuget\Yaclops.nuspec
 	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Old", "Old", "{946D781B-1672-45C2-9219-96C1B9D446CA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yaclops", "Yaclops\Yaclops.csproj", "{A2F7F7B4-AB6C-41A2-A5EF-05905D681319}"
 EndProject
@@ -28,18 +20,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{8FA0C3EF-0236-4B3D-B8A7-9AB7744F1AEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8FA0C3EF-0236-4B3D-B8A7-9AB7744F1AEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8FA0C3EF-0236-4B3D-B8A7-9AB7744F1AEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8FA0C3EF-0236-4B3D-B8A7-9AB7744F1AEB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D4A57B22-74C0-4426-B5D3-F3B75A8FF7CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D4A57B22-74C0-4426-B5D3-F3B75A8FF7CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D4A57B22-74C0-4426-B5D3-F3B75A8FF7CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D4A57B22-74C0-4426-B5D3-F3B75A8FF7CB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DF7C6514-7305-44AC-95FC-19EEA60B8CF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DF7C6514-7305-44AC-95FC-19EEA60B8CF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DF7C6514-7305-44AC-95FC-19EEA60B8CF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DF7C6514-7305-44AC-95FC-19EEA60B8CF0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A2F7F7B4-AB6C-41A2-A5EF-05905D681319}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A2F7F7B4-AB6C-41A2-A5EF-05905D681319}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A2F7F7B4-AB6C-41A2-A5EF-05905D681319}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -55,10 +35,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{8FA0C3EF-0236-4B3D-B8A7-9AB7744F1AEB} = {946D781B-1672-45C2-9219-96C1B9D446CA}
-		{D4A57B22-74C0-4426-B5D3-F3B75A8FF7CB} = {946D781B-1672-45C2-9219-96C1B9D446CA}
-		{DF7C6514-7305-44AC-95FC-19EEA60B8CF0} = {946D781B-1672-45C2-9219-96C1B9D446CA}
 	EndGlobalSection
 EndGlobal
