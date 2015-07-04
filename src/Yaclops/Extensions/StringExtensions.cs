@@ -19,11 +19,11 @@ namespace Yaclops.Extensions
                         builder.Clear();
                     }
 
-                    builder.Append(c);
+                    builder.Append(char.ToLower(c));
                 }
                 else
                 {
-                    builder.Append(c);
+                    builder.Append(char.ToLower(c));
                 }
             }
 

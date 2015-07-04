@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandLineParserTests.cs" />
+    <Compile Include="Extensions\StringExtensionTests.cs" />
     <Compile Include="Injecting\PropertyInjectorTests.cs" />
     <Compile Include="Mocks\CommandBuilder.cs" />
     <Compile Include="Mocks\MockReflectedCommand.cs" />

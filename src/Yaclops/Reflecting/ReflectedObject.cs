@@ -50,7 +50,7 @@ namespace Yaclops.Reflecting
                 var longNames = prop.FindAttribute<LongNameAttribute>();
                 if (string.IsNullOrEmpty(namedAtt.LongName) && !longNames.Any())
                 {
-                    namedParam.AddLongName(string.Join("-", prop.Name.Decamel()).ToLower());
+                    namedParam.AddLongName(string.Join("-", prop.Name.Decamel()));
                 }
                 else
                 {
