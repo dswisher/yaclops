@@ -53,9 +53,16 @@
     <Compile Include="Commands\HelpCommand.cs" />
     <Compile Include="Commands\NullSubCommand.cs" />
     <Compile Include="Commands\YaclopsDumpTreeCommand.cs" />
+    <Compile Include="DocumentModel\Document.cs" />
+    <Compile Include="DocumentModel\DocumentStyle.cs" />
+    <Compile Include="DocumentModel\Paragraph.cs" />
+    <Compile Include="DocumentModel\ParagraphStyle.cs" />
+    <Compile Include="DocumentModel\Span.cs" />
+    <Compile Include="DocumentModel\SpanStyle.cs" />
     <Compile Include="Extensions\PropertyInfoExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
+    <Compile Include="Formatting\ConsoleFormatter.cs" />
     <Compile Include="Injecting\PropertyInjector.cs" />
     <Compile Include="ISubCommand.cs" />
     <Compile Include="Model\Command.cs" />
