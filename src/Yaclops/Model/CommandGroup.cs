@@ -9,8 +9,8 @@ namespace Yaclops.Model
         private readonly List<CommandNode> _nodes = new List<CommandNode>();
 
 
-        public CommandGroup(string verb)
-            : base(verb)
+        public CommandGroup(CommandNode parent, string verb)
+            : base(parent, verb)
         {
         }
 
@@ -24,7 +24,7 @@ namespace Yaclops.Model
             var group = _nodes.OfType<CommandGroup>().FirstOrDefault(x => x.Verb == verb);
             if (group == null)
             {
-                group = new CommandGroup(verb);
+                group = new CommandGroup(this, verb);
                 _nodes.Add(group);
             }
 
@@ -41,7 +41,7 @@ namespace Yaclops.Model
                 throw new CommandLineParserException("Duplicate command: " + verb);
             }
 
-            var command = new ExternalCommand<T>(verb, factory);
+            var command = new ExternalCommand<T>(this, verb, factory);
             _nodes.Add(command);
             return command;
         }
@@ -56,7 +56,7 @@ namespace Yaclops.Model
                 throw new CommandLineParserException("Duplicate command: " + verb);
             }
 
-            var command = new InternalCommand(verb, worker);
+            var command = new InternalCommand(this, verb, worker);
             _nodes.Add(command);
             return command;
         }

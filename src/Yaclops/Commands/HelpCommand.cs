@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Text;
 using Yaclops.DocumentModel;
 using Yaclops.Formatting;
 using Yaclops.Model;
@@ -53,9 +54,21 @@ namespace Yaclops.Commands
         {
             Document doc = new Document();
 
+            var para = doc.AddParagraph(new Paragraph());
+            para.AddSpan("usage: " + VerbPath(group));
+
             // TODO - add usage
             // TODO - add overall command description
 
+            AddCommandList(doc, group);
+
+            return doc;
+        }
+
+
+
+        private void AddCommandList(Document doc, CommandGroup group)
+        {
             ParagraphStyle style = new ParagraphStyle
             {
                 Indent = 3,
@@ -80,8 +93,6 @@ namespace Yaclops.Commands
                     para.AddSpan(new Span(node.Summary));
                 }
             }
-
-            return doc;
         }
 
 
@@ -91,6 +102,28 @@ namespace Yaclops.Commands
             Console.WriteLine("   --> Command.");
             // TODO
             return new Document();
+        }
+
+
+
+        // TODO - include options?
+        private string VerbPath(CommandNode node)
+        {
+            StringBuilder builder = new StringBuilder();
+
+            if (node.Parent != null)
+            {
+                builder.Append(VerbPath(node.Parent));
+            }
+
+            if (builder.Length > 0)
+            {
+                builder.Append(" ");
+            }
+
+            builder.Append(node.HelpVerb);
+
+            return builder.ToString();
         }
     }
 }

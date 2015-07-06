@@ -5,7 +5,8 @@ namespace Yaclops.Model
 {
     internal abstract class ExternalCommand : Command
     {
-        protected ExternalCommand(string verb) : base(verb)
+        protected ExternalCommand(CommandNode parent, string verb)
+            : base(parent, verb)
         {
         }
     }
@@ -14,8 +15,8 @@ namespace Yaclops.Model
 
     internal class ExternalCommand<T> : ExternalCommand
     {
-        public ExternalCommand(string verb, Func<T> factory)
-            : base(verb)
+        public ExternalCommand(CommandNode parent, string verb, Func<T> factory)
+            : base(parent, verb)
         {
             Factory = factory;
         }
