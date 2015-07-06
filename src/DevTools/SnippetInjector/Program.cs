@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
+using SampleHelpers;
 using Yaclops;
 using Yaclops.Attributes;
 
@@ -26,7 +28,8 @@ namespace SnippetInjector
                     }
 
                     // TODO - need to handle positional parameters at the group (global) level!
-                    Console.WriteLine("Go!");
+                    Console.WriteLine("** Inject Snippets **");
+                    globals.Dump();
                 }
             }
             catch (CommandLineParserException ex)
@@ -66,7 +69,7 @@ namespace SnippetInjector
 
         private class GlobalSettings
         {
-            [PositionalParameter]
+            [PositionalParameter, Required]
             [Description("The list of file names to update. Wildcards are allowed.")]
             public List<string> Names { get; set; }
 

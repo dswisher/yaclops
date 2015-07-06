@@ -40,6 +40,12 @@ namespace Yaclops.Parsing
             }
             else if (state.CurrentNode is CommandRoot)
             {
+                if (state.PendingRequired.Any())
+                {
+                    var missing = string.Join(", ", state.PendingRequired);
+                    throw new CommandLineParserException(string.Concat("Missing required parameter(s): ", missing));
+                }
+
                 result.Kind = ParseResultKind.DefaultCommand;
             }
             else if (state.CurrentNode is Command)
@@ -47,7 +53,7 @@ namespace Yaclops.Parsing
                 if (state.PendingRequired.Any())
                 {
                     var missing = string.Join(", ", state.PendingRequired);
-                    throw new CommandLineParserException(string.Concat("Missing required parameters: ", missing));
+                    throw new CommandLineParserException(string.Concat("Missing required parameter(s): ", missing));
                 }
 
                 if (state.CurrentNode is ExternalCommand)

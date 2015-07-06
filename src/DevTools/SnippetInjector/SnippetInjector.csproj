@@ -33,6 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -48,6 +49,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Samples\SampleHelpers\SampleHelpers.csproj">
+      <Project>{E9FC64ED-16B9-4B84-9B92-2D06805E9FAC}</Project>
+      <Name>SampleHelpers</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Yaclops\Yaclops.csproj">
       <Project>{a2f7f7b4-ab6c-41a2-a5ef-05905d681319}</Project>
       <Name>Yaclops</Name>

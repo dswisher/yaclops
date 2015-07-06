@@ -112,14 +112,14 @@ namespace Yaclops.Tests.Injecting
 
             public ResultMaker PositionalParam(string propertyName, string value, bool isList = false)
             {
-                _result.PositionalParameters.Add(new ParserPositionalParameterResult(new CommandPositionalParameter(propertyName, isList, false), value));
+                _result.PositionalParameters.Add(new ParserPositionalParameterResult(new CommandPositionalParameter(propertyName, isList, false, x => x), value));
                 return this;
             }
 
 
             public ResultMaker PositionalParam(string propertyName, params string[] values)
             {
-                var thing = new ParserPositionalParameterResult(new CommandPositionalParameter(propertyName, true, false), values.First());
+                var thing = new ParserPositionalParameterResult(new CommandPositionalParameter(propertyName, true, false, x => x), values.First());
                 thing.Values.AddRange(values.Skip(1));
                 _result.PositionalParameters.Add(thing);
                 return this;

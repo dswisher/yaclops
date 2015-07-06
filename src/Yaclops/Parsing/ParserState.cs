@@ -137,38 +137,38 @@ namespace Yaclops.Parsing
                     throw new CommandLineParserException("Unknown named parameter: " + CurrentToken.Text);
 
                 case TokenKind.Value:
-                    if (CurrentNode is Command)
+                    if (_positionalParameters.Any())
                     {
-                        if (_positionalParameters.Count > 0)
+                        var commandParam = _positionalParameters.Peek();
+                        if (commandParam.IsList)
                         {
-                            var commandParam = _positionalParameters.Peek();
-                            if (commandParam.IsList)
+                            // A list; create a new param or add to an existing one
+                            if ((PositionalParameters.Count == 0) || (PositionalParameters.Last().Parameter != commandParam))
                             {
-                                // A list; create a new param or add to an existing one
-                                if ((PositionalParameters.Count == 0) || (PositionalParameters.Last().Parameter != commandParam))
+                                if (commandParam.IsRequired)
                                 {
-                                    if (commandParam.IsRequired)
-                                    {
-                                        _pendingRequired.Remove(commandParam.PropertyName);
-                                    }
-                                    PositionalParameters.Add(new ParserPositionalParameterResult(commandParam, CurrentToken.Text));
+                                    _pendingRequired.Remove(commandParam.PropertyName);
                                 }
-                                else
-                                {
-                                    PositionalParameters.Last().Values.Add(CurrentToken.Text);
-                                }
+                                PositionalParameters.Add(new ParserPositionalParameterResult(commandParam, CurrentToken.Text));
                             }
                             else
                             {
-                                // Not a list; always create a new param
-                                PositionalParameters.Add(new ParserPositionalParameterResult(commandParam, CurrentToken.Text));
-                                _positionalParameters.Dequeue();
+                                PositionalParameters.Last().Values.Add(CurrentToken.Text);
                             }
-
-                            CurrentToken = _lexer.Pop();
-                            return true;
+                        }
+                        else
+                        {
+                            // Not a list; always create a new param
+                            PositionalParameters.Add(new ParserPositionalParameterResult(commandParam, CurrentToken.Text));
+                            _positionalParameters.Dequeue();
                         }
 
+                        CurrentToken = _lexer.Pop();
+                        return true;
+                    }
+
+                    if (CurrentNode is Command)
+                    {
                         throw new CommandLineParserException("Unexpected positional parameter: " + CurrentToken.Text);
                     }
 

@@ -40,13 +40,7 @@ namespace Yaclops.Model
             command.Summary = reflected.Summary;
 
             AddNamedParameters(reflected, command, x => x);
-
-            foreach (var reflectedParam in reflected.PositionalParameters)
-            {
-                var commandParam = new CommandPositionalParameter(reflectedParam.PropertyName, reflectedParam.IsList, reflectedParam.IsRequired);
-
-                command.PositionalParameters.Add(commandParam);
-            }
+            AddPositionalParameters(reflected, command, x => x);
         }
 
 
@@ -72,7 +66,20 @@ namespace Yaclops.Model
                 var reflected = entry.ReflectedObject;
 
                 AddNamedParameters(reflected, group, entry.PropertyTarget);
-                // TODO - handle positional parameters, too, at least for global parser!
+                AddPositionalParameters(reflected, group, entry.PropertyTarget);
+            }
+        }
+
+
+
+        private void AddPositionalParameters(IReflectedObject reflected, CommandNode target, Func<object, object> propertyTarget)
+        {
+            // TODO - handle positional parameters, too, at least for global parser!
+            foreach (var reflectedParam in reflected.PositionalParameters)
+            {
+                var commandParam = new CommandPositionalParameter(reflectedParam.PropertyName, reflectedParam.IsList, reflectedParam.IsRequired, propertyTarget);
+
+                target.PositionalParameters.Add(commandParam);
             }
         }
 

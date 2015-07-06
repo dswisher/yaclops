@@ -12,20 +12,23 @@ namespace Yaclops.Reflecting
     internal interface IReflectedObject
     {
         IReadOnlyList<ReflectedNamedParameter> NamedParameters { get; }
+        IReadOnlyList<ReflectedPositionalParameter> PositionalParameters { get; }
+
     }
 
 
 
-    internal class ReflectedObject<T> : IReflectedObject
+    internal class ReflectedObject : IReflectedObject
     {
-
         private readonly List<ReflectedNamedParameter> _namedParameters = new List<ReflectedNamedParameter>();
+        private readonly List<ReflectedPositionalParameter> _positionalParameters = new List<ReflectedPositionalParameter>();
 
 
 
         public ReflectedObject(Type type)
         {
             ExtractNamedParameters(type);
+            ExtractPositionalParameters(type);
 
             // TODO - pull out summary and description
         }
@@ -33,6 +36,7 @@ namespace Yaclops.Reflecting
 
 
         public IReadOnlyList<ReflectedNamedParameter> NamedParameters { get { return _namedParameters; } }
+        public IReadOnlyList<ReflectedPositionalParameter> PositionalParameters { get { return _positionalParameters; } }
 
 
 
@@ -75,6 +79,21 @@ namespace Yaclops.Reflecting
                 {
                     namedParam.AddShortName(att.Name);
                 }
+
+                // TODO - pick up the description (if any)
+            }
+        }
+
+
+
+        private void ExtractPositionalParameters(Type type)
+        {
+            var props = type.FindProperties<PositionalParameterAttribute>();
+
+            foreach (var prop in props)
+            {
+                var posParam = new ReflectedPositionalParameter(prop.Name, prop.IsList(), prop.IsRequired());
+                _positionalParameters.Add(posParam);
 
                 // TODO - pick up the description (if any)
             }

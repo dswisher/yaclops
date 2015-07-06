@@ -30,7 +30,7 @@ namespace Yaclops.Model
 
         public override IReflectedObject ReflectedObject
         {
-            get { return new ReflectedObject<T>(Options.GetType()); }
+            get { return new ReflectedObject(Options.GetType()); }
         }
 
         public override Func<object, object> PropertyTarget

@@ -9,7 +9,6 @@ namespace Yaclops.Reflecting
     internal interface IReflectedCommand : IReflectedObject
     {
         IReadOnlyList<string> Verbs { get; }
-        IReadOnlyList<ReflectedPositionalParameter> PositionalParameters { get; }
     }
 
 
@@ -21,10 +20,9 @@ namespace Yaclops.Reflecting
 
 
 
-    internal class ReflectedCommand<T> : ReflectedObject<T>, IReflectedCommand<T>
+    internal class ReflectedCommand<T> : ReflectedObject, IReflectedCommand<T>
     {
         private readonly List<string> _verbs = new List<string>();
-        private readonly List<ReflectedPositionalParameter> _positionalParameters = new List<ReflectedPositionalParameter>();
 
 
         public ReflectedCommand(Type type, Func<T> factory) : base(type)
@@ -43,31 +41,13 @@ namespace Yaclops.Reflecting
             }
 
             // TODO - extract description
-
-            ExtractPositionalParameters(type);
         }
 
 
 
         public IReadOnlyList<string> Verbs { get { return _verbs; } }
-        public IReadOnlyList<ReflectedPositionalParameter> PositionalParameters { get { return _positionalParameters; } }
         public Func<T> Factory { get; private set; }
 
         public string Summary { get; private set; }
-
-
-
-        private void ExtractPositionalParameters(Type type)
-        {
-            var props = type.FindProperties<PositionalParameterAttribute>();
-
-            foreach (var prop in props)
-            {
-                var posParam = new ReflectedPositionalParameter(prop.Name, prop.IsList(), prop.IsRequired());
-                _positionalParameters.Add(posParam);
-
-                // TODO - pick up the description (if any)
-            }
-        }
     }
 }

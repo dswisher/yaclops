@@ -34,7 +34,9 @@ namespace Yaclops.Injecting
 
         private void Push(ParserPositionalParameterResult param, object target)
         {
-            var type = target.GetType();
+            var propertyTarget = param.Parameter.PropertyTarget(target);
+
+            var type = propertyTarget.GetType();
 
             var prop = type.GetProperty(param.Parameter.PropertyName);
 
@@ -49,11 +51,11 @@ namespace Yaclops.Injecting
                 var genericArgs = prop.PropertyType.GetGenericArguments();
                 var concreteType = listType.MakeGenericType(genericArgs);
 
-                var list = prop.GetValue(target);
+                var list = prop.GetValue(propertyTarget);
                 if (list == null)
                 {
                     list = Activator.CreateInstance(concreteType);
-                    prop.SetValue(target, list);
+                    prop.SetValue(propertyTarget, list);
                 }
 
                 var add = concreteType.GetMethod("Add");
@@ -66,7 +68,7 @@ namespace Yaclops.Injecting
             }
             else
             {
-                Push(target, prop, param.Values.First());
+                Push(propertyTarget, prop, param.Values.First());
             }
         }
 
