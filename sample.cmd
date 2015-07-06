@@ -1,2 +1,2 @@
 @echo off
-src\sample\bin\debug\Sample.exe %*
+src\samples\sample\bin\debug\Sample.exe %*

@@ -12,13 +12,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yaclops", "Yaclops\Yaclops.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yaclops.Tests", "Yaclops.Tests\Yaclops.Tests.csproj", "{7BF53DE0-C2B6-4DAD-A02C-DC2E898E88DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample", "Sample\Sample.csproj", "{F98F6C2C-B8B3-4147-AAD2-15F6FC14C560}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample", "Samples\Sample\Sample.csproj", "{F98F6C2C-B8B3-4147-AAD2-15F6FC14C560}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{B49A4A89-1D55-4AF7-B987-0EB71010CAE8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Injection", "Injection\Injection.csproj", "{69FF1FD7-368B-49D1-88D9-EFBBA0435003}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Injection", "Samples\Injection\Injection.csproj", "{69FF1FD7-368B-49D1-88D9-EFBBA0435003}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleHelpers", "SampleHelpers\SampleHelpers.csproj", "{E9FC64ED-16B9-4B84-9B92-2D06805E9FAC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleHelpers", "Samples\SampleHelpers\SampleHelpers.csproj", "{E9FC64ED-16B9-4B84-9B92-2D06805E9FAC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
