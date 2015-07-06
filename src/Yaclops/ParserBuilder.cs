@@ -16,6 +16,7 @@ namespace Yaclops
         private readonly List<object> _globals = new List<object>();
         private readonly Type _type = typeof(T);
         private Func<Type, T> _factory;
+        private CommandLineParserSettings<T> _settings;
 
 
         private ParserBuilder()
@@ -77,13 +78,26 @@ namespace Yaclops
 
 
         /// <summary>
+        /// Set the settings that are used to alter the default behavior of the parser.
+        /// </summary>
+        /// <param name="settings">The settings</param>
+        /// <returns>The builder, to keep the fluentness alive</returns>
+        public ParserBuilder<T> WithSettings(CommandLineParserSettings<T> settings)
+        {
+            _settings = settings;
+            return this;
+        }
+
+
+
+        /// <summary>
         /// Get the resulting parser
         /// </summary>
         public CommandLineParser<T> Parser
         {
             get
             {
-                var parser = new CommandLineParser<T>();
+                var parser = new CommandLineParser<T>(_settings);
 
                 parser.AddTypes(_commandTypes, _factory);
 

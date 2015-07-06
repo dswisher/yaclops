@@ -226,7 +226,7 @@ namespace Yaclops
             }
 
             // Create the command graph
-            ModelBuilder builder = new ModelBuilder();
+            ModelBuilder builder = new ModelBuilder(_settings.ProgramName);
 
             builder.AddTypes(_types);
 

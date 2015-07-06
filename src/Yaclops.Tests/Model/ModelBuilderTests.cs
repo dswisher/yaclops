@@ -14,7 +14,7 @@ namespace Yaclops.Tests.Model
         [SetUp]
         public void BeforeEachTest()
         {
-            _builder = new ModelBuilder();
+            _builder = new ModelBuilder("Command");
         }
 
 

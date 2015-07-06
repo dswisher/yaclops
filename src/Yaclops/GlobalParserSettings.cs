@@ -32,5 +32,10 @@ namespace Yaclops
         /// Enable (hidden) internal Yaclops command used for debugging.
         /// </summary>
         public bool EnableYaclopsCommands { get; set; }
+
+        /// <summary>
+        /// The name of the program. The default is the executable name.
+        /// </summary>
+        public string ProgramName { get; set; }
     }
 }

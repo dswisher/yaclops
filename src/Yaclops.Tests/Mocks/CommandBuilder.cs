@@ -10,7 +10,7 @@ namespace Yaclops.Tests.Mocks
 
         public CommandBuilder()
         {
-            Root = new CommandRoot();
+            Root = new CommandRoot("Command");
         }
 
 

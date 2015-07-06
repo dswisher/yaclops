@@ -65,6 +65,7 @@
     <Compile Include="Formatting\ConsoleFormatter.cs" />
     <Compile Include="GlobalParser.cs" />
     <Compile Include="GlobalParserSettings.cs" />
+    <Compile Include="Helpers\ExeHelpers.cs" />
     <Compile Include="Injecting\PropertyInjector.cs" />
     <Compile Include="ISubCommand.cs" />
     <Compile Include="Model\Command.cs" />

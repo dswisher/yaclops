@@ -8,9 +8,9 @@ namespace Yaclops.Model
     internal class ModelBuilder
     {
 
-        public ModelBuilder()
+        public ModelBuilder(string programName)
         {
-            Root = new CommandRoot();
+            Root = new CommandRoot(programName);
         }
 
 

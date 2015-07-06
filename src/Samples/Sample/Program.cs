@@ -15,8 +15,14 @@ namespace Sample
             {
                 var globals = new GlobalSettings();
 
+                var settings = new CommandLineParserSettings<ISampleCommand>
+                {
+                    ProgramName = "MyApp"
+                };
+
                 var parser = ParserBuilder<ISampleCommand>.FromCommands(Assembly.GetExecutingAssembly())
                     .WithGlobals(globals)
+                    .WithSettings(settings)
                     .Parser;
 
                 var command = parser.Parse(args);

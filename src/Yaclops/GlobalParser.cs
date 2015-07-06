@@ -110,7 +110,7 @@ namespace Yaclops
             }
 
             // Create the command graph
-            ModelBuilder builder = new ModelBuilder();
+            ModelBuilder builder = new ModelBuilder(_settings.ProgramName);
 
             if (_settings.EnableYaclopsCommands)
             {
