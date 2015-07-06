@@ -53,12 +53,14 @@ namespace Yaclops.Commands
         {
             Document doc = new Document();
 
+            // TODO - add usage
             // TODO - add overall command description
 
-            // TODO - add formatting!
-            ParagraphStyle style = new ParagraphStyle();
-            style.Indent = 5;
-            // TODO - set tab stop at, say, 20?
+            ParagraphStyle style = new ParagraphStyle
+            {
+                Indent = 3,
+                Tabs = new[] { 22 }
+            };
 
             foreach (var node in group.Nodes.OrderBy(x => x.Verb))
             {
