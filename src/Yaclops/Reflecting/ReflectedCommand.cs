@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Yaclops.Attributes;
 using Yaclops.Extensions;
 
@@ -16,6 +17,7 @@ namespace Yaclops.Reflecting
     internal interface IReflectedCommand<T> : IReflectedCommand
     {
         Func<T> Factory { get; }
+        string Summary { get; }
     }
 
 
@@ -35,6 +37,14 @@ namespace Yaclops.Reflecting
 
             // TODO - look for [Group] attribute to help build up verbs
 
+            var summaryAtt = type.FindAttribute<SummaryAttribute>();
+            if (summaryAtt != null)
+            {
+                Summary = summaryAtt.Summary;
+            }
+
+            // TODO - extract description
+
             ExtractPositionalParameters(type);
         }
 
@@ -43,6 +53,8 @@ namespace Yaclops.Reflecting
         public IReadOnlyList<string> Verbs { get { return _verbs; } }
         public IReadOnlyList<ReflectedPositionalParameter> PositionalParameters { get { return _positionalParameters; } }
         public Func<T> Factory { get; private set; }
+
+        public string Summary { get; private set; }
 
 
 

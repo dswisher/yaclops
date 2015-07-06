@@ -18,6 +18,7 @@ namespace Yaclops.Tests.Mocks
         public IReadOnlyList<ReflectedPositionalParameter> PositionalParameters { get { return _positionalParameters; } }
 
         public Func<object> Factory { get { return _factory; } }
+        public string Summary { get; private set; }
 
 
         public void AddVerbs(params string[] verbs)

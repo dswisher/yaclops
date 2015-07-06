@@ -7,6 +7,13 @@ namespace Yaclops.DocumentModel
     {
         private readonly List<Span> _spans = new List<Span>();
 
+
+        public Paragraph(ParagraphStyle style)
+        {
+            Style = style;
+        }
+
+
         public ParagraphStyle Style { get; set; }
         public IEnumerable<Span> Spans { get { return _spans; } }
 
@@ -14,6 +21,12 @@ namespace Yaclops.DocumentModel
         {
             _spans.Add(span);
             return span;
+        }
+
+        public void AddTab()
+        {
+            // TODO - should this something other than a span?
+            AddSpan(new Span("\t"));
         }
     }
 }

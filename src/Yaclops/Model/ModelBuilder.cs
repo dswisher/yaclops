@@ -37,6 +37,8 @@ namespace Yaclops.Model
 
             var command = group.AddExternalCommand(reflected.Verbs[reflected.Verbs.Count - 1], reflected.Factory);
 
+            command.Summary = reflected.Summary;
+
             AddNamedParameters(reflected, command, x => x);
 
             foreach (var reflectedParam in reflected.PositionalParameters)

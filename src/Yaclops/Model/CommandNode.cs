@@ -16,5 +16,7 @@ namespace Yaclops.Model
         public string Verb { get; private set; }
         public IList<CommandNamedParameter> NamedParameters { get { return _namedParameters; } }
         public IList<CommandPositionalParameter> PositionalParameters { get { return _positionalParameters; } }
+
+        public string Summary { get; set; }
     }
 }

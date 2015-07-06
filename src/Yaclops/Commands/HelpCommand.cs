@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Yaclops.DocumentModel;
 using Yaclops.Formatting;
 using Yaclops.Model;
@@ -23,8 +24,6 @@ namespace Yaclops.Commands
 
         public void Execute()
         {
-            Console.WriteLine("Help is not yet implemented! Node.verb={0}, type={1}", _start.Verb, _start.GetType().Name);
-
             Document doc;
             var group = _start as CommandGroup;
             if (group != null)
@@ -54,13 +53,25 @@ namespace Yaclops.Commands
         {
             Document doc = new Document();
 
-            foreach (var node in group.Nodes)
+            // TODO - add overall command description
+
+            // TODO - add formatting!
+            ParagraphStyle style = new ParagraphStyle();
+            style.Indent = 5;
+            // TODO - set tab stop at, say, 20?
+
+            foreach (var node in group.Nodes.OrderBy(x => x.Verb))
             {
-                var para = doc.AddParagraph(new Paragraph());
-                // TODO - add formatting!
-                // TODO - add summary!
+                var para = doc.AddParagraph(new Paragraph(style));
+
                 // TODO - allow nodes to be hidden, unless an 'all' option is set
-                para.AddSpan(new Span(node.Verb));
+                para.AddSpan(new Span(node.Verb));      // TODO - highlight the command?
+                para.AddTab();
+
+                if (!string.IsNullOrEmpty(node.Summary))
+                {
+                    para.AddSpan(new Span(node.Summary));
+                }
             }
 
             return doc;
