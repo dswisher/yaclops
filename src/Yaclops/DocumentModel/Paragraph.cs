@@ -17,11 +17,13 @@ namespace Yaclops.DocumentModel
         public ParagraphStyle Style { get; set; }
         public IEnumerable<Span> Spans { get { return _spans; } }
 
+
         public Span AddSpan(Span span)
         {
             _spans.Add(span);
             return span;
         }
+
 
         public void AddTab()
         {

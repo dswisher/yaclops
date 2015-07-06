@@ -55,6 +55,8 @@ namespace Yaclops.Model
         {
             CommandGroup yaclops = Root.GetOrAddGroup("yaclops");
 
+            yaclops.Hidden = true;
+
             yaclops.AddInternalCommand("dump", (r, n) => new YaclopsDumpTreeCommand(r).Execute());
         }
 

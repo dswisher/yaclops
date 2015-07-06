@@ -62,9 +62,14 @@ namespace Yaclops.Commands
 
             foreach (var node in group.Nodes.OrderBy(x => x.Verb))
             {
+                // TODO - add option to show ALL commands/groups
+                if (node.Hidden)
+                {
+                    continue;
+                }
+
                 var para = doc.AddParagraph(new Paragraph(style));
 
-                // TODO - allow nodes to be hidden, unless an 'all' option is set
                 para.AddSpan(new Span(node.Verb));      // TODO - highlight the command?
                 para.AddTab();
 

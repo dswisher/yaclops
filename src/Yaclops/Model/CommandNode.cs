@@ -17,6 +17,7 @@ namespace Yaclops.Model
         public IList<CommandNamedParameter> NamedParameters { get { return _namedParameters; } }
         public IList<CommandPositionalParameter> PositionalParameters { get { return _positionalParameters; } }
 
+        public bool Hidden { get; set; }
         public string Summary { get; set; }
     }
 }
