@@ -72,6 +72,7 @@ namespace Yaclops.Model
                 var reflected = entry.ReflectedObject;
 
                 AddNamedParameters(reflected, group, entry.PropertyTarget);
+                // TODO - handle positional parameters, too, at least for global parser!
             }
         }
 

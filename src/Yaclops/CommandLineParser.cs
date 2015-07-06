@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Yaclops.Commands;
+using Yaclops.Extensions;
 using Yaclops.Injecting;
 using Yaclops.Model;
 using Yaclops.Parsing;
@@ -138,6 +139,7 @@ namespace Yaclops
         }
 
 
+
         /// <summary>
         /// Parse the given command line.
         /// </summary>
@@ -145,7 +147,7 @@ namespace Yaclops
         /// <returns>The parsed command</returns>
         public T Parse(IEnumerable<string> args)
         {
-            return Parse(string.Join(" ", args.Select(Quote)));
+            return Parse(string.Join(" ", args.Select(x => x.Quote())));
         }
 
 
@@ -153,7 +155,7 @@ namespace Yaclops
         /// <summary>
         /// Parse the given command line.
         /// </summary>
-        /// <param name="input">The list of arguments passed into the program.</param>
+        /// <param name="input">The arguments passed into the program.</param>
         /// <returns>The parsed command</returns>
         public T Parse(string input)
         {
@@ -173,6 +175,7 @@ namespace Yaclops
             switch (result.Kind)
             {
                 case ParseResultKind.Help:
+                case ParseResultKind.DefaultCommand:    // TODO - make default command configurable
                     HelpCommand.Make(result.FinalNode).Execute();
                     return _settings.NullCommand();
 
@@ -210,19 +213,6 @@ namespace Yaclops
             injector.Populate(command);
 
             return command;
-        }
-
-
-
-        private string Quote(string s)
-        {
-            // TODO - check for other whitespace chars
-            if (s.Contains(' '))
-            {
-                return '"' + s + '"';
-            }
-
-            return s;
         }
 
 

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Yaclops.Extensions
@@ -34,10 +35,24 @@ namespace Yaclops.Extensions
         }
 
 
+
         public static bool IsBool(this string text)
         {
             bool scratch;
             return bool.TryParse(text, out scratch);
+        }
+
+
+
+        public static string Quote(this string text)
+        {
+            // TODO - check for other whitespace chars
+            if (text.Contains(' '))
+            {
+                return '"' + text + '"';
+            }
+
+            return text;
         }
     }
 }

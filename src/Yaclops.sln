@@ -20,6 +20,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Injection", "Samples\Inject
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleHelpers", "Samples\SampleHelpers\SampleHelpers.csproj", "{E9FC64ED-16B9-4B84-9B92-2D06805E9FAC}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DevTools", "DevTools", "{1B2C0945-C28D-40ED-8053-B99895BD783C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SnippetInjector", "devtools\SnippetInjector\SnippetInjector.csproj", "{DDD6E89D-F1A4-4B18-B208-E9931327CE0A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,6 +50,10 @@ Global
 		{E9FC64ED-16B9-4B84-9B92-2D06805E9FAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E9FC64ED-16B9-4B84-9B92-2D06805E9FAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E9FC64ED-16B9-4B84-9B92-2D06805E9FAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDD6E89D-F1A4-4B18-B208-E9931327CE0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDD6E89D-F1A4-4B18-B208-E9931327CE0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDD6E89D-F1A4-4B18-B208-E9931327CE0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDD6E89D-F1A4-4B18-B208-E9931327CE0A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -54,5 +62,6 @@ Global
 		{F98F6C2C-B8B3-4147-AAD2-15F6FC14C560} = {B49A4A89-1D55-4AF7-B987-0EB71010CAE8}
 		{69FF1FD7-368B-49D1-88D9-EFBBA0435003} = {B49A4A89-1D55-4AF7-B987-0EB71010CAE8}
 		{E9FC64ED-16B9-4B84-9B92-2D06805E9FAC} = {B49A4A89-1D55-4AF7-B987-0EB71010CAE8}
+		{DDD6E89D-F1A4-4B18-B208-E9931327CE0A} = {1B2C0945-C28D-40ED-8053-B99895BD783C}
 	EndGlobalSection
 EndGlobal
