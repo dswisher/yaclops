@@ -51,7 +51,6 @@
     <Compile Include="Commands\CheckoutCommand.cs" />
     <Compile Include="Commands\CommitCommand.cs" />
     <Compile Include="GlobalSettings.cs" />
-    <Compile Include="Helpers\CommandExtensions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -60,6 +59,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SampleHelpers\SampleHelpers.csproj">
+      <Project>{e9fc64ed-16b9-4b84-9b92-2d06805e9fac}</Project>
+      <Name>SampleHelpers</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Yaclops\Yaclops.csproj">
       <Project>{a2f7f7b4-ab6c-41a2-a5ef-05905d681319}</Project>
       <Name>Yaclops</Name>

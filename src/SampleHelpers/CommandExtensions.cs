@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Yaclops;
 
-namespace Sample.Helpers
+namespace SampleHelpers
 {
     public static class CommandExtensions
     {
-        public static void Dump(this ISubCommand command)
+        public static void Dump(this object command)
         {
             var type = command.GetType();
 

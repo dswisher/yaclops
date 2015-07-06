@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel;
-using Sample.Helpers;
+using SampleHelpers;
 using Yaclops;
 using Yaclops.Attributes;
 

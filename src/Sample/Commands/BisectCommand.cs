@@ -1,4 +1,4 @@
-﻿using Sample.Helpers;
+﻿using SampleHelpers;
 using Yaclops;
 
 namespace Sample.Commands
