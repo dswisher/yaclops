@@ -78,6 +78,7 @@
     <Compile Include="Model\InternalCommand.cs" />
     <Compile Include="Model\ModelBuilder.cs" />
     <Compile Include="Model\TypeEntry.cs" />
+    <Compile Include="ParserBuilder.cs" />
     <Compile Include="Parsing\Lexer.cs" />
     <Compile Include="Parsing\Parser.cs" />
     <Compile Include="Parsing\ParseResult.cs" />

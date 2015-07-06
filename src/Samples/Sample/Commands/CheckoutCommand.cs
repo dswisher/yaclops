@@ -1,12 +1,10 @@
 ﻿using System.ComponentModel;
-using SampleHelpers;
-using Yaclops;
 using Yaclops.Attributes;
 
 namespace Sample.Commands
 {
     [Summary("Checkout a branch or paths to the working tree")]
-    public class CheckoutCommand : ISubCommand
+    public class CheckoutCommand : ISampleCommand
     {
         [PositionalParameter]
         [Description(@"
@@ -35,12 +33,5 @@ entries are ignored.
 
         // TODO - figure out how to handle variants: "git checkout [-p|--patch] [<tree-ish>] [--] <pathspec>…" versus "git checkout <branch>", etc...
         // TODO - add remaining parameters
-
-
-        public void Execute()
-        {
-            // Execute the command. For demo purposes, just dump out the parameters...
-            this.Dump();
-        }
     }
 }

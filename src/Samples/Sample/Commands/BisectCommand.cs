@@ -1,94 +1,47 @@
-﻿using SampleHelpers;
-using Yaclops;
-
+﻿
 namespace Sample.Commands
 {
-    public class BisectStartCommand : ISubCommand
+    public class BisectStartCommand : ISampleCommand
     {
-        public void Execute()
-        {
-            // Execute the command. For demo purposes, just dump out the parameters...
-            this.Dump();
-        }
     }
 
 
-    public class BisectBadCommand : ISubCommand
+    public class BisectBadCommand : ISampleCommand
     {
-        public void Execute()
-        {
-            // Execute the command. For demo purposes, just dump out the parameters...
-            this.Dump();
-        }
     }
 
 
-    public class BisectGoodCommand : ISubCommand
+    public class BisectGoodCommand : ISampleCommand
     {
-        public void Execute()
-        {
-            // Execute the command. For demo purposes, just dump out the parameters...
-            this.Dump();
-        }
     }
 
 
-    public class BisectSkipCommand : ISubCommand
+    public class BisectSkipCommand : ISampleCommand
     {
-        public void Execute()
-        {
-            // Execute the command. For demo purposes, just dump out the parameters...
-            this.Dump();
-        }
     }
 
 
-    public class BisectResetCommand : ISubCommand
+    public class BisectResetCommand : ISampleCommand
     {
-        public void Execute()
-        {
-            // Execute the command. For demo purposes, just dump out the parameters...
-            this.Dump();
-        }
     }
 
 
-    public class BisectVisualizeCommand : ISubCommand
+    public class BisectVisualizeCommand : ISampleCommand
     {
-        public void Execute()
-        {
-            // Execute the command. For demo purposes, just dump out the parameters...
-            this.Dump();
-        }
     }
 
 
-    public class BisectReplayCommand : ISubCommand
+    public class BisectReplayCommand : ISampleCommand
     {
-        public void Execute()
-        {
-            // Execute the command. For demo purposes, just dump out the parameters...
-            this.Dump();
-        }
     }
 
 
-    public class BisectLogCommand : ISubCommand
+    public class BisectLogCommand : ISampleCommand
     {
-        public void Execute()
-        {
-            // Execute the command. For demo purposes, just dump out the parameters...
-            this.Dump();
-        }
     }
 
 
-    public class BisectRunCommand : ISubCommand
+    public class BisectRunCommand : ISampleCommand
     {
-        public void Execute()
-        {
-            // Execute the command. For demo purposes, just dump out the parameters...
-            this.Dump();
-        }
     }
 }

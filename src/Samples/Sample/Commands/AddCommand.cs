@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using SampleHelpers;
-using Yaclops;
 using Yaclops.Attributes;
 
 namespace Sample.Commands
@@ -35,7 +33,7 @@ your globs before the shell) will be silently ignored. The git add command can b
 to add ignored files with the -f (force) option.
 
 Please see `commit` for alternative ways to add content to a commit.")]
-    public class AddCommand : ISubCommand
+    public class AddCommand : ISampleCommand
     {
         [PositionalParameter, Required]
         public List<string> Paths { get; set; }
@@ -105,11 +103,5 @@ See EDITING PATCHES below.
 
 
         // TODO - add remaining parameters
-
-        public void Execute()
-        {
-            // Execute the command. For demo purposes, just dump out the parameters...
-            this.Dump();
-        }
     }
 }

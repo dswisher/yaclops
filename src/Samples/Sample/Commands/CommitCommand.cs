@@ -1,6 +1,4 @@
 ﻿using System.ComponentModel;
-using SampleHelpers;
-using Yaclops;
 using Yaclops.Attributes;
 
 namespace Sample.Commands
@@ -42,18 +40,10 @@ commit by giving the same set of parameters (options and paths).
 If you make a commit and then find a mistake immediately after
 that, you can recover from it with 'git reset'.
 ")]
-    public class CommitCommand : ISubCommand
+    public class CommitCommand : ISampleCommand
     {
         [NamedParameter, ShortName("m")]
         [Description("Use the given <msg> as the commit message. If multiple `-m` options are given, their values are concatenated as separate paragraphs.")]
         public string Message { get; set; }
-
-
-
-        public void Execute()
-        {
-            // Execute the command. For demo purposes, just dump out the parameters...
-            this.Dump();
-        }
     }
 }

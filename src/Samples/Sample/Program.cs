@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Reflection;
-using Autofac;
+using Sample.Commands;
+using SampleHelpers;
 using Yaclops;
 
 namespace Sample
@@ -12,12 +13,11 @@ namespace Sample
         {
             try
             {
-                var container = CreateContainer();
-
                 var globals = new GlobalSettings();
 
-                var parser = container.Resolve<CommandLineParser>();
-                parser.AddGlobalOptions(globals);
+                var parser = ParserBuilder<ISampleCommand>.FromCommands(Assembly.GetExecutingAssembly())
+                    .WithGlobals(globals)
+                    .Parser;
 
                 var command = parser.Parse(args);
 
@@ -28,7 +28,7 @@ namespace Sample
 
                 if (command != null)
                 {
-                    command.Execute();
+                    command.Dump();
                 }
             }
             catch (CommandLineParserException ex)
@@ -63,26 +63,6 @@ namespace Sample
 ";
 
             Console.WriteLine(logo);
-        }
-
-
-
-        private static IContainer CreateContainer()
-        {
-            var settings = new CommandLineParserSettings<ISubCommand>();
-            settings.EnableYaclopsCommands = true;
-
-            ContainerBuilder builder = new ContainerBuilder();
-
-            // Command-line specific stuff
-            builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
-                .Where(t => typeof(ISubCommand).IsAssignableFrom(t) && t.IsPublic)
-                .SingleInstance()
-                .As<ISubCommand>();
-
-            builder.RegisterType<CommandLineParser>().WithParameter("settings", settings);
-
-            return builder.Build();
         }
     }
 }
