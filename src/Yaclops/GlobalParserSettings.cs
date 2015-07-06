@@ -15,6 +15,7 @@ namespace Yaclops
         {
             HelpVerb = "help";
             HelpFlags = new[] { "-h", "--help", "-?" };
+            EnableYaclopsCommands = true;
         }
 
         /// <summary>
