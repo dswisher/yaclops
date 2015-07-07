@@ -1,4 +1,7 @@
 ﻿
+- Implement help for commands
+
+- Allow named parameters to be marked as required
 - Allow mix-ins in addition to inheritence; if command object includes specially-attributed object, grab its props, too
 - Handle enums and list of enums and more complex types, like FileInfo, TimeSpan and DateTime
 - Add support for fields (in addition to properties)
