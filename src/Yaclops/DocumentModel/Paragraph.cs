@@ -23,9 +23,9 @@ namespace Yaclops.DocumentModel
         public IEnumerable<Span> Spans { get { return _spans; } }
 
 
-        public Span AddSpan(string text)
+        public Span AddSpan(string format, params object[] args)
         {
-            var span = new Span(text);
+            var span = new Span(string.Format(format, args));
             return AddSpan(span);
         }
 

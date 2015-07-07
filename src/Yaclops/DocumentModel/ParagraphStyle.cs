@@ -11,5 +11,7 @@ namespace Yaclops.DocumentModel
 
         public int Indent { get; set; }
         public int[] Tabs { get; set; }
+        public int LinesBefore { get; set; }
+        public int LinesAfter { get; set; }
     }
 }

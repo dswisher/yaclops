@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
 
 namespace Yaclops.Model
@@ -21,5 +22,37 @@ namespace Yaclops.Model
         public Func<object, object> PropertyTarget { get; private set; }
         public List<string> LongNames { get { return _longNames; } }
         public List<string> ShortNames { get { return _shortNames; } }
+
+        public string Usage
+        {
+            get
+            {
+                StringBuilder builder = new StringBuilder();
+
+                foreach (var sn in ShortNames)
+                {
+                    if (builder.Length > 0)
+                    {
+                        builder.Append("|");
+                    }
+
+                    builder.Append("-");
+                    builder.Append(sn);
+                }
+
+                foreach (var ln in LongNames)
+                {
+                    if (builder.Length > 0)
+                    {
+                        builder.Append("|");
+                    }
+
+                    builder.Append("--");
+                    builder.Append(ln);
+                }
+
+                return "[" + builder + "]";
+            }
+        }
     }
 }

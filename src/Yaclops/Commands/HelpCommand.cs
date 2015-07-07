@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Yaclops.DocumentModel;
@@ -54,15 +55,46 @@ namespace Yaclops.Commands
         {
             Document doc = new Document();
 
-            var para = doc.AddParagraph(new Paragraph());
+            var para = doc.AddParagraph(new Paragraph(new ParagraphStyle { LinesAfter = 1 }));
             para.AddSpan("usage: " + VerbPath(group));
+
+            AddNamed(para, group.NamedParameters);
+
+            if (group.Nodes.Any())
+            {
+                para.AddSpan("<command>");
+            }
+
+            if (group.Nodes.Any(x => x.PositionalParameters.Any()))
+            {
+                para.AddSpan("[<args>]");
+            }
 
             // TODO - add usage
             // TODO - add overall command description
 
             AddCommandList(doc, group);
 
+            // TODO - add help blurb
+            if (group.Nodes.Any())
+            {
+                var p = doc.AddParagraph(new Paragraph(new ParagraphStyle { LinesBefore = 1 }));
+                var helpVerb = "help";  // TODO - pull from settings!
+                p.AddSpan("See '{0} {1} <command>' to read about a specific subcommand.", VerbPath(group), helpVerb);
+            }
+
             return doc;
+        }
+
+
+
+        private void AddNamed(Paragraph para, IList<CommandNamedParameter> parameters)
+        {
+            foreach (var p in parameters)
+            {
+                // TODO - set the spans to not split whitespace
+                para.AddSpan(p.Usage);
+            }
         }
 
 

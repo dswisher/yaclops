@@ -14,6 +14,12 @@ namespace Yaclops.Formatting
 
             foreach (var para in doc.Paragraphs)
             {
+                // Add any extra lines
+                for (int i = 0; i < para.Style.LinesBefore; i++)
+                {
+                    Console.WriteLine();
+                }
+
                 int pos = 0;
 
                 foreach (var span in para.Spans)
@@ -61,6 +67,12 @@ namespace Yaclops.Formatting
 
                 // End the most recent line (if any)...
                 if (pos > 0)
+                {
+                    Console.WriteLine();
+                }
+
+                // Add any extra lines
+                for (int i = 0; i < para.Style.LinesAfter; i++)
                 {
                     Console.WriteLine();
                 }
