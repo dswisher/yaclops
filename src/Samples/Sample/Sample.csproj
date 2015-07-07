@@ -44,9 +44,26 @@
   <ItemGroup>
     <Compile Include="Commands\AddCommand.cs" />
     <Compile Include="Commands\BisectCommand.cs" />
+    <Compile Include="Commands\BranchCommand.cs" />
     <Compile Include="Commands\CheckoutCommand.cs" />
     <Compile Include="Commands\CommitCommand.cs" />
+    <Compile Include="Commands\DiffCommand.cs" />
+    <Compile Include="Commands\FetchCommand.cs" />
+    <Compile Include="Commands\GcCommand.cs" />
+    <Compile Include="Commands\GrepCommand.cs" />
+    <Compile Include="Commands\InitCommand.cs" />
     <Compile Include="Commands\ISampleCommand.cs" />
+    <Compile Include="Commands\LogCommand.cs" />
+    <Compile Include="Commands\MergeCommand.cs" />
+    <Compile Include="Commands\MvCommand.cs" />
+    <Compile Include="Commands\PullCommand.cs" />
+    <Compile Include="Commands\PushCommand.cs" />
+    <Compile Include="Commands\RebaseCommand.cs" />
+    <Compile Include="Commands\ResetCommand.cs" />
+    <Compile Include="Commands\RmCommand.cs" />
+    <Compile Include="Commands\ShowCommand.cs" />
+    <Compile Include="Commands\StatusCommand.cs" />
+    <Compile Include="Commands\TagCommand.cs" />
     <Compile Include="GlobalSettings.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

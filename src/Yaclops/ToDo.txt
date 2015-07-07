@@ -6,3 +6,4 @@
 - If duplicate short/long names are specified at the SAME LEVEL, emit a warning
 - Figure out a way to make description and other text dynamic. For example, to embed a const in a description
   or reference another parameter/command.
+- Add "did you mean" support (try 'git comit' or 'git help -man')

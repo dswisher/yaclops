@@ -59,6 +59,7 @@ namespace Yaclops.Commands
             para.AddSpan("usage: " + VerbPath(group));
 
             AddNamed(para, group.NamedParameters);
+            // TODO - include --help!
 
             if (group.Nodes.Any())
             {
@@ -73,6 +74,7 @@ namespace Yaclops.Commands
             // TODO - add usage
             // TODO - add overall command description
 
+            // TODO - include "Help" in the command list!
             AddCommandList(doc, group);
 
             // TODO - add help blurb
