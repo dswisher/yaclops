@@ -91,6 +91,8 @@ namespace Yaclops.Model
             {
                 var commandParam = new CommandNamedParameter(reflectedParam.PropertyName, reflectedParam.IsBool, propertyTarget);
 
+                commandParam.Description = reflectedParam.Description;
+
                 commandParam.LongNames.AddRange(reflectedParam.LongNames);
                 commandParam.ShortNames.AddRange(reflectedParam.ShortNames);
 

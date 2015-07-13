@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Yaclops.Attributes;
 using Yaclops.Extensions;
@@ -50,6 +51,12 @@ namespace Yaclops.Reflecting
 
                 var namedParam = new ReflectedNamedParameter(prop.Name, prop.IsBool());
                 _namedParameters.Add(namedParam);
+
+                var descrip = prop.FindAttribute<DescriptionAttribute>().FirstOrDefault();
+                if (descrip != null)
+                {
+                    namedParam.Description = descrip.Description;
+                }
 
                 var longNames = prop.FindAttribute<LongNameAttribute>();
                 if (string.IsNullOrEmpty(namedAtt.LongName) && !longNames.Any())

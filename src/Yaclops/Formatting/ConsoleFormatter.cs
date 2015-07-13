@@ -21,6 +21,7 @@ namespace Yaclops.Formatting
                 }
 
                 int pos = 0;
+                int line = 1;
 
                 foreach (var span in para.Spans)
                 {
@@ -45,13 +46,19 @@ namespace Yaclops.Formatting
                         if ((pos > 0) && (pos + word.Length + 1 > width))
                         {
                             pos = 0;
+                            line += 1;
                             Console.WriteLine();
                         }
 
                         // Indent is good.
-                        if (pos < para.Style.Indent)
+                        var indent = para.Style.Indent;
+                        if (line == 1)
                         {
-                            WriteText(ref pos, new string(' ', para.Style.Indent - pos));
+                            indent += para.Style.FirstLineIndent;
+                        }
+                        if (pos < indent)
+                        {
+                            WriteText(ref pos, new string(' ', indent - pos));
                         }
 
                         // Whitespace between words is good, too

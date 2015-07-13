@@ -133,14 +133,75 @@ namespace Yaclops.Commands
 
         private Document CommandHelp(Command command)
         {
-            Console.WriteLine("   --> Command.");
-            // TODO
-            return new Document();
+            Document doc = new Document();
+
+            var headerStyle = new ParagraphStyle { LinesBefore = 1 };
+
+            var para = doc.AddParagraph(new Paragraph(headerStyle));
+            para.AddSpan("NAME");
+            // TODO - rather than drawing dashes, make the prior span a different color or some such
+            para = doc.AddParagraph(new Paragraph());
+            para.AddSpan("----");
+
+            para = doc.AddParagraph(new Paragraph());
+            para.AddSpan(VerbPath(command));
+            para.AddSpan("-");
+            para.AddSpan(command.Summary);
+
+            para = doc.AddParagraph(new Paragraph(headerStyle));
+            para.AddSpan("SYNOPSIS");
+            para = doc.AddParagraph(new Paragraph());
+            para.AddSpan("--------");
+
+            para = doc.AddParagraph(new Paragraph());
+            para.AddSpan(VerbPath(command));
+
+            foreach (var named in command.NamedParameters)
+            {
+                para.AddSpan(named.Usage);
+            }
+
+            // TODO - pick up any position parameters on prior verbs
+            foreach (var pos in command.PositionalParameters)
+            {
+                para.AddSpan(pos.Usage);
+            }
+
+            para = doc.AddParagraph(new Paragraph(headerStyle));
+            para.AddSpan("OPTIONS");
+            para = doc.AddParagraph(new Paragraph());
+            para.AddSpan("-------");
+
+            var style = new ParagraphStyle
+            {
+                LinesAfter = 1,
+                Indent = 3,
+                FirstLineIndent = -3
+            };
+
+            foreach (var named in command.NamedParameters)
+            {
+                para = doc.AddParagraph(new Paragraph(style));
+                para.AddSpan(named.Usage);
+                para.AddSpan("-");
+
+                if (!string.IsNullOrEmpty(named.Description))
+                {
+                    para.AddSpan(named.Description);
+                }
+                // TODO - add named param to option list
+            }
+
+            // TODO - add positional parameters to option list
+
+            // TODO - add long description
+
+            return doc;
         }
 
 
 
-        // TODO - include options?
+        // TODO - include options of ancestor groups?
         private string VerbPath(CommandNode node)
         {
             StringBuilder builder = new StringBuilder();

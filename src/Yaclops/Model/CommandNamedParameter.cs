@@ -22,6 +22,7 @@ namespace Yaclops.Model
         public Func<object, object> PropertyTarget { get; private set; }
         public List<string> LongNames { get { return _longNames; } }
         public List<string> ShortNames { get { return _shortNames; } }
+        public string Description { get; set; }
 
         public string Usage
         {
@@ -51,6 +52,7 @@ namespace Yaclops.Model
                     builder.Append(ln);
                 }
 
+                // TODO - check to see if param is required
                 return "[" + builder + "]";
             }
         }
