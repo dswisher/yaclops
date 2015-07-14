@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Yaclops</id>
-    <version>0.7.0-alpha</version>
+    <version>0.8.0-alpha</version>
     <title>Yet Another Command-Line Option Parser</title>
     <authors>Doug Swisher</authors>
     <owners>Doug Swisher</owners>
