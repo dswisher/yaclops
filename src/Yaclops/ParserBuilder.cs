@@ -37,7 +37,7 @@ namespace Yaclops
             foreach (var assembly in assemblies)
             {
                 var types = assembly.GetTypes()
-                    .Where(x => builder._type.IsAssignableFrom(x) && !x.IsInterface)
+                    .Where(x => builder._type.IsAssignableFrom(x) && !x.IsInterface && !x.IsAbstract)
                     .ToList();
 
                 if (types.Any())

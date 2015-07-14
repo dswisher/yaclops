@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstractions\AbstractCommand.cs" />
     <Compile Include="Commands\AddCommand.cs" />
     <Compile Include="Commands\BisectCommand.cs" />
     <Compile Include="Commands\BranchCommand.cs" />
