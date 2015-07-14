@@ -109,24 +109,85 @@ namespace Yaclops.Commands
                 Tabs = new[] { 22 }
             };
 
-            foreach (var node in group.Nodes.OrderBy(x => x.Verb))
+            // TODO - add option to show ALL commands/groups
+            const bool showHidden = false;
+
+            var commands = GetExpandedCommandNodes(group, showHidden)
+                .Select(x => new { x.Node, x.Depth, Verb = VerbPath(x.Node, x.Depth - 1) });
+
+            foreach (var entry in commands.OrderBy(x => x.Verb))
             {
-                // TODO - add option to show ALL commands/groups
-                if (node.Hidden)
+                if (entry.Node.Hidden)
                 {
                     continue;
                 }
 
                 var para = doc.AddParagraph(new Paragraph(style));
 
-                para.AddSpan(new Span(node.Verb));      // TODO - highlight the command?
+                // TODO - highlight the command by setting span style?
+                para.AddSpan(new Span(entry.Verb));
                 para.AddTab();
 
-                if (!string.IsNullOrEmpty(node.Summary))
+                if (!string.IsNullOrEmpty(entry.Node.Summary))
                 {
-                    para.AddSpan(new Span(node.Summary));
+                    para.AddSpan(new Span(entry.Node.Summary));
                 }
             }
+        }
+
+
+
+        private IEnumerable<CommandChildEntry> GetExpandedCommandNodes(CommandGroup group, bool showHidden)
+        {
+            // Can't use recursion here, as that prevents yielding the results, so use a stack...
+            Stack<CommandChildEntry> stack = new Stack<CommandChildEntry>(new[] { new CommandChildEntry(group, 0) });
+
+            while (stack.Count > 0)
+            {
+                var entry = stack.Pop();
+
+                var command = entry.Node as Command;
+                if ((command != null) && (showHidden || !command.Hidden))
+                {
+                    yield return entry;
+                }
+
+                var childGroup = entry.Node as CommandGroup;
+                // TODO - the '3' is arbitrary - make it configurable! (Determines when to show children)
+                if ((childGroup != null) && ((entry.Depth == 0) || (CountChildCommands(childGroup, showHidden) <= 3)))
+                {
+                    foreach (var child in childGroup.Nodes)
+                    {
+                        if (showHidden || !child.Hidden)
+                        {
+                            stack.Push(new CommandChildEntry(child, entry.Depth + 1));
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+        private int CountChildCommands(CommandNode node, bool includeHidden)
+        {
+            int count = 0;
+
+            Command command = node as Command;
+            if (command != null)
+            {
+                count += 1;
+            }
+            else
+            {
+                CommandGroup group = node as CommandGroup;
+                if ((group != null) && (includeHidden || !group.Hidden))
+                {
+                    count += group.Nodes.Sum(child => CountChildCommands(child, includeHidden));
+                }
+            }
+
+            return count;
         }
 
 
@@ -202,13 +263,13 @@ namespace Yaclops.Commands
 
 
         // TODO - include options of ancestor groups?
-        private string VerbPath(CommandNode node)
+        private string VerbPath(CommandNode node, int maxDepth = int.MaxValue)
         {
             StringBuilder builder = new StringBuilder();
 
-            if (node.Parent != null)
+            if ((node.Parent != null) && (maxDepth > 0))
             {
-                builder.Append(VerbPath(node.Parent));
+                builder.Append(VerbPath(node.Parent, maxDepth - 1));
             }
 
             if (builder.Length > 0)
@@ -219,6 +280,20 @@ namespace Yaclops.Commands
             builder.Append(node.HelpVerb);
 
             return builder.ToString();
+        }
+
+
+
+        private class CommandChildEntry
+        {
+            public CommandChildEntry(CommandNode node, int depth)
+            {
+                Node = node;
+                Depth = depth;
+            }
+
+            public CommandNode Node { get; private set; }
+            public int Depth { get; private set; }
         }
     }
 }
