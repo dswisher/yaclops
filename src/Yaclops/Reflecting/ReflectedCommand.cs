@@ -29,10 +29,17 @@ namespace Yaclops.Reflecting
         {
             Factory = factory;
 
-            // TODO - look for attribute to override the name verbs
-            _verbs.AddRange(type.Name.Replace("Command", string.Empty).Decamel());
+            var nameAttribute = type.FindAttribute<LongNameAttribute>();
+            if (nameAttribute != null)
+            {
+                _verbs.AddRange(nameAttribute.Name.Split(' '));
+            }
+            else
+            {
+                _verbs.AddRange(type.Name.Replace("Command", string.Empty).Decamel());
+            }
 
-            // TODO - look for [Group] attribute to help build up verbs
+            // TODO - look for new [Group] attribute to help build up verbs
 
             var summaryAtt = type.FindAttribute<SummaryAttribute>();
             if (summaryAtt != null)
