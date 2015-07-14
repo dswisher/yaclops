@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
+using Yaclops.Extensions;
 using Yaclops.Parsing;
 
 namespace Yaclops.Injecting
@@ -47,28 +48,50 @@ namespace Yaclops.Injecting
 
             if (param.Parameter.IsList)
             {
-                var listType = typeof(List<>);
-                var genericArgs = prop.PropertyType.GetGenericArguments();
-                var concreteType = listType.MakeGenericType(genericArgs);
-
-                var list = prop.GetValue(propertyTarget);
-                if (list == null)
+                if (prop.IsList())
                 {
-                    list = Activator.CreateInstance(concreteType);
-                    prop.SetValue(propertyTarget, list);
+                    PushList(param, prop, propertyTarget, typeof(List<>));
                 }
-
-                var add = concreteType.GetMethod("Add");
-                TypeConverter typeConverter = TypeDescriptor.GetConverter(genericArgs.First());
-                foreach (var stringVal in param.Values)
+                else if (prop.IsHashSet())
                 {
-                    var val = typeConverter.ConvertFromString(stringVal);
-                    add.Invoke(list, new[] { val });
+                    PushList(param, prop, propertyTarget, typeof(HashSet<>));
                 }
+                // TODO - others? Is there a more generic way to cope with this?
             }
             else
             {
                 Push(propertyTarget, prop, param.Values.First());
+            }
+        }
+
+
+
+        private void PushList(ParserPositionalParameterResult param, PropertyInfo prop, object propertyTarget, Type listType)
+        {
+            // var listType = typeof(List<>);
+            var genericArgs = prop.PropertyType.GetGenericArguments();
+            var concreteType = listType.MakeGenericType(genericArgs);
+
+            var list = prop.GetValue(propertyTarget);
+            if (list == null)
+            {
+                list = Activator.CreateInstance(concreteType);
+                prop.SetValue(propertyTarget, list);
+            }
+
+            AddToCollection(param, list, concreteType, genericArgs);
+        }
+
+
+
+        private void AddToCollection(ParserPositionalParameterResult param, object collection, Type concreteType, Type[] genericArgs)
+        {
+            var add = concreteType.GetMethod("Add");
+            TypeConverter typeConverter = TypeDescriptor.GetConverter(genericArgs.First());
+            foreach (var stringVal in param.Values)
+            {
+                var val = typeConverter.ConvertFromString(stringVal);
+                add.Invoke(collection, new[] { val });
             }
         }
 

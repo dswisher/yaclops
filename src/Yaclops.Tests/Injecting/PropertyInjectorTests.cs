@@ -74,6 +74,38 @@ namespace Yaclops.Tests.Injecting
         }
 
 
+        [Test]
+        public void CanInjectEnumPositionalParameter()
+        {
+            var result = new ResultMaker().PositionalParam("Num", "One").Result;
+            var target = Populate<EnumPositional>(result);
+
+            target.Num.ShouldBe(TestEnum.One);
+        }
+
+
+        [Test]
+        public void CanInjectMultipleItemsIntoUninitializedEnumList()
+        {
+            var result = new ResultMaker().PositionalParam("Nums", "Two", "Three").Result;
+            var target = Populate<UninitializedEnumList>(result);
+
+            target.Nums.ShouldBe(new[] { TestEnum.Two, TestEnum.Three });
+        }
+
+
+        [Test]
+        public void CanInjectMultipleItemsIntoUninitializedEnumSet()
+        {
+            var result = new ResultMaker().PositionalParam("Nums", "Two", "Three").Result;
+            var target = Populate<UninitializedEnumSet>(result);
+
+            target.Nums.ShouldContain(TestEnum.Two);
+            target.Nums.ShouldContain(TestEnum.Three);
+            target.Nums.ShouldNotContain(TestEnum.One);
+        }
+
+
 
         #region Helpers
 
@@ -170,6 +202,32 @@ namespace Yaclops.Tests.Injecting
         {
             [PositionalParameter]
             public List<long> Nums { get; set; } 
+        }
+
+
+        public enum TestEnum
+        {
+            One,
+            Two,
+            Three
+        };
+
+        public class EnumPositional
+        {
+            [PositionalParameter]
+            public TestEnum Num { get; set; }
+        }
+
+        public class UninitializedEnumList
+        {
+            [PositionalParameter]
+            public List<TestEnum> Nums { get; set; }
+        }
+
+        public class UninitializedEnumSet
+        {
+            [PositionalParameter]
+            public HashSet<TestEnum> Nums { get; set; }
         }
 
         #endregion

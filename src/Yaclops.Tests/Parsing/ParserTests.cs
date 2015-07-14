@@ -42,5 +42,41 @@ namespace Yaclops.Tests.Parsing
             result.PositionalParameters[0].Values.ShouldBe(new[] { "bar" });
         }
 
+
+
+        [Test]
+        public void MissingRequiredStringParamThrows()
+        {
+            var root = _builder.ExternalCommand("funky")
+                .WithPositionalString("Name", true)
+                .Root;
+
+            var parser = new Parser(root);
+
+            Should.Throw<CommandLineParserException>(() => parser.Parse("funky"));
+        }
+
+
+
+        [Test]
+        public void SpecifiedRequiredStringParamIsSet()
+        {
+            var root = _builder.ExternalCommand("funky")
+                .WithPositionalString("Name", true)
+                .Root;
+
+            var parser = new Parser(root);
+
+            var result = parser.Parse("funky foo");
+
+            result.Kind.ShouldBe(ParseResultKind.ExternalCommand);
+
+            result.PositionalParameters.Count.ShouldBe(1);
+            result.PositionalParameters[0].Parameter.PropertyName.ShouldBe("Name");
+            result.PositionalParameters[0].Values.ShouldBe(new[] { "foo" });
+        }
+
+
+        // TODO - add test for required List<string>
     }
 }

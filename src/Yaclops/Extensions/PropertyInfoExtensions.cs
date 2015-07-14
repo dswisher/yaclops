@@ -20,6 +20,12 @@ namespace Yaclops.Extensions
         }
 
 
+        public static bool IsHashSet(this PropertyInfo info)
+        {
+            return info.PropertyType.IsGenericType && (info.PropertyType.GetGenericTypeDefinition() == typeof(HashSet<>));
+        }
+
+
         public static bool IsRequired(this PropertyInfo info)
         {
             return FindAttribute<RequiredAttribute>(info).Any();
