@@ -158,6 +158,10 @@ namespace Yaclops.Parsing
                         }
                         else
                         {
+                            if (commandParam.IsRequired)
+                            {
+                                _pendingRequired.Remove(commandParam.PropertyName);
+                            }
                             // Not a list; always create a new param
                             PositionalParameters.Add(new ParserPositionalParameterResult(commandParam, CurrentToken.Text));
                             _positionalParameters.Dequeue();
