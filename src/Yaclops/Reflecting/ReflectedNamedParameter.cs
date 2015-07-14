@@ -35,7 +35,10 @@ namespace Yaclops.Reflecting
 
         public void AddLongName(string name)
         {
-            _longNames.Add(name);
+            if (!string.IsNullOrEmpty(name))
+            {
+                _longNames.Add(name);
+            }
         }
 
         public void AddShortName(string name)

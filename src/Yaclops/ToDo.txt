@@ -2,6 +2,8 @@
 - Issue with executing help internally and returning null-command: logo prints out AFTER help
 - Finish help for commands
 
+- If resolving commands out of Autofac, how to pass in settings?
+
 - Allow named parameters to be marked as required
 - Allow mix-ins in addition to inheritence; if command object includes specially-attributed object, grab its props, too
 - Handle enums and list of enums and more complex types, like FileInfo, TimeSpan and DateTime
