@@ -25,6 +25,8 @@ namespace Yaclops.DocumentModel
             // TODO - this is a HACK! Make this work right! (A blank line should start a new paragraph, for a start)
 
             StringBuilder builder = new StringBuilder();
+            Paragraph para;
+            int returnCount = 0;
 
             foreach (var c in content)
             {
@@ -34,16 +36,28 @@ namespace Yaclops.DocumentModel
                         break;
 
                     case '\r':
-                        builder.Append(' ');
+                        returnCount += 1;
+                        if (returnCount > 1)
+                        {
+                            para = new Paragraph(style);
+                            para.AddSpan(builder.ToString().Trim());
+                            yield return para;
+                            builder.Clear();
+                        }
+                        else
+                        {
+                            builder.Append(' ');
+                        }
                         break;
 
                     default:
                         builder.Append(c);
+                        returnCount = 0;
                         break;
                 }
             }
 
-            var para = new Paragraph(style);
+            para = new Paragraph(style);
             para.AddSpan(builder.ToString().Trim());
             yield return para;
         }

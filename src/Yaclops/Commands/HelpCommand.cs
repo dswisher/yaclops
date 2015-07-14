@@ -172,22 +172,15 @@ namespace Yaclops.Commands
             para = doc.AddParagraph(new Paragraph());
             para.AddSpan("-------");
 
-            var firstStyle = new ParagraphStyle();
-
-            var secondStyle = new ParagraphStyle
-            {
-                LinesBefore = 1
-            };
-
             var descStyle = new ParagraphStyle
             {
-                Indent = 3
+                Indent = 3,
+                LinesAfter = 1
             };
 
-            bool first = true;
             foreach (var named in command.NamedParameters)
             {
-                para = doc.AddParagraph(new Paragraph(first ? firstStyle : secondStyle));
+                para = doc.AddParagraph(new Paragraph());
                 para.AddSpan(named.Usage);
 
                 foreach (var p in MarkLeft.Parse(named.Description, descStyle))
@@ -197,8 +190,6 @@ namespace Yaclops.Commands
                 }
 
                 // TODO - add named params to option list
-
-                first = false;
             }
 
             // TODO - add positional parameters to option list
