@@ -43,7 +43,7 @@ namespace Yaclops.Formatting
                         }
 
                         // If we'd extend beyond the edge, skip to a new line.
-                        if ((pos > 0) && (pos + word.Length + 1 > width))
+                        if ((pos > 0) && (pos + word.Length + 1 >= width))
                         {
                             pos = 0;
                             line += 1;

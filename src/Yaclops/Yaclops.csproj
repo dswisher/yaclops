@@ -55,6 +55,7 @@
     <Compile Include="Commands\YaclopsDumpTreeCommand.cs" />
     <Compile Include="DocumentModel\Document.cs" />
     <Compile Include="DocumentModel\DocumentStyle.cs" />
+    <Compile Include="DocumentModel\MarkLeft.cs" />
     <Compile Include="DocumentModel\Paragraph.cs" />
     <Compile Include="DocumentModel\ParagraphStyle.cs" />
     <Compile Include="DocumentModel\Span.cs" />
