@@ -38,7 +38,11 @@ namespace Yaclops.Formatting
                         if ((word == "\t") && (para.Style.Tabs != null))
                         {
                             var spaces = para.Style.Tabs.FirstOrDefault(x => x > pos) - pos - 1;
-                            WriteText(ref pos, new string(' ', spaces));
+                            if (spaces > 0)
+                            {
+                                // TODO - the >0 check above seems like a hack - off by one error?
+                                WriteText(ref pos, new string(' ', spaces));
+                            }
                             continue;
                         }
 
