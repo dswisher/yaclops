@@ -196,8 +196,23 @@ namespace Yaclops.Commands
         {
             Document doc = new Document();
 
+            // TODO - create a "style sheet" that can be passed around
             var headerStyle = new ParagraphStyle { LinesBefore = 1 };
 
+            AddName(command, doc, headerStyle);
+            AddSynopsis(command, doc, headerStyle);
+
+            // TODO - add long description
+
+            AddOptions(command, doc, headerStyle);
+
+            return doc;
+        }
+
+
+
+        private void AddName(Command command, Document doc, ParagraphStyle headerStyle)
+        {
             var para = doc.AddParagraph(new Paragraph(headerStyle));
             para.AddSpan("NAME");
             // TODO - rather than drawing dashes, make the prior span a different color or some such
@@ -208,27 +223,13 @@ namespace Yaclops.Commands
             para.AddSpan(VerbPath(command));
             para.AddSpan("-");
             para.AddSpan(command.Summary);
+        }
 
-            para = doc.AddParagraph(new Paragraph(headerStyle));
-            para.AddSpan("SYNOPSIS");
-            para = doc.AddParagraph(new Paragraph());
-            para.AddSpan("--------");
 
-            para = doc.AddParagraph(new Paragraph());
-            para.AddSpan(VerbPath(command));
 
-            foreach (var named in command.NamedParameters)
-            {
-                para.AddSpan(named.Usage);
-            }
-
-            // TODO - pick up any positional parameters on prior verbs
-            foreach (var pos in command.PositionalParameters)
-            {
-                para.AddSpan(pos.Usage);
-            }
-
-            para = doc.AddParagraph(new Paragraph(headerStyle));
+        private void AddOptions(Command command, Document doc, ParagraphStyle headerStyle)
+        {
+            var para = doc.AddParagraph(new Paragraph(headerStyle));
             para.AddSpan("OPTIONS");
             para = doc.AddParagraph(new Paragraph());
             para.AddSpan("-------");
@@ -261,10 +262,30 @@ namespace Yaclops.Commands
                     doc.AddParagraph(p);
                 }
             }
+        }
 
-            // TODO - add long description
 
-            return doc;
+
+        private void AddSynopsis(Command command, Document doc, ParagraphStyle headerStyle)
+        {
+            var para = doc.AddParagraph(new Paragraph(headerStyle));
+            para.AddSpan("SYNOPSIS");
+            para = doc.AddParagraph(new Paragraph());
+            para.AddSpan("--------");
+
+            para = doc.AddParagraph(new Paragraph());
+            para.AddSpan(VerbPath(command));
+
+            foreach (var named in command.NamedParameters)
+            {
+                para.AddSpan(named.Usage);
+            }
+
+            // TODO - pick up any positional parameters on prior verbs
+            foreach (var pos in command.PositionalParameters)
+            {
+                para.AddSpan(pos.Usage);
+            }
         }
 
 
