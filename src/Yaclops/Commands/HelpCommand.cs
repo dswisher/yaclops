@@ -11,16 +11,18 @@ namespace Yaclops.Commands
     internal class HelpCommand
     {
         private readonly CommandNode _start;
+        private readonly GlobalParserSettings _settings;
 
-        public static HelpCommand Make(CommandNode start)
+        public static HelpCommand Make(CommandNode start, GlobalParserSettings settings)
         {
-            return new HelpCommand(start);
+            return new HelpCommand(start, settings);
         }
 
 
-        public HelpCommand(CommandNode start)
+        public HelpCommand(CommandNode start, GlobalParserSettings settings)
         {
             _start = start;
+            _settings = settings;
         }
 
 
@@ -153,15 +155,21 @@ namespace Yaclops.Commands
                 }
 
                 var childGroup = entry.Node as CommandGroup;
-                // TODO - the '10' is arbitrary - make it configurable! (Determines when to show children)
-                if ((childGroup != null) && ((entry.Depth == 0) || (CountChildCommands(childGroup, showHidden) <= 10)))
+                if (childGroup != null)
                 {
-                    foreach (var child in childGroup.Nodes)
+                    if ((entry.Depth == 0) || (CountChildCommands(childGroup, showHidden) <= _settings.ChildThreshold))
                     {
-                        if (showHidden || !child.Hidden)
+                        foreach (var child in childGroup.Nodes)
                         {
-                            stack.Push(new CommandChildEntry(child, entry.Depth + 1));
+                            if (showHidden || !child.Hidden)
+                            {
+                                stack.Push(new CommandChildEntry(child, entry.Depth + 1));
+                            }
                         }
+                    }
+                    else
+                    {
+                        yield return entry;
                     }
                 }
             }

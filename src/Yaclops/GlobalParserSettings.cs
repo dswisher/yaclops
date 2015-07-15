@@ -16,6 +16,7 @@ namespace Yaclops
             HelpVerb = "help";
             HelpFlags = new[] { "-h", "--help", "-?" };
             EnableYaclopsCommands = true;
+            ChildThreshold = 3;
         }
 
         /// <summary>
@@ -37,5 +38,12 @@ namespace Yaclops
         /// The name of the program. The default is the executable name.
         /// </summary>
         public string ProgramName { get; set; }
+
+        /// <summary>
+        /// When printing the command summary, if a group has fewer child commands
+        /// than this threshold, the children are listed. If there are more children,
+        /// only the group is listed. The default is 3.
+        /// </summary>
+        public int ChildThreshold { get; set; }
     }
 }
