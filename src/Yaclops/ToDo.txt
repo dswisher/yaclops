@@ -1,4 +1,5 @@
 ﻿
+- If group is not shown as it has too many child commands, it doesn't show up at all
 - When printing list of options for a command, alphabetize them? (If so, by what - long id or short id?)
 - Finish help for commands
 

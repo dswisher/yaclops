@@ -153,8 +153,8 @@ namespace Yaclops.Commands
                 }
 
                 var childGroup = entry.Node as CommandGroup;
-                // TODO - the '3' is arbitrary - make it configurable! (Determines when to show children)
-                if ((childGroup != null) && ((entry.Depth == 0) || (CountChildCommands(childGroup, showHidden) <= 3)))
+                // TODO - the '10' is arbitrary - make it configurable! (Determines when to show children)
+                if ((childGroup != null) && ((entry.Depth == 0) || (CountChildCommands(childGroup, showHidden) <= 10)))
                 {
                     foreach (var child in childGroup.Nodes)
                     {
