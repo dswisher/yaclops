@@ -1,5 +1,4 @@
 ﻿
-- Issue with executing help internally and returning null-command: logo prints out AFTER help
 - Finish help for commands
 
 - If resolving commands out of Autofac, how to pass in settings?

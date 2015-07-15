@@ -79,6 +79,8 @@ namespace Yaclops.Model
             {
                 var commandParam = new CommandPositionalParameter(reflectedParam.PropertyName, reflectedParam.IsList, reflectedParam.IsRequired, propertyTarget);
 
+                commandParam.Description = reflectedParam.Description;
+
                 target.PositionalParameters.Add(commandParam);
             }
         }

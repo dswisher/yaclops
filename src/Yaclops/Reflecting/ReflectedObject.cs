@@ -102,7 +102,11 @@ namespace Yaclops.Reflecting
                 var posParam = new ReflectedPositionalParameter(prop.Name, prop.IsList() || prop.IsHashSet(), prop.IsRequired());
                 _positionalParameters.Add(posParam);
 
-                // TODO - pick up the description (if any)
+                var descrip = prop.FindAttribute<DescriptionAttribute>().FirstOrDefault();
+                if (descrip != null)
+                {
+                    posParam.Description = descrip.Description;
+                }
             }
         }
     }

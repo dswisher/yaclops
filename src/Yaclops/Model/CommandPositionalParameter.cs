@@ -18,6 +18,7 @@ namespace Yaclops.Model
         public bool IsList { get; private set; }
         public bool IsRequired { get; private set; }
         public Func<object, object> PropertyTarget { get; private set; }
+        public string Description { get; set; }
 
         public string Usage
         {

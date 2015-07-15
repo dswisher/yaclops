@@ -12,6 +12,7 @@ namespace Yaclops.Reflecting
         }
 
         public string PropertyName { get; private set; }
+        public string Description { get; set; }
         public bool IsList { get; private set; }
         public bool IsRequired { get; private set; }
     }
