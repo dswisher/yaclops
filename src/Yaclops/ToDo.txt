@@ -1,5 +1,5 @@
 ﻿
-- If group is not shown as it has too many child commands, it doesn't show up at all
+- If there are duplicate options within a command, throw a parser exception.
 - When printing list of options for a command, alphabetize them? (If so, by what - long id or short id?)
 - Finish help for commands
 
