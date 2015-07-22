@@ -93,21 +93,18 @@ namespace Yaclops
         /// <summary>
         /// Get the resulting parser
         /// </summary>
-        public CommandLineParser<T> Parser
+        public CommandLineParser<T> Build()
         {
-            get
+            var parser = new CommandLineParser<T>(_settings);
+
+            parser.AddTypes(_commandTypes, _factory);
+
+            foreach (var g in _globals)
             {
-                var parser = new CommandLineParser<T>(_settings);
-
-                parser.AddTypes(_commandTypes, _factory);
-
-                foreach (var g in _globals)
-                {
-                    parser.AddGlobalOptions(g);
-                }
-
-                return parser;
+                parser.AddGlobalOptions(g);
             }
+
+            return parser;
         }
 
 

@@ -23,7 +23,7 @@ namespace Sample
                 var parser = ParserBuilder<ISampleCommand>.FromCommands(Assembly.GetExecutingAssembly())
                     .WithGlobals(globals)
                     .WithSettings(settings)
-                    .Parser;
+                    .Build();
 
                 var command = parser.Parse(args);
 
