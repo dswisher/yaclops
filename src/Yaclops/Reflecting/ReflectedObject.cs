@@ -45,6 +45,9 @@ namespace Yaclops.Reflecting
         {
             var props = type.FindProperties<NamedParameterAttribute>();
 
+            var shortHash = new HashSet<string>();
+            var longHash = new HashSet<string>();
+
             foreach (var prop in props)
             {
                 var namedAtt = prop.FindAttribute<NamedParameterAttribute>().First();
@@ -61,17 +64,21 @@ namespace Yaclops.Reflecting
                 var longNames = prop.FindAttribute<LongNameAttribute>();
                 if (string.IsNullOrEmpty(namedAtt.LongName) && !longNames.Any())
                 {
-                    namedParam.AddLongName(string.Join("-", prop.Name.Decamel()));
+                    string name = string.Join("-", prop.Name.Decamel());
+                    DupCheck(type, longHash, name, false);
+                    namedParam.AddLongName(name);
                 }
                 else
                 {
                     if (!string.IsNullOrEmpty(namedAtt.LongName))
                     {
+                        DupCheck(type, longHash, namedAtt.LongName, false);
                         namedParam.AddLongName(namedAtt.LongName);
                     }
 
                     foreach (var att in longNames)
                     {
+                        DupCheck(type, longHash, att.Name, false);
                         namedParam.AddLongName(att.Name);
                     }
                 }
@@ -79,16 +86,31 @@ namespace Yaclops.Reflecting
                 var shortNames = prop.FindAttribute<ShortNameAttribute>();
                 if (!string.IsNullOrEmpty(namedAtt.ShortName))
                 {
+                    DupCheck(type, shortHash, namedAtt.ShortName, true);
                     namedParam.AddShortName(namedAtt.ShortName);
                 }
 
                 foreach (var att in shortNames)
                 {
+                    DupCheck(type, shortHash, att.Name, true);
                     namedParam.AddShortName(att.Name);
                 }
 
                 // TODO - pick up the description (if any)
             }
+        }
+
+
+
+        private void DupCheck(Type type, HashSet<string> hash, string name, bool shortName)
+        {
+            if (hash.Contains(name))
+            {
+                throw new CommandLineParserException("Type {0} contains duplicate {1} name: {2}",
+                    type.Name, shortName ? "short" : "long", name);
+            }
+
+            hash.Add(name);
         }
 
 

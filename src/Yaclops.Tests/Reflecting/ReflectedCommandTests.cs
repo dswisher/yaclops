@@ -123,6 +123,42 @@ namespace Yaclops.Tests.Reflecting
         }
 
 
+        [Test]
+        public void DuplicateExplicitShortNamesThrows()
+        {
+            Should.Throw<CommandLineParserException>(() => new ReflectedCommand<object>(typeof (DuplicateExplicitShortNames), _factory));
+        }
+
+        [Test]
+        public void DuplicateOldShortNamesThrows()
+        {
+            Should.Throw<CommandLineParserException>(() => new ReflectedCommand<object>(typeof (DuplicateOldShortNames), _factory));
+        }
+
+
+        [Test]
+        public void DuplicateExplicitLongNamesThrows()
+        {
+            Should.Throw<CommandLineParserException>(() => new ReflectedCommand<object>(typeof(DuplicateExplicitLongNames), _factory));
+        }
+
+        [Test]
+        public void DuplicateOldLongNamesThrows()
+        {
+            Should.Throw<CommandLineParserException>(() => new ReflectedCommand<object>(typeof(DuplicateOldLongNames), _factory));
+        }
+
+        [Test]
+        public void DuplicateDefaultLongNamesThrows()
+        {
+            Should.Throw<CommandLineParserException>(() => new ReflectedCommand<object>(typeof(DuplicateDefaultLongNames), _factory));
+        }
+
+
+        // TODO - add test for conflict between default long name and attributed long name
+        // TODO - add test for short name in NamedParameterAtt and ShortNameAtt
+
+
         #region Test Commands
         // ReSharper disable UnusedMember.Local
 
@@ -164,6 +200,51 @@ namespace Yaclops.Tests.Reflecting
         {
             [PositionalParameter, Required]
             public int Count { get; set; }
+        }
+
+        private class DuplicateExplicitShortNames
+        {
+            [NamedParameter, ShortName("x")]
+            public bool Foo { get; set; }
+
+            [NamedParameter, ShortName("x")]
+            public bool Bar { get; set; }
+        }
+
+        private class DuplicateOldShortNames
+        {
+            [NamedParameter(ShortName = "x")]
+            public bool Foo { get; set; }
+
+            [NamedParameter, ShortName("x")]
+            public bool Bar { get; set; }
+        }
+
+        private class DuplicateExplicitLongNames
+        {
+            [NamedParameter, LongName("fred")]
+            public bool Foo { get; set; }
+
+            [NamedParameter, LongName("fred")]
+            public bool Bar { get; set; }
+        }
+
+        private class DuplicateOldLongNames
+        {
+            [NamedParameter(LongName = "fred")]
+            public bool Foo { get; set; }
+
+            [NamedParameter, LongName("fred")]
+            public bool Bar { get; set; }
+        }
+
+        private class DuplicateDefaultLongNames
+        {
+            [NamedParameter]
+            public bool Fred { get; set; }
+
+            [NamedParameter, LongName("fred")]
+            public bool Bar { get; set; }
         }
 
         // ReSharper restore UnusedMember.Local
