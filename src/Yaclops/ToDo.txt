@@ -6,6 +6,10 @@
 
 - If resolving commands out of Autofac, how to pass in settings?
 
+- Tab completion!
+    -> Powershell
+        -> look at https://github.com/lzybkr/TabExpansionPlusPlus#readme
+
 - Allow named parameters to be marked as required
 - Allow mix-ins in addition to inheritence; if command object includes specially-attributed object, grab its props, too
 - Handle enums and list of enums and more complex types, like FileInfo, TimeSpan and DateTime
@@ -15,3 +19,4 @@
 - Figure out a way to make description and other text dynamic. For example, to embed a const in a description
   or reference another parameter/command.
 - Add "did you mean" support (try 'git comit' or 'git help -man')
+
