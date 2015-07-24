@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D225F641-15E5-40A9-9B48-9FEBDACF707F}"
 	ProjectSection(SolutionItems) = preProject
@@ -23,6 +23,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DevTools", "DevTools", "{1B2C0945-C28D-40ED-8053-B99895BD783C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SnippetInjector", "devtools\SnippetInjector\SnippetInjector.csproj", "{DDD6E89D-F1A4-4B18-B208-E9931327CE0A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simple", "Samples\Simple\Simple.csproj", "{F561F988-58CD-45D4-BE13-997D639C0804}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -54,6 +56,10 @@ Global
 		{DDD6E89D-F1A4-4B18-B208-E9931327CE0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DDD6E89D-F1A4-4B18-B208-E9931327CE0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DDD6E89D-F1A4-4B18-B208-E9931327CE0A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F561F988-58CD-45D4-BE13-997D639C0804}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F561F988-58CD-45D4-BE13-997D639C0804}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F561F988-58CD-45D4-BE13-997D639C0804}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F561F988-58CD-45D4-BE13-997D639C0804}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -63,5 +69,6 @@ Global
 		{69FF1FD7-368B-49D1-88D9-EFBBA0435003} = {B49A4A89-1D55-4AF7-B987-0EB71010CAE8}
 		{E9FC64ED-16B9-4B84-9B92-2D06805E9FAC} = {B49A4A89-1D55-4AF7-B987-0EB71010CAE8}
 		{DDD6E89D-F1A4-4B18-B208-E9931327CE0A} = {1B2C0945-C28D-40ED-8053-B99895BD783C}
+		{F561F988-58CD-45D4-BE13-997D639C0804} = {B49A4A89-1D55-4AF7-B987-0EB71010CAE8}
 	EndGlobalSection
 EndGlobal

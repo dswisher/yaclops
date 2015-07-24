@@ -175,7 +175,11 @@ namespace Yaclops
             switch (result.Kind)
             {
                 case ParseResultKind.Help:
-                case ParseResultKind.DefaultCommand:    // TODO - make default command configurable
+                case ParseResultKind.DefaultCommand:
+                    if (_settings.DefaultCommand != null)
+                    {
+                        return _settings.DefaultCommand();
+                    }
                     HelpCommand.Make(result.FinalNode, _settings).Execute();
                     return _settings.NullCommand();
 

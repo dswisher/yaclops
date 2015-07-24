@@ -22,6 +22,12 @@ namespace Yaclops
         /// A func that returns the command that is returned when help or another internal command is parsed.
         /// </summary>
         public Func<T> NullCommand { get; set; }
+
+        /// <summary>
+        /// A func that returns the default command that is returned if no arguments are supplied.
+        /// The default is to show help.
+        /// </summary>
+        public Func<T> DefaultCommand { get; set; } 
     }
 
 
