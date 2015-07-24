@@ -6,7 +6,7 @@ namespace Yaclops.Attributes
     /// <summary>
     /// Decorate a class or property with a long name
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Property)]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Property, AllowMultiple = true)]
     public class LongNameAttribute : Attribute
     {
         /// <summary>

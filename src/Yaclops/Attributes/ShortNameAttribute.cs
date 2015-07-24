@@ -6,7 +6,7 @@ namespace Yaclops.Attributes
     /// <summary>
     /// Decorate a property with a shore name
     /// </summary>
-    [AttributeUsage(AttributeTargets.Property)]
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
     public class ShortNameAttribute : Attribute
     {
         /// <summary>
