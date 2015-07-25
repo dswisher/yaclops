@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Yaclops.Commands;
 using Yaclops.Extensions;
 using Yaclops.Injecting;
 using Yaclops.Model;
@@ -86,8 +87,7 @@ namespace Yaclops
                     return true;
 
                 case ParseResultKind.Help:
-                    // TODO - implement help
-                    Console.WriteLine("Help!");
+                    HelpCommand.Make(result.FinalNode, _settings).Execute();
                     return false;
 
                 case ParseResultKind.InternalCommand:

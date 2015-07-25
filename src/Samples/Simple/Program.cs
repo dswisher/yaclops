@@ -12,20 +12,20 @@ namespace Simple
         {
             try
             {
-                var sampleCommand = new SimpleCommand();
+                var globals = new GlobalSettings();
 
                 var settings = new CommandLineParserSettings<ISubCommand>
                 {
-                    ProgramName = "ConMan",
-                    DefaultCommand = () => sampleCommand
+                    ProgramName = "ConMan"
                 };
 
-                CommandLineParser<ISubCommand> parser = new CommandLineParser(settings);
-                parser.AddCommand(sampleCommand);
+                GlobalParser parser = new GlobalParser(settings);
+                parser.AddGlobalOptions(globals);
 
-                var command = parser.Parse(args);
-
-                command.Execute();
+                if (parser.Parse(args))
+                {
+                    globals.Execute();
+                }
             }
             catch (CommandLineParserException ex)
             {
@@ -36,9 +36,9 @@ namespace Simple
 
 
 
-    class SimpleCommand : ISubCommand
+    class GlobalSettings
     {
-        public SimpleCommand()
+        public GlobalSettings()
         {
             Sample = "one";
             Rows = Console.WindowHeight;
