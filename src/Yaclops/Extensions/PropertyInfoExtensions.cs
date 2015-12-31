@@ -10,7 +10,7 @@ namespace Yaclops.Extensions
     {
         public static bool IsBool(this PropertyInfo info)
         {
-            return info.PropertyType == typeof(bool);
+            return (info.PropertyType == typeof(bool)) || (info.PropertyType == typeof(bool?));
         }
 
 

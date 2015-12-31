@@ -60,6 +60,20 @@ namespace Yaclops.Tests.Reflecting
 
 
         [Test]
+        public void NamedNullableBoolParameterGetsPickedUp()
+        {
+            var command = new ReflectedCommand<object>(typeof(NamedNullableBool), _factory);
+
+            command.NamedParameters.Count.ShouldBe(1);
+            var param = command.NamedParameters[0];
+            param.PropertyName.ShouldBe("Flag");
+            param.IsBool.ShouldBe(true);
+            param.HasLongName("flag").ShouldBe(true);
+        }
+
+
+
+        [Test]
         public void NamedLongParameterGetsPickedUp()
         {
             var command = new ReflectedCommand<object>(typeof(NamedLong), _factory);
@@ -170,6 +184,12 @@ namespace Yaclops.Tests.Reflecting
         {
             [NamedParameter]
             public bool Flag { get; set; }
+        }
+
+        private class NamedNullableBool
+        {
+            [NamedParameter]
+            public bool? Flag { get; set; }
         }
 
         private class NamedLong
