@@ -10,15 +10,7 @@ namespace Yaclops.Formatting
 
         public void Format(Document doc)
         {
-            int width = int.MaxValue;
-            try
-            {
-                width = Console.WindowWidth;
-            }
-            catch
-            {
-                // Probably in Windows Application mode or some other process where stdout is unsized 
-            }
+            int width = Console.IsOutputRedirected ? int.MaxValue : Console.WindowWidth;
 
             foreach (var para in doc.Paragraphs)
             {
