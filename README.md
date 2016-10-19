@@ -2,6 +2,8 @@
 
 # Yaclops #
 
+[![NuGet](https://img.shields.io/nuget/vpre/yaclops.svg)](https://www.nuget.org/packages/yaclops/)
+
 Yet another command-line option parser.
 
 * Intended for cases where subcommands are required (like git or svn)
