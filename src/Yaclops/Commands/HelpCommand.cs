@@ -257,10 +257,7 @@ namespace Yaclops.Commands
                 para = doc.AddParagraph(new Paragraph());
                 para.AddSpan(named.Usage);
 
-                foreach (var p in MarkLeft.Parse(named.Description, descStyle))
-                {
-                    doc.AddParagraph(p);
-                }
+                AddParameterDescription(doc, named.Description, descStyle);
             }
 
             // TODO - add positional parameters from prior verbs
@@ -269,7 +266,21 @@ namespace Yaclops.Commands
                 para = doc.AddParagraph(new Paragraph());
                 para.AddSpan(pos.Usage);
 
-                foreach (var p in MarkLeft.Parse(pos.Description, descStyle))
+                AddParameterDescription(doc, pos.Description, descStyle);
+            }
+        }
+
+
+
+        private void AddParameterDescription(Document doc, string description, ParagraphStyle descStyle)
+        {
+            if (string.IsNullOrEmpty(description))
+            {
+                doc.AddParagraph(new Paragraph(descStyle));
+            }
+            else
+            {
+                foreach (var p in MarkLeft.Parse(description, descStyle))
                 {
                     doc.AddParagraph(p);
                 }
