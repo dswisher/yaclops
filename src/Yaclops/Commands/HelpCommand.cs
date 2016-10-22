@@ -229,8 +229,12 @@ namespace Yaclops.Commands
 
             para = doc.AddParagraph(new Paragraph());
             para.AddSpan(VerbPath(command));
-            para.AddSpan("-");
-            para.AddSpan(command.Summary);
+
+            if (!string.IsNullOrEmpty(command.Summary))
+            {
+                para.AddSpan("-");
+                para.AddSpan(command.Summary);
+            }
         }
 
 
