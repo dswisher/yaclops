@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using SampleHelpers;
 using Yaclops;
 using Yaclops.Attributes;
@@ -30,6 +31,12 @@ namespace Simple
             catch (CommandLineParserException ex)
             {
                 Console.WriteLine(ex.Message);
+            }
+
+            if (Debugger.IsAttached)
+            {
+                Console.Write("Press [Enter] to exit:");
+                Console.ReadLine();
             }
         }
     }
