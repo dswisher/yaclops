@@ -22,7 +22,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleHelpers", "Samples\Sa
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DevTools", "DevTools", "{1B2C0945-C28D-40ED-8053-B99895BD783C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SnippetInjector", "devtools\SnippetInjector\SnippetInjector.csproj", "{DDD6E89D-F1A4-4B18-B208-E9931327CE0A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SnippetInjector", "DevTools\SnippetInjector\SnippetInjector.csproj", "{DDD6E89D-F1A4-4B18-B208-E9931327CE0A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simple", "Samples\Simple\Simple.csproj", "{F561F988-58CD-45D4-BE13-997D639C0804}"
 EndProject
