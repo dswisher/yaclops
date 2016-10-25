@@ -19,7 +19,7 @@ For each subcommand, implement a class that inherits the `ISubCommand` interface
 
     public class AddCommand : ISubCommand
     {
-        [CommandLineOption(ShortName="n")]
+        [NamedParameter, ShortName("r")]
         public bool DryRun { get; set; }
 
         public void Execute()
@@ -34,7 +34,7 @@ For each subcommand, implement a class that inherits the `ISubCommand` interface
     {
         try
         {
-            var parser = new CommandLineParser(new ISubCommand[] { new AddCommand(), new DiffCommand() });
+            var parser = new CommandLineParser(new ISubCommand[] { new AddCommand() });
 
             var command = parser.Parse(args);
 

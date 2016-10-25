@@ -2,7 +2,6 @@
 
 ### Core ###
 
-* BUG: missing required commands break `--help` functionality; `sample add --help` prints error about missing required parameter, rather than print the help
 * Add ability to set default command to something other than help
 * Allow commands to be abbreviated: `sample cl` should be equivalent to `sample clone` (assuming no other commands start with "cl").
 * Allow aliases; see sample AddCommand: `-A`, `--all` and `--no-ignore-removal`
