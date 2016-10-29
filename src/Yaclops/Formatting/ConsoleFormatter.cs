@@ -10,7 +10,7 @@ namespace Yaclops.Formatting
 
         public void Format(Document doc)
         {
-            int width = Console.IsOutputRedirected ? int.MaxValue : Console.WindowWidth;
+            int width = Console.IsOutputRedirected ? int.MaxValue : (Console.WindowWidth - 1);
 
             foreach (var para in doc.Paragraphs)
             {
