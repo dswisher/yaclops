@@ -32,10 +32,10 @@ namespace Yaclops.DocumentModel
             {
                 switch (c)
                 {
-                    case '\n':
+                    case '\r':
                         break;
 
-                    case '\r':
+                    case '\n':
                         returnCount += 1;
                         if (returnCount > 1)
                         {

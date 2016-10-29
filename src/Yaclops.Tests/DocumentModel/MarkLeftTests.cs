@@ -49,15 +49,29 @@ namespace Yaclops.Tests.DocumentModel
         [Test]
         public void TwoLinesGivesOneParaOneSpan()
         {
-            var paras = MarkLeft.Parse(@"
-This is still one
+            string[] chunks =
+            {
+                "First: this is still one\r\nspan, but with newlines.",
+                "Second: this is still one\r\nspan, but with newlines.\r\n",
+                "Third: this is still one\nspan, but with newlines.",
+                "Fourth: this is still one\nspan, but with newlines.\n",
+                @"
+Fifth: this is still one
 span, but with newlines.
-");
+"
+            };
 
-            var expected = new Paragraph();
-            expected.AddSpan("This is still one span, but with newlines.");
+            foreach (var chunk in chunks)
+            {
+                var echunk = chunk.Trim().Replace("\n", " ").Replace("\r", " ").Replace("  ", " ");
 
-            paras.Dump().ShouldBe((new[] { expected }).Dump());
+                var expected = new Paragraph();
+                expected.AddSpan(echunk);
+
+                var paras = MarkLeft.Parse(chunk);
+
+                paras.Dump().ShouldBe((new[] {expected}).Dump());
+            }
         }
 
 
