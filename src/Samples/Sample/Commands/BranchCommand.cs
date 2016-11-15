@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using Yaclops.Attributes;
 
 namespace Sample.Commands
@@ -17,7 +16,7 @@ namespace Sample.Commands
         [Description("Delete a branch irrespective of its merged status.")]
         public bool ForceDelete { get; set; }
 
-        [PositionalParameter, Required]
+        [PositionalParameter, Mandatory]
         [Description("The name of the branch")]
         public string NewBranch { get; set; }
     }

@@ -45,7 +45,7 @@ namespace Yaclops.Tests.Parsing
 
 
         [Test]
-        public void MissingRequiredStringParamThrows()
+        public void MissingMandatoryStringParamThrows()
         {
             var root = _builder.ExternalCommand("funky")
                 .WithPositionalString("Name", true)
@@ -59,7 +59,7 @@ namespace Yaclops.Tests.Parsing
 
 
         [Test]
-        public void SpecifiedRequiredStringParamIsSet()
+        public void SpecifiedMandatoryStringParamIsSet()
         {
             var root = _builder.ExternalCommand("funky")
                 .WithPositionalString("Name", true)
@@ -77,6 +77,6 @@ namespace Yaclops.Tests.Parsing
         }
 
 
-        // TODO - add test for required List<string>
+        // TODO - add test for mandatory List<string>
     }
 }

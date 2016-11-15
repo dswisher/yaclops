@@ -34,9 +34,9 @@ namespace Yaclops.Tests.Mocks
         }
 
 
-        public CommandBuilder WithPositionalString(string name, bool required = false)
+        public CommandBuilder WithPositionalString(string name, bool mandatory = false)
         {
-            var param = new CommandPositionalParameter(name, false, required, x => x);
+            var param = new CommandPositionalParameter(name, false, mandatory, x => x);
             _lastCommand.PositionalParameters.Add(param);
             return this;
         }

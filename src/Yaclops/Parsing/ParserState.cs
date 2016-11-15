@@ -15,7 +15,7 @@ namespace Yaclops.Parsing
         private readonly HashSet<string> _shortHelpFlags = new HashSet<string>();
         private readonly HashSet<string> _longHelpFlags = new HashSet<string>();
         private readonly Queue<CommandPositionalParameter> _positionalParameters = new Queue<CommandPositionalParameter>();
-        private readonly List<string> _pendingRequired = new List<string>();
+        private readonly List<string> _pendingMandatory = new List<string>();
         private CommandNamedParameter _currentParameter;
 
         public ParserState(CommandNode startNode, Lexer lexer, IEnumerable<string> helpFlags, string helpVerb)
@@ -45,7 +45,7 @@ namespace Yaclops.Parsing
 
         public bool HelpWanted { get; private set; }
         public CommandNode CurrentNode { get; private set; }
-        public IReadOnlyList<string> PendingRequired { get { return _pendingRequired; } }
+        public IReadOnlyList<string> PendingMandatory { get { return _pendingMandatory; } }
         public Token CurrentToken { get; private set; }
         public List<ParserNamedParameterResult> NamedParameters { get; private set; }
         public List<ParserPositionalParameterResult> PositionalParameters { get; private set; }
@@ -145,9 +145,9 @@ namespace Yaclops.Parsing
                             // A list; create a new param or add to an existing one
                             if ((PositionalParameters.Count == 0) || (PositionalParameters.Last().Parameter != commandParam))
                             {
-                                if (commandParam.IsRequired)
+                                if (commandParam.IsMandatory)
                                 {
-                                    _pendingRequired.Remove(commandParam.PropertyName);
+                                    _pendingMandatory.Remove(commandParam.PropertyName);
                                 }
                                 PositionalParameters.Add(new ParserPositionalParameterResult(commandParam, CurrentToken.Text));
                             }
@@ -158,9 +158,9 @@ namespace Yaclops.Parsing
                         }
                         else
                         {
-                            if (commandParam.IsRequired)
+                            if (commandParam.IsMandatory)
                             {
-                                _pendingRequired.Remove(commandParam.PropertyName);
+                                _pendingMandatory.Remove(commandParam.PropertyName);
                             }
                             // Not a list; always create a new param
                             PositionalParameters.Add(new ParserPositionalParameterResult(commandParam, CurrentToken.Text));
@@ -230,9 +230,9 @@ namespace Yaclops.Parsing
             {
                 _positionalParameters.Enqueue(p);
 
-                if (p.IsRequired)
+                if (p.IsMandatory)
                 {
-                    _pendingRequired.Add(p.PropertyName);
+                    _pendingMandatory.Add(p.PropertyName);
                 }
             }
         }

@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\LongNameAttribute.cs" />
+    <Compile Include="Attributes\MandatoryAttribute.cs" />
     <Compile Include="Attributes\NamedParameterAttribute.cs" />
     <Compile Include="Attributes\PositionalParameterAttribute.cs" />
     <Compile Include="Attributes\ShortNameAttribute.cs" />

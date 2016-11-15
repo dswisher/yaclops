@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
+using Yaclops.Attributes;
 
 
 namespace Yaclops.Extensions
@@ -26,9 +27,10 @@ namespace Yaclops.Extensions
         }
 
 
-        public static bool IsRequired(this PropertyInfo info)
+        public static bool IsMandatory(this PropertyInfo info)
         {
-            return FindAttribute<RequiredAttribute>(info).Any();
+            // For now, support both [Required] AND [Mandatory]
+            return FindAttribute<MandatoryAttribute>(info).Any() || FindAttribute<RequiredAttribute>(info).Any();
         }
 
 

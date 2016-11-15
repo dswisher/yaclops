@@ -95,7 +95,7 @@ namespace Yaclops.Tests.Reflecting
             command.PositionalParameters.Count.ShouldBe(1);
             var param = command.PositionalParameters[0];
             param.PropertyName.ShouldBe("Stuff");
-            param.IsRequired.ShouldBe(false);
+            param.IsMandatory.ShouldBe(false);
             param.IsList.ShouldBe(false);
         }
 
@@ -108,7 +108,7 @@ namespace Yaclops.Tests.Reflecting
             command.PositionalParameters.Count.ShouldBe(1);
             var param = command.PositionalParameters[0];
             param.PropertyName.ShouldBe("Stuffs");
-            param.IsRequired.ShouldBe(false);
+            param.IsMandatory.ShouldBe(false);
             param.IsList.ShouldBe(true);
         }
 
@@ -121,19 +121,30 @@ namespace Yaclops.Tests.Reflecting
             command.PositionalParameters.Count.ShouldBe(1);
             var param = command.PositionalParameters[0];
             param.PropertyName.ShouldBe("Fractions");
-            param.IsRequired.ShouldBe(false);
+            param.IsMandatory.ShouldBe(false);
             param.IsList.ShouldBe(true);
         }
 
 
         [Test]
-        public void RequiredParameterIsMarkedAsRequired()
+        public void RequiredParameterIsMarkedAsMandatory()      // For legacy support
         {
             var command = new ReflectedCommand<object>(typeof(PositionalRequired), _factory);
 
             command.PositionalParameters.Count.ShouldBe(1);
             var param = command.PositionalParameters[0];
-            param.IsRequired.ShouldBe(true);
+            param.IsMandatory.ShouldBe(true);
+        }
+
+
+        [Test]
+        public void MandatoryParameterIsMarkedAsMandatory()      // For legacy support
+        {
+            var command = new ReflectedCommand<object>(typeof(PositionalMandatory), _factory);
+
+            command.PositionalParameters.Count.ShouldBe(1);
+            var param = command.PositionalParameters[0];
+            param.IsMandatory.ShouldBe(true);
         }
 
 
@@ -219,6 +230,12 @@ namespace Yaclops.Tests.Reflecting
         private class PositionalRequired
         {
             [PositionalParameter, Required]
+            public int Count { get; set; }
+        }
+
+        private class PositionalMandatory
+        {
+            [PositionalParameter, Mandatory]
             public int Count { get; set; }
         }
 

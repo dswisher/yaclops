@@ -77,7 +77,7 @@ namespace Yaclops.Model
             // TODO - handle positional parameters, too, at least for global parser!
             foreach (var reflectedParam in reflected.PositionalParameters)
             {
-                var commandParam = new CommandPositionalParameter(reflectedParam.PropertyName, reflectedParam.IsList, reflectedParam.IsRequired, propertyTarget);
+                var commandParam = new CommandPositionalParameter(reflectedParam.PropertyName, reflectedParam.IsList, reflectedParam.IsMandatory, propertyTarget);
 
                 commandParam.Description = reflectedParam.Description;
 

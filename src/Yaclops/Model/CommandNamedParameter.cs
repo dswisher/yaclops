@@ -52,7 +52,7 @@ namespace Yaclops.Model
                     builder.Append(ln);
                 }
 
-                // TODO - check to see if param is required
+                // TODO - check to see if param is mandatory
                 return "[" + builder + "]";
             }
         }

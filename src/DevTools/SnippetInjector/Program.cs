@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using SampleHelpers;
 using Yaclops;
@@ -69,7 +68,7 @@ namespace SnippetInjector
 
         private class GlobalSettings
         {
-            [PositionalParameter, Required]
+            [PositionalParameter, Mandatory]
             [Description("The list of file names to update. Wildcards are allowed.")]
             public List<string> Names { get; set; }
 

@@ -40,20 +40,20 @@ namespace Yaclops.Parsing
             }
             else if (state.CurrentNode is CommandRoot)
             {
-                if (state.PendingRequired.Any())
+                if (state.PendingMandatory.Any())
                 {
-                    var missing = string.Join(", ", state.PendingRequired);
-                    throw new CommandLineParserException(string.Concat("Missing required parameter(s): ", missing));
+                    var missing = string.Join(", ", state.PendingMandatory);
+                    throw new CommandLineParserException(string.Concat("Missing mandatory parameter(s): ", missing));
                 }
 
                 result.Kind = ParseResultKind.DefaultCommand;
             }
             else if (state.CurrentNode is Command)
             {
-                if (state.PendingRequired.Any())
+                if (state.PendingMandatory.Any())
                 {
-                    var missing = string.Join(", ", state.PendingRequired);
-                    throw new CommandLineParserException(string.Concat("Missing required parameter(s): ", missing));
+                    var missing = string.Join(", ", state.PendingMandatory);
+                    throw new CommandLineParserException(string.Concat("Missing mandatory parameter(s): ", missing));
                 }
 
                 if (state.CurrentNode is ExternalCommand)

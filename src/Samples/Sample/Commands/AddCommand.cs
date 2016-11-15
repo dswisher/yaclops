@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using Yaclops.Attributes;
 
 namespace Sample.Commands
@@ -35,7 +34,7 @@ to add ignored files with the -f (force) option.
 Please see `commit` for alternative ways to add content to a commit.")]
     public class AddCommand : ISampleCommand
     {
-        [PositionalParameter, Required]
+        [PositionalParameter, Mandatory]
         public List<string> Paths { get; set; }
 
         [NamedParameter, ShortName("n")]

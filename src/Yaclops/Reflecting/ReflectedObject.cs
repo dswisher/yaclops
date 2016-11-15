@@ -121,7 +121,7 @@ namespace Yaclops.Reflecting
 
             foreach (var prop in props)
             {
-                var posParam = new ReflectedPositionalParameter(prop.Name, prop.IsList() || prop.IsHashSet(), prop.IsRequired());
+                var posParam = new ReflectedPositionalParameter(prop.Name, prop.IsList() || prop.IsHashSet(), prop.IsMandatory());
                 _positionalParameters.Add(posParam);
 
                 var descrip = prop.FindAttribute<DescriptionAttribute>().FirstOrDefault();

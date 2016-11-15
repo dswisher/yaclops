@@ -10,11 +10,11 @@
     -> Powershell
         -> look at https://github.com/lzybkr/TabExpansionPlusPlus#readme
 
-- Allow named parameters to be marked as required
+- Allow named parameters to be marked as mandatory
 - Allow mix-ins in addition to inheritence; if command object includes specially-attributed object, grab its props, too
 - Handle enums and list of enums and more complex types, like FileInfo, TimeSpan and DateTime
 - Add support for fields (in addition to properties)
-- Add support for complex meta-rules (if -b is specified, field X is required or w/e - custom Func passed by user)
+- Add support for complex meta-rules (if -b is specified, field X is mandatory or w/e - custom Func passed by user)
 - If duplicate short/long names are specified at the SAME LEVEL, emit a warning
 - Figure out a way to make description and other text dynamic. For example, to embed a const in a description
   or reference another parameter/command.
