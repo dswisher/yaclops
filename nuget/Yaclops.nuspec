@@ -14,7 +14,7 @@
     <iconUrl>https://raw.github.com/dswisher/yaclops/master/logo.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <licenseUrl>https://raw.github.com/dswisher/yaclops/master/LICENSE.txt</licenseUrl>
-    <copyright>Copyright (c) 2016 Doug Swisher</copyright>
+    <copyright>Copyright (c) 2015-2018 Doug Swisher</copyright>
     <tags>command line argument option parser</tags>
   </metadata>
 
