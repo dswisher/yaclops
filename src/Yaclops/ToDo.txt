@@ -1,4 +1,4 @@
-﻿
+
 - When printing list of options for a command, alphabetize them? (If so, by what - long id or short id?)
 - Finish help for commands
 
