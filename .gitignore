@@ -1,5 +1,6 @@
 *.suo
 *.user
 *.swp
+.vs
 bin
 obj

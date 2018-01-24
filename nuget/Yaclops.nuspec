@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Yaclops</id>
-    <version>0.12.0-alpha</version>
+    <version>0.13.0-alpha</version>
     <title>Yet Another Command-Line Option Parser</title>
     <authors>Doug Swisher</authors>
     <owners>Doug Swisher</owners>
@@ -19,7 +19,6 @@
   </metadata>
 
   <files>
-    <file src="..\src\Yaclops\bin\Release\Yaclops.dll" target="lib\net45\Yaclops.dll" />
-    <file src="..\src\Yaclops\bin\Release\Yaclops.xml" target="lib\net45\Yaclops.xml" />
+    <file src="..\src\Yaclops\bin\Release\netstandard2.0\Yaclops.dll" target="lib\netstandard2.0\Yaclops.dll" />
   </files>
 </package>
